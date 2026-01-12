@@ -1,0 +1,13 @@
+{
+  "name": "open-market",
+  "version": "1.0.0",
+  "description": "오픈마켓 프로젝트",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
