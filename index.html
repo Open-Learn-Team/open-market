@@ -1,45 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HODU</title>
-  <link rel="stylesheet" href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css">
-  <link rel="stylesheet" href="/assets/css/reset.css">
-  <link rel="stylesheet" href="/assets/css/common.css">
-  <link rel="stylesheet" href="/assets/css/pages/home.css">
-</head>
-<body>
-  <main>
-    <!-- 배너 -->
-    <section class="banner">
-      <figure class="banner-slide">
-        <img src="/assets/images/banner-placeholder.png" alt="배너">
-      </figure>
-      <button type="button" class="banner-nav prev" aria-label="이전">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
-        </svg>
-      </button>
-      <button type="button" class="banner-nav next" aria-label="다음">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
-        </svg>
-      </button>
-      <nav class="banner-dots">
-        <button type="button" class="banner-dot"></button>
-        <button type="button" class="banner-dot"></button>
-        <button type="button" class="banner-dot"></button>
-      </nav>
-    </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HODU</title>
+    <link
+      rel="stylesheet"
+      href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+    />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/pages/home.css" />
+  </head>
+  <body>
+    <main>
+      <!-- 배너 -->
+      <section class="banner">
+        <figure class="banner-slide">
+          <img src="/assets/images/banner-placeholder.png" alt="배너" />
+        </figure>
+        <button type="button" class="banner-nav prev" aria-label="이전">
+          <img src="/assets/images/icon-swiper-1.svg" alt="" />
+        </button>
+        <button type="button" class="banner-nav next" aria-label="다음">
+          <img src="/assets/images/icon-swiper-2.svg" alt="" />
+        </button>
+        <nav class="banner-dots">
+          <button type="button" class="banner-dot"></button>
+          <button type="button" class="banner-dot"></button>
+          <button type="button" class="banner-dot"></button>
+          <button type="button" class="banner-dot"></button>
+          <button type="button" class="banner-dot"></button>
+        </nav>
+      </section>
 
-    <!-- 상품 목록 -->
-    <section class="products">
-      <h2 class="sr-only">상품 목록</h2>
-      <ul class="products-grid"></ul>
-    </section>
-  </main>
+      <!-- 상품 목록 -->
+      <section class="products">
+        <h2 class="sr-only">상품 목록</h2>
+        <ul class="products-grid"></ul>
+      </section>
+    </main>
 
-  <script type="module" src="/assets/js/pages/home.js"></script>
-</body>
+    <script type="module" src="/assets/js/pages/home.js"></script>
+  </body>
 </html>
