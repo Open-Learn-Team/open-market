@@ -11,7 +11,7 @@ export const createHeader = () => {
   header.innerHTML = `
     <section class="header-inner">
       <h1 class="logo">
-        <a href="/"><img src="/assets/images/Logo-hodu.png" alt="HODU" /></a>
+        <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU" /></a>
       </h1>
 
       <form class="search-bar" role="search">

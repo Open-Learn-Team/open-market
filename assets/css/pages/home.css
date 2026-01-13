@@ -24,8 +24,7 @@
 }
 
 .search-bar {
-  flex: 1;
-  max-width: 400px;
+  width: 400px;
   height: 46px;
   display: flex;
   align-items: center;
@@ -47,6 +46,10 @@
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.user-menu {
+  margin-left: auto;
 }
 
 .user-menu > ul {
@@ -158,17 +161,9 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 60px;
-  height: 60px;
-  background: rgba(255,255,255,0.8);
+  background: transparent;
   border: none;
-  border-radius: 50%;
   cursor: pointer;
-}
-
-.banner-nav svg {
-  width: 24px;
-  height: 24px;
 }
 
 .banner-nav.prev { left: 60px; }
@@ -189,11 +184,10 @@
   background: #fff;
   border: none;
   border-radius: 50%;
-  opacity: 0.5;
   cursor: pointer;
 }
 
-.banner-dot.active { opacity: 1; }
+.banner-dot.active { background: #000; }
 
 /* Products */
 .products {
