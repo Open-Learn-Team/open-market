@@ -55,7 +55,6 @@ body {
   color: #333;
 }
 
-/* 인풋 */
 .input {
   width: 100%;
   padding: 12px 16px;
@@ -71,4 +70,354 @@ body {
 
 .input::placeholder {
   color: #767676;
+}
+
+/* 헤더 */
+.header {
+  position: sticky;
+  top: 0;
+  height: 90px;
+  background: #fff;
+  box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1280px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo img {
+  width: 124px;
+  height: 38px;
+}
+
+/* 검색바 */
+.search-bar {
+  width: 400px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--color-primary);
+  border-radius: 50px;
+  padding: 0 22px;
+}
+
+.search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search-bar input::placeholder { 
+  color: #767676; 
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.user-menu {
+  margin-left: auto;
+}
+
+.user-menu > ul {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+/* 일반 메뉴 링크 (장바구니, 로그인) */
+.menu-link,
+.mypage-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #767676;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.menu-link:hover,
+.mypage-btn:hover { 
+  color: #333; 
+}
+
+/* 마이페이지 드롭다운 */
+.mypage-wrap { 
+  position: relative; 
+}
+
+.dropdown {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.25);
+  padding: 10px;
+}
+
+.dropdown.active { 
+  display: flex; 
+}
+
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 8px solid transparent;
+  border-top: none;
+  border-bottom-color: #fff;
+}
+
+.dropdown li { 
+  list-style: none; 
+}
+
+.dropdown a,
+.dropdown button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 34px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #767676;
+  background: #fff;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.dropdown a:hover,
+.dropdown button:hover {
+  color: #333;
+  border: 1px solid #c4c4c4;
+}
+
+/* 판매자 센터 버튼 */
+.seller-center-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  width: 168px;
+  height: 54px;
+  padding: 0 20px;
+  background: var(--color-primary);
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.seller-center-btn:hover {
+  background: var(--color-primary-dark);
+}
+
+.seller-center-btn svg {
+  flex-shrink: 0;
+}
+
+.seller-center-btn span {
+  color: white;
+}
+
+/* 푸터 */
+.footer {
+  background: #f2f2f2;
+  padding: 60px 0;
+}
+
+.footer-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #c4c4c4;
+  margin-bottom: 30px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 14px;
+}
+
+.footer-links li:not(:last-child)::after {
+  content: '|';
+  margin-left: 14px;
+  color: #333;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: #333;
+  text-decoration: none;
+}
+
+.footer-links a:hover { 
+  text-decoration: underline; 
+}
+
+.footer-links .bold { 
+  font-weight: 700; 
+}
+
+.social-links {
+  display: flex;
+  gap: 14px;
+}
+
+.social-links a:hover { 
+  opacity: 0.8; 
+}
+
+.company-info {
+  font-style: normal;
+  font-size: 14px;
+  color: #767676;
+  line-height: 24px;
+}
+
+.company-info strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* 모달 */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  width: 360px;
+  padding: 40px 60px;
+  background: #fff;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-msg {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.modal-btns button {
+  width: 100px;
+  padding: 10px 0;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  color: #767676;
+}
+
+.btn-confirm {
+  background: var(--color-primary);
+  border: none;
+  color: #fff;
+}
+
+.btn-confirm.only { 
+  width: 120px; 
+}
+
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f2f2f2;
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 640px) {
+  .search-bar { 
+    display: none; 
+  }
+  
+  .footer-top {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  
+  .footer-links { 
+    flex-wrap: wrap; 
+  }
+
+  .seller-center-btn {
+    width: auto;
+    padding: 0 12px;
+    font-size: 14px;
+  }
 }
