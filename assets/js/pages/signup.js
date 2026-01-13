@@ -58,7 +58,7 @@ checkBtn.addEventListener("click", async () => {
 });
 
 pw.addEventListener("input", () => {
-  pwCheck.style.display = pw.value.length >= 6 ? "inline" : "none";
+  pwCheck.style.display = pw.value.length >= 8 ? "inline" : "none";
   validate();
 });
 
