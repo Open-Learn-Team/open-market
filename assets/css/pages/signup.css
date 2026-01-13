@@ -110,20 +110,17 @@ select {
 .agree {
   text-align: left;
   font-size: 12px;
-  /* margin-top: 16px;
-  margin-bottom: 16px; */
-  margin: 16px 16px 10px 10px;
+  margin: 16px 16px 16px 16px;
 }
 
 .submit {
-  width: 100%;
+  width: 90%;
   padding: 12px;
   background: #22c55e;
   color: white;
   border: none;
   border-radius: 5px;
   opacity: 0.5;
-  /* margin: 10px 10px 10px 10px; */
 }
 
 .submit.active {
