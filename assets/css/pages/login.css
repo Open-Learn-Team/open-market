@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,40 +15,40 @@ body {
 
 .login-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   text-align: center;
 }
 
 .logo {
   color: #2CC053; /* HODU 시그니처 그린 */
   font-size: 48px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   font-weight: bold;
 }
 
 .login-box {
   background: #fff;
-  padding: 40px;
+  padding: 36px 40px;
   border-radius: 10px;
   border: 1px solid #dbdbdb;
 }
 
-.login-box h2 {
-  font-size: 18px;
-  margin-bottom: 30px;
+.login-container h2 {
+  font-size: 15.5px;
+  margin-bottom: 15px;
 }
 
 .input-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .input-group input {
   width: 100%;
-  padding: 12px 0;
+  padding: 15px 0 12px 0;
   border: none;
   border-bottom: 1px solid #dbdbdb;
   outline: none;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .input-group input:focus {
@@ -59,20 +59,24 @@ body {
   color: #eb5757;
   font-size: 12px;
   text-align: left;
-  margin-bottom: 15px;
-  display: none; /* 기본적으로 숨김 */
+  margin-top: 5px;
+  /* 이 숫자를 줄여서 버튼과의 거리를 좁힙니다. */
+  margin-bottom: 5px; 
+  display: none;
+  min-height: 12px;
 }
 
 .login-btn {
   width: 100%;
-  padding: 15px;
+  padding: 13px;
   background-color: #2CC053;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
   cursor: pointer;
   font-weight: bold;
+  margin-top: 20px;
 }
 
 .login-btn:hover {
