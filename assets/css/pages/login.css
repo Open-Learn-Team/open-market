@@ -97,3 +97,17 @@ body {
   margin: 0 10px;
   color: #dbdbdb;
 }
+
+/* 로고 컨테이너(h1) 및 이미지 스타일 */
+.logo img {
+  width: 150px; /* 로고의 가로 너비 (디자인에 맞춰 조절) */
+  height: auto;  /* 비율 유지 */
+  display: block;
+  margin: 0 auto 30px; /* 가운데 정렬 및 아래쪽 여백 */
+}
+
+.logo a {
+  display: inline-block; /* 링크 영역이 이미지 크기에 딱 맞게 설정 */
+  cursor: pointer;       /* 마우스를 올리면 손가락 모양으로 변경 */
+  text-decoration: none; /* 혹시 모를 밑줄 제거 */
+}
