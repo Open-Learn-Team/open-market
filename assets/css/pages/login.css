@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pretendard', sans-serif;
+}
+
+body {
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.logo {
+  color: #2CC053; /* HODU 시그니처 그린 */
+  font-size: 48px;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.login-box {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid #dbdbdb;
+}
+
+.login-box h2 {
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+  outline: none;
+  font-size: 14px;
+}
+
+.input-group input:focus {
+  border-bottom: 1px solid #2CC053;
+}
+
+.error-text {
+  color: #eb5757;
+  font-size: 12px;
+  text-align: left;
+  margin-bottom: 15px;
+  display: none; /* 기본적으로 숨김 */
+}
+
+.login-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #2CC053;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.login-btn:hover {
+  background-color: #26a346;
+}
+
+.login-footer {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.login-footer a {
+  text-decoration: none;
+  color: #767676;
+}
+
+.divider {
+  margin: 0 10px;
+  color: #dbdbdb;
+}

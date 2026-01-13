@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="ko-KR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>로그인 페이지</title>
-    <link rel="stylesheet" href="/assets/css/pages/login.css">
-  </head>
-  <body>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HODU - 로그인</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
     <div class="login-container">
-      <h1 class="logo">HODU</h1>
-      <from id="loginform">
+        <h1 class="logo">HODU</h1>
+        <h2>로그인</h2>
+        <main class="login-box">
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="아이디" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="비밀번호" required>
+                </div>
+                
+                <p id="error-message" class="error-text">아이디 또는 비밀번호가 일치하지 않습니다.</p>
+                
+                <button type="submit" class="login-btn">로그인</button>
+            </form>
+        </main>
+
+        <footer class="login-footer">
+            <a href="#">회원가입</a>
+            <span class="divider">|</span>
+            <a href="#">비밀번호 찾기</a>
+        </footer>
     </div>
-    <label for="username">아이디</label>
-    <input type="text" id="username" name="username">
-    <p id="usernameError" calss="error-message"></p>
-  </div>
-  <div>
-    <label for="password">비밀번호:</label>
-    <input type="password" id="password" name="password">
-    <p id="passwordError" class="error-message"></p>
-  </div>
-  <button type="submit" id="loginButton">로그인</button>
-  <div class="buyer-login-info">
-    <p>회원가입 | 비밀번호 찾기</p>
-    <!-- 실제 구현 시 별도의 구매 회원 로그인 탭 링크/버튼 필요-->
-  </div>
-</form>
-</div>
-<script sre="/assets/js/pages/login.css"></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
