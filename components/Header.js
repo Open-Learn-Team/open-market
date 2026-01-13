@@ -25,8 +25,9 @@ export const createHeader = () => {
       <nav class="user-menu">
         <ul>
           ${!isSeller ? `
+            <!-- 구매자: 장바구니 -->
             <li>
-              <a href="${loggedIn ? '/pages/cart/' : '#'}" class="${!loggedIn ? 'require-login' : ''}">
+              <a href="${loggedIn ? '/pages/cart/' : '#'}" class="menu-link ${!loggedIn ? 'require-login' : ''}">
                 <img src="/assets/images/icon-shopping-cart.svg" alt="" width="32" height="32">
                 <span>장바구니</span>
               </a>
@@ -34,19 +35,31 @@ export const createHeader = () => {
           ` : ''}
           
           ${loggedIn ? `
+            <!-- 로그인: 마이페이지 드롭다운 -->
             <li class="mypage-wrap">
               <button type="button" class="mypage-btn" aria-expanded="false">
                 <img src="/assets/images/icon-user.svg" alt="" width="32" height="32">
-                <span ${isSeller ? 'class="primary"' : ''}>마이페이지</span>
+                <span>마이페이지</span>
               </button>
               <ul class="dropdown">
                 <li><a href="/pages/mypage/">마이페이지</a></li>
                 <li><button type="button" class="logout-btn">로그아웃</button></li>
               </ul>
             </li>
+            
+            ${isSeller ? `
+              <!-- 판매자: 판매자 센터 버튼 -->
+              <li>
+                <a href="/pages/seller/" class="seller-center-btn">
+                  <img src="/assets/images/icon-shopping-bag.svg" alt="" width="32" height="32">
+                  <span>판매자 센터</span>
+                </a>
+              </li>
+            ` : ''}
           ` : `
+            <!-- 비로그인: 로그인 버튼 -->
             <li>
-              <a href="/pages/login/">
+              <a href="/pages/login/" class="menu-link">
                 <img src="/assets/images/icon-user.svg" alt="" width="32" height="32">
                 <span>로그인</span>
               </a>
