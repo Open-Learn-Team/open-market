@@ -1,3 +1,5 @@
+import { validateUsername } from "/utils/api.js";
+
 const checkBtn = document.getElementById("checkId");
 const idInput = document.getElementById("userid");
 const idMsg = document.getElementById("idMsg");
@@ -13,16 +15,26 @@ const submit = document.getElementById("submitBtn");
 
 let idOk = false;
 
-checkBtn.addEventListener("click", () => {
-  if (idInput.value === "jejucoing") {
-    idMsg.textContent = "이미 사용 중인 아이디입니다.";
+checkBtn.addEventListener("click", async () => {
+  console.log(checkBtn);
+  if (!idInput.value) {
+    idMsg.textContent = "아이디를 입력해주세요.";
     idMsg.style.color = "red";
     idOk = false;
-  } else {
+    return;
+  }
+
+  try {
+    await validateUsername(idInput.value);
     idMsg.textContent = "멋진 아이디네요 :)";
     idMsg.style.color = "green";
     idOk = true;
+  } catch (err) {
+    idMsg.textContent = err.data?.error || "이미 사용 중인 아이디입니다.";
+    idMsg.style.color = "red";
+    idOk = false;
   }
+
   validate();
 });
 
