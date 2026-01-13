@@ -10,8 +10,8 @@
     <h1 class="logo">HODU</h1>
 
     <div class="tabs">
-      <button class="tab active">구매회원가입</button>
-      <button class="tab">판매회원가입</button>
+      <button class="tab active" data-type="buyer">구매회원가입</button>
+      <button class="tab" data-type="seller">판매회원가입</button>
     </div>
 
     <div class="card">
@@ -61,6 +61,22 @@
             </select>
             <input />
             <input />
+          </div>
+        </div>
+
+        <!-- 판매자 전용 -->
+        <div class="seller-only" id="sellerArea">
+          <div class="field">
+            <label>사업자 등록번호</label>
+            <div class="row">
+              <input type="text" />
+              <button type="button" class="check-btn">인증</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>스토어 이름</label>
+            <input type="text" />
           </div>
         </div>
       </form>

@@ -92,6 +92,10 @@ select {
   gap: 10px;
 }
 
+.seller-only {
+  display: none;
+}
+
 .check {
   float: right;
   color: green;
