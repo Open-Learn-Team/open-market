@@ -24,8 +24,7 @@
 }
 
 .search-bar {
-  flex: 1;
-  max-width: 400px;
+  width: 400px;
   height: 46px;
   display: flex;
   align-items: center;
@@ -47,6 +46,10 @@
   background: none;
   border: none;
   cursor: pointer;
+}
+
+.user-menu {
+  margin-left: auto;
 }
 
 .user-menu > ul {
