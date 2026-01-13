@@ -59,3 +59,21 @@ function validate() {
     submit.disabled = true;
   }
 }
+
+const tabs = document.querySelectorAll(".tab");
+const sellerArea = document.getElementById("sellerArea");
+
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    // active 클래스 이동
+    tabs.forEach((t) => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    // 판매자 / 구매자 전환
+    if (tab.dataset.type === "seller") {
+      sellerArea.style.display = "block";
+    } else {
+      sellerArea.style.display = "none";
+    }
+  });
+});
