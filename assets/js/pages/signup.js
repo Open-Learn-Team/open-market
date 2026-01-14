@@ -71,10 +71,43 @@ requiredFields.forEach((field) => {
   });
 });
 
+idInput.addEventListener("input", () => {
+  const value = idInput.value;
+
+  idOk = false; // 아이디 바뀌면 다시 중복확인 필요
+
+  if (value.length > 20) {
+    idMsg.textContent = "아이디는 20자 이내로 입력해주세요.";
+    idMsg.style.color = "red";
+    return;
+  }
+
+  if (!/^[A-Za-z0-9]*$/.test(value)) {
+    idMsg.textContent = "아이디는 영문자와 숫자만 사용할 수 있습니다.";
+    idMsg.style.color = "red";
+    return;
+  }
+
+  if (value === "") {
+    idMsg.textContent = "";
+    return;
+  }
+
+  // 형식이 맞으면 메시지 지움 (아직 중복확인은 안 한 상태)
+  idMsg.textContent = "";
+});
+
 checkBtn.addEventListener("click", async () => {
-  console.log(checkBtn);
   if (!idInput.value) {
     idMsg.textContent = "아이디를 입력해주세요.";
+    idMsg.style.color = "red";
+    idOk = false;
+    return;
+  }
+
+  if (!USERNAME_REGEX.test(idInput.value)) {
+    idMsg.textContent =
+      "아이디는 영문자와 숫자만 사용하여 20자 이내로 입력해주세요.";
     idMsg.style.color = "red";
     idOk = false;
     return;
