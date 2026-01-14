@@ -39,7 +39,21 @@ const phone1 = document.getElementById("phone1");
 const phone2 = document.getElementById("phone2");
 const phone3 = document.getElementById("phone3");
 
-const requiredFields = [idInput, pw, pw2, nameInput, phone2, phone3];
+const companyInput = document.getElementById("companyNumber");
+const storeInput = document.getElementById("storeName");
+
+function getRequiredFields() {
+  const base = [idInput, pw, pw2, nameInput, phone2, phone3];
+
+  const isSeller =
+    document.querySelector(".tab.active").dataset.type === "seller";
+
+  if (isSeller) {
+    base.push(companyInput, storeInput);
+  }
+
+  return base;
+}
 
 function showRequiredError(input) {
   const msg = input.closest(".field").querySelector(".msg");
@@ -50,11 +64,16 @@ function showRequiredError(input) {
   }
 }
 
-requiredFields.forEach((field, index) => {
+document.querySelectorAll("input, select").forEach((field) => {
   field.addEventListener("focus", () => {
+    const fields = getRequiredFields();
+    const index = fields.indexOf(field);
+
+    if (index === -1) return;
+
     for (let i = 0; i < index; i++) {
-      if (!requiredFields[i].value) {
-        showRequiredError(requiredFields[i]);
+      if (!fields[i].value) {
+        showRequiredError(fields[i]);
       }
     }
   });
@@ -62,7 +81,7 @@ requiredFields.forEach((field, index) => {
 
 const USERNAME_REGEX = /^[A-Za-z0-9]{1,20}$/;
 
-requiredFields.forEach((field) => {
+document.querySelectorAll("input").forEach((field) => {
   field.addEventListener("input", () => {
     const msg = field.closest(".field")?.querySelector(".msg");
 
@@ -147,13 +166,23 @@ function validate() {
   const phoneOk = phone2.value.length === 4 && phone3.value.length === 4;
   const nameOk = nameInput.value.trim().length > 0;
 
+  const isSeller =
+    document.querySelector(".tab.active").dataset.type === "seller";
+
+  let sellerOk = true;
+  if (isSeller) {
+    sellerOk =
+      companyInput.value.trim() !== "" && storeInput.value.trim() !== "";
+  }
+
   const allFilled =
     idOk &&
     pw.value.length >= 8 &&
     pw2.value === pw.value &&
     nameOk &&
     phoneOk &&
-    agree.checked;
+    agree.checked &&
+    sellerOk;
 
   if (allFilled) {
     submit.classList.add("active");

@@ -71,7 +71,7 @@ body {
 .tabs::after {
   content: "";
   position: absolute;
-  top: 42px;
+  top: 43px;
   left: 49%;
   width: 10px;
   height: 10px;
