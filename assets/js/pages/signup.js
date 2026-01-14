@@ -19,6 +19,38 @@ tabs.forEach((tab) => {
   });
 });
 
+function requireBefore(current, prev, msgEl) {
+  if (!prev.value.trim()) {
+    msgEl.textContent = "필수 정보입니다.";
+    msgEl.style.color = "red";
+    prev.focus();
+    return false;
+  }
+  return true;
+}
+
+pw.addEventListener("focus", () => {
+  requireBefore(pw, idInput, idMsg);
+});
+
+pw2.addEventListener("focus", () => {
+  requireBefore(pw2, pw, pwMsg);
+});
+
+document.querySelector("input[name='name']").addEventListener("focus", () => {
+  if (!pw2.value) {
+    pwMsg.textContent = "필수 정보입니다.";
+    pw2.focus();
+  }
+});
+
+phone2.addEventListener("focus", () => {
+  if (!document.querySelector("input[name='name']").value) {
+    alert("이름은 필수 정보입니다.");
+    document.querySelector("input[name='name']").focus();
+  }
+});
+
 const checkBtn = document.getElementById("checkId");
 const idInput = document.getElementById("userid");
 const idMsg = document.getElementById("idMsg");
