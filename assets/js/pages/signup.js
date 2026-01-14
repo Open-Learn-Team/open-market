@@ -26,7 +26,13 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*\d).{8,}$/;
 
 const nameInput = document.querySelector("input[name='name']");
 
-const phone1 = document.getElementById("phone1");
+// 커스텀 드롭다운 요소들
+const phone1 = document.getElementById("phone1"); // hidden input
+const phone1Wrapper = document.getElementById("phone1Wrapper");
+const phone1Trigger = document.getElementById("phone1Trigger");
+const phone1Value = document.getElementById("phone1Value");
+const phone1Dropdown = document.getElementById("phone1Dropdown");
+
 const phone2 = document.getElementById("phone2");
 const phone3 = document.getElementById("phone3");
 const phoneMsg = document.getElementById("phoneMsg");
@@ -47,18 +53,137 @@ const agree = document.getElementById("agree");
 const agreeIcon = document.getElementById("agreeIcon");
 const submit = document.getElementById("submitBtn");
 
+// ========== 커스텀 드롭다운 로직 ==========
+function initCustomDropdown() {
+  const dropdownItems = phone1Dropdown.querySelectorAll(".dropdown-item");
+  const dropdownList = phone1Dropdown.querySelector(".dropdown-list");
+  const scrollbarThumb = phone1Dropdown.querySelector(".scrollbar-thumb");
+
+  // 스크롤바 thumb 높이 및 위치 계산
+  function updateScrollbar() {
+    const listHeight = dropdownList.scrollHeight; // 전체 콘텐츠 높이
+    const visibleHeight = 240; // 보이는 영역 높이
+    const scrollTop = dropdownList.scrollTop;
+
+    // thumb 높이 계산 (최소 30px)
+    const thumbHeight = Math.max(
+      (visibleHeight / listHeight) * visibleHeight,
+      30
+    );
+
+    // thumb 위치 계산 (6px 여백 고려)
+    const maxScroll = listHeight - visibleHeight;
+    const maxThumbTop = visibleHeight - thumbHeight - 12; // 상하 6px 여백
+    const thumbTop =
+      maxScroll > 0 ? (scrollTop / maxScroll) * maxThumbTop + 6 : 6;
+
+    scrollbarThumb.style.height = `${thumbHeight}px`;
+    scrollbarThumb.style.top = `${thumbTop}px`;
+  }
+
+  // 리스트 스크롤 시 스크롤바 업데이트
+  dropdownList.addEventListener("scroll", updateScrollbar);
+
+  // 트리거 클릭 시 드롭다운 열기/닫기
+  phone1Trigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    const isOpen = phone1Dropdown.classList.contains("open");
+
+    if (isOpen) {
+      closeDropdown();
+    } else {
+      openDropdown();
+      // 열릴 때 스크롤바 초기화
+      setTimeout(updateScrollbar, 0);
+    }
+  });
+
+  // 옵션 클릭 시 선택
+  dropdownItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const value = item.dataset.value;
+
+      // 값 업데이트
+      phone1.value = value;
+      phone1Value.textContent = value;
+
+      // selected 클래스 이동
+      dropdownItems.forEach((i) => i.classList.remove("selected"));
+      item.classList.add("selected");
+
+      closeDropdown();
+    });
+  });
+
+  // 외부 클릭 시 닫기
+  document.addEventListener("click", (e) => {
+    if (!phone1Wrapper.contains(e.target)) {
+      closeDropdown();
+    }
+  });
+
+  // ESC 키로 닫기
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeDropdown();
+    }
+  });
+
+  // 스크롤바 드래그 기능
+  let isDragging = false;
+  let startY = 0;
+  let startScrollTop = 0;
+
+  scrollbarThumb.addEventListener("mousedown", (e) => {
+    isDragging = true;
+    startY = e.clientY;
+    startScrollTop = dropdownList.scrollTop;
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isDragging) return;
+
+    const deltaY = e.clientY - startY;
+    const listHeight = dropdownList.scrollHeight;
+    const visibleHeight = 240;
+    const maxScroll = listHeight - visibleHeight;
+
+    // 드래그 비율로 스크롤 계산
+    const scrollRatio = deltaY / (visibleHeight - 30); // thumb 이동 가능 범위
+    const newScrollTop = startScrollTop + scrollRatio * maxScroll;
+
+    dropdownList.scrollTop = Math.max(0, Math.min(newScrollTop, maxScroll));
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+  });
+}
+
+function openDropdown() {
+  phone1Dropdown.classList.add("open");
+  phone1Trigger.classList.add("active");
+}
+
+function closeDropdown() {
+  phone1Dropdown.classList.remove("open");
+  phone1Trigger.classList.remove("active");
+}
+
+// 초기화
+initCustomDropdown();
+
+// ========== 기존 로직 ==========
 function resetSellerForm() {
   companyOk = false;
 
-  // 값 초기화
   companyInput.value = "";
   storeInput.value = "";
 
-  // 메시지 제거
   companyMsg.textContent = "";
   storeMsg.textContent = "";
 
-  // input 이벤트 강제로 발생 → validate & UI 동기화
   companyInput.dispatchEvent(new Event("input"));
   storeInput.dispatchEvent(new Event("input"));
 
@@ -67,11 +192,9 @@ function resetSellerForm() {
 
 tabs.forEach((tab) => {
   tab.addEventListener("click", () => {
-    // active 클래스 이동
     tabs.forEach((t) => t.classList.remove("active"));
     tab.classList.add("active");
 
-    // 판매자 / 구매자 전환
     if (tab.dataset.type === "seller") {
       sellerArea.style.display = "block";
     } else {
@@ -103,20 +226,22 @@ function showRequiredError(input) {
   }
 }
 
-document.querySelectorAll("input, select").forEach((field) => {
-  field.addEventListener("focus", () => {
-    const fields = getRequiredFields();
-    const index = fields.indexOf(field);
+document
+  .querySelectorAll("input:not([type='hidden']):not([type='checkbox'])")
+  .forEach((field) => {
+    field.addEventListener("focus", () => {
+      const fields = getRequiredFields();
+      const index = fields.indexOf(field);
 
-    if (index === -1) return;
+      if (index === -1) return;
 
-    for (let i = 0; i < index; i++) {
-      if (!fields[i].value) {
-        showRequiredError(fields[i]);
+      for (let i = 0; i < index; i++) {
+        if (!fields[i].value) {
+          showRequiredError(fields[i]);
+        }
       }
-    }
+    });
   });
-});
 
 document.querySelectorAll("input").forEach((field) => {
   field.addEventListener("input", () => {
@@ -126,34 +251,42 @@ document.querySelectorAll("input").forEach((field) => {
       msg.textContent = "";
       msg.classList.remove("error");
     }
+
+    // 입력 시 에러 border 제거 (특정 필드 제외 - 별도 validation 있는 것들)
+    if (!["userid", "pw", "pw2", "companyNumber"].includes(field.id)) {
+      field.classList.remove("input-error");
+    }
   });
 });
 
 idInput.addEventListener("input", () => {
   const value = idInput.value;
 
-  idOk = false; // 아이디 바뀌면 다시 중복확인 필요
+  idOk = false;
 
   if (value.length > 20 || !/^[A-Za-z0-9]*$/.test(value)) {
     idMsg.textContent =
       "20자 이내의 영문 소문자, 대문자, 숫자만 사용 가능합니다.";
     idMsg.style.color = "red";
+    idInput.classList.add("input-error");
     return;
   }
 
   if (value === "") {
     idMsg.textContent = "";
+    idInput.classList.remove("input-error");
     return;
   }
 
-  // 형식이 맞으면 메시지 지움 (아직 중복확인은 안 한 상태)
   idMsg.textContent = "";
+  idInput.classList.remove("input-error");
 });
 
 checkBtn.addEventListener("click", async () => {
   if (!idInput.value) {
     idMsg.textContent = "아이디를 입력해주세요.";
     idMsg.style.color = "red";
+    idInput.classList.add("input-error");
     idOk = false;
     return;
   }
@@ -162,6 +295,7 @@ checkBtn.addEventListener("click", async () => {
     idMsg.textContent =
       "아이디는 영문자와 숫자만 사용하여 20자 이내로 입력해주세요.";
     idMsg.style.color = "red";
+    idInput.classList.add("input-error");
     idOk = false;
     return;
   }
@@ -170,10 +304,12 @@ checkBtn.addEventListener("click", async () => {
     await validateUsername(idInput.value);
     idMsg.textContent = "멋진 아이디네요 :)";
     idMsg.style.color = "green";
+    idInput.classList.remove("input-error");
     idOk = true;
   } catch (err) {
     idMsg.textContent = err.data?.error || "이미 사용 중인 아이디입니다.";
     idMsg.style.color = "red";
+    idInput.classList.add("input-error");
     idOk = false;
   }
 
@@ -193,37 +329,87 @@ function setPw2Check(on) {
 }
 
 pwInput.addEventListener("input", () => {
-  const value = pwInput.value;
+  const pw = pwInput.value;
+  const pw2 = pw2Input.value;
+  const pwValid = PASSWORD_REGEX.test(pw);
 
-  if (value === "") {
+  // 비밀번호 자체 검증
+  if (pw === "") {
     pwMsg1.textContent = "";
+    pwInput.classList.remove("input-error");
     setPwCheck(false);
-    validate();
-    return;
-  }
-
-  if (!PASSWORD_REGEX.test(value)) {
+  } else if (!pwValid) {
     pwMsg1.textContent =
       "8자 이상, 영문 소문자와 숫자를 각각 1개 이상 포함하세요.";
     pwMsg1.style.color = "red";
+    pwInput.classList.add("input-error");
     setPwCheck(false);
   } else {
     pwMsg1.textContent = "";
+    pwInput.classList.remove("input-error");
     setPwCheck(true);
+  }
+
+  // pw가 바뀌면 pw2를 다시 검증
+  if (pw2 !== "") {
+    if (!pwValid) {
+      setPw2Check(false);
+      pwMsg2.textContent = "올바른 비밀번호를 입력해주세요.";
+      pwMsg2.style.color = "red";
+      pw2Input.classList.add("input-error");
+    } else if (pw !== pw2) {
+      setPw2Check(false);
+      pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
+      pwMsg2.style.color = "red";
+      pw2Input.classList.add("input-error");
+    } else {
+      setPw2Check(true);
+      pwMsg2.textContent = "";
+      pw2Input.classList.remove("input-error");
+    }
   }
 
   validate();
 });
 
 pw2Input.addEventListener("input", () => {
-  if (pwInput.value === pw2Input.value && pw2Input.value !== "") {
-    setPw2Check(true);
+  const pw = pwInput.value;
+  const pw2 = pw2Input.value;
+  const pwValid = PASSWORD_REGEX.test(pw);
+
+  // 아무것도 안 쓴 상태
+  if (pw2 === "") {
+    setPw2Check(false);
     pwMsg2.textContent = "";
-  } else {
+    pw2Input.classList.remove("input-error");
+    validate();
+    return;
+  }
+
+  // 비밀번호 자체가 규칙 미달
+  if (!pwValid) {
+    setPw2Check(false);
+    pwMsg2.textContent = "올바른 비밀번호를 입력해주세요.";
+    pwMsg2.style.color = "red";
+    pw2Input.classList.add("input-error");
+    validate();
+    return;
+  }
+
+  // 비밀번호는 유효한데 서로 다름
+  if (pw !== pw2) {
     setPw2Check(false);
     pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
     pwMsg2.style.color = "red";
+    pw2Input.classList.add("input-error");
   }
+  // 비밀번호도 유효 + 서로 같음
+  else {
+    setPw2Check(true);
+    pwMsg2.textContent = "";
+    pw2Input.classList.remove("input-error");
+  }
+
   validate();
 });
 
@@ -233,14 +419,12 @@ function updateAgreeIcon() {
   agreeIcon.src = agree.checked ? AGREE_ON : AGREE_OFF;
 }
 
-// 아이콘 클릭 → 체크 토글
 agreeIcon.addEventListener("click", () => {
   agree.checked = !agree.checked;
   updateAgreeIcon();
   validate();
 });
 
-// 라벨 클릭해도 토글
 document.querySelector(".agree label").addEventListener("click", () => {
   setTimeout(() => {
     updateAgreeIcon();
@@ -248,7 +432,6 @@ document.querySelector(".agree label").addEventListener("click", () => {
   }, 0);
 });
 
-// 처음 로드 시 OFF 상태 세팅
 updateAgreeIcon();
 
 function validate() {
@@ -286,34 +469,27 @@ function validate() {
 
 [phone2, phone3].forEach((input) => {
   input.addEventListener("input", () => {
-    // 숫자가 아닌 것 제거
     input.value = input.value.replace(/[^0-9]/g, "");
 
-    // 4자리까지만 유지
     if (input.value.length > 4) {
       input.value = input.value.slice(0, 4);
     }
   });
 });
 
-// 폰 번호 네 자리 입력 시 다음 칸으로 자동 넘어가는 기능
 phone2.addEventListener("input", () => {
   if (phone2.value.length === 4) {
     phone3.focus();
   }
 });
 
-// 사업자등록번호는 10자리 숫자만
 companyInput.addEventListener("input", () => {
-  // 숫자만 남기기
   companyInput.value = companyInput.value.replace(/[^0-9]/g, "");
 
-  // 10자리까지만
   if (companyInput.value.length > 10) {
     companyInput.value = companyInput.value.slice(0, 10);
   }
 
-  // 입력이 바뀌면 다시 인증 안된 상태로
   companyOk = false;
 
   validate();
@@ -325,6 +501,7 @@ companyBtn.addEventListener("click", async () => {
   if (!number) {
     companyMsg.textContent = "사업자등록번호를 입력해주세요.";
     companyMsg.style.color = "red";
+    companyInput.classList.add("input-error");
     companyOk = false;
     return;
   }
@@ -332,6 +509,7 @@ companyBtn.addEventListener("click", async () => {
   if (number.length !== 10) {
     companyMsg.textContent = "사업자등록번호는 10자리 숫자여야 합니다.";
     companyMsg.style.color = "red";
+    companyInput.classList.add("input-error");
     companyOk = false;
     return;
   }
@@ -339,14 +517,14 @@ companyBtn.addEventListener("click", async () => {
   try {
     const data = await validateCompanyNumber(number);
 
-    // 성공 (200)
-    companyMsg.textContent = data.message; // "사용 가능한 사업자등록번호입니다."
+    companyMsg.textContent = data.message;
     companyMsg.style.color = "green";
+    companyInput.classList.remove("input-error");
     companyOk = true;
   } catch (err) {
-    // 실패 (400, 409)
     companyMsg.textContent = err.data?.error || "사업자등록번호 확인 실패";
     companyMsg.style.color = "red";
+    companyInput.classList.add("input-error");
     companyOk = false;
   }
 
@@ -384,7 +562,6 @@ submit.addEventListener("click", async () => {
 
     const data = err.data;
 
-    // 전화번호 에러
     if (data?.phone_number) {
       const msg = data.phone_number[0];
       phoneMsg.textContent = msg;
@@ -392,8 +569,9 @@ submit.addEventListener("click", async () => {
 
       phone2.value = "";
       phone3.value = "";
+      phone2.classList.add("input-error");
+      phone3.classList.add("input-error");
 
-      // input 이벤트 강제 발생
       phone2.dispatchEvent(new Event("input"));
       phone3.dispatchEvent(new Event("input"));
 
@@ -401,28 +579,27 @@ submit.addEventListener("click", async () => {
       return;
     }
 
-    // 아이디 에러
     if (data?.username) {
       const msg = data.username[0];
       idMsg.textContent = msg;
       idMsg.style.color = "red";
+      idInput.classList.add("input-error");
       idInput.value = "";
       idInput.focus();
       idOk = false;
       return;
     }
 
-    // 비밀번호 에러
     if (data?.password) {
       alert(data.password[0]);
       return;
     }
 
-    // 스토어 이름 중복
     if (data?.store_name) {
       const msg = data.store_name[0];
       storeMsg.textContent = msg;
       storeMsg.style.color = "red";
+      storeInput.classList.add("input-error");
 
       storeInput.value = "";
       storeInput.dispatchEvent(new Event("input"));
@@ -431,11 +608,11 @@ submit.addEventListener("click", async () => {
       return;
     }
 
-    // 사업자 번호 중복
     if (data?.company_registration_number) {
       const msg = data.company_registration_number[0];
       companyMsg.textContent = msg;
       companyMsg.style.color = "red";
+      companyInput.classList.add("input-error");
 
       companyInput.value = "";
       companyInput.dispatchEvent(new Event("input"));
@@ -444,7 +621,6 @@ submit.addEventListener("click", async () => {
       return;
     }
 
-    // 그 외
     alert("회원가입 실패");
   }
 });
