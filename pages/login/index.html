@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HODU - 로그인</title>
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
     <link rel="stylesheet" href="/assets/css/pages/login.css" />
-  </head>
-  <body>
+</head>
+<body>
     <div class="login-container">
-      <h1 class="logo">
-        <a href="/"><img src="/assets/images/Logo-hodu.png" alt="HODU 로고"></a>
-      </h1>
-      <h2>로그인</h2>
-      <main class="login-box">
-        <form id="loginForm" novalidate>
-          <div class="input-group">
-            <input type="text" id="username" placeholder="아이디" />
-          </div>
-          <div class="input-group">
-            <input type="password" id="password" placeholder="비밀번호" />
-          </div>
+        <h1 class="logo">
+            <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU"></a>
+        </h1>
+        <h2 class="login-title">로그인</h2>
+        <main class="login-box">
+            
+            <form id="loginForm" novalidate>
+                <div class="input-group">
+                    <input type="text" id="username" class="input" placeholder="아이디" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" class="input" placeholder="비밀번호" required />
+                </div>
 
-          <p id="error-message" class="error-text"></p>
+                <p id="error-message" class="error-text"></p>
 
-          <button type="submit" class="login-btn">로그인</button>
-        </form>
-      </main>
+                <button type="submit" class="login-btn btn-primary">로그인</button>
+            </form>
+        </main>
 
-      <footer class="login-footer">
-        <a href="../signup/index.html">회원가입</a>
-        <span class="divider">|</span>
-        <a href="#">비밀번호 찾기</a>
-      </footer>
+        <footer class="login-footer">
+            <a href="../signup/index.html">회원가입</a>
+            <span class="divider">|</span>
+            <a href="#">비밀번호 찾기</a>
+        </footer>
     </div>
-    <script src="/assets/js/pages/login.js"></script>
-  </body>
+    
+    <script type="module" src="/assets/js/pages/login.js"></script>
+</body>
 </html>

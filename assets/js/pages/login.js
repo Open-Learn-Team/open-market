@@ -1,45 +1,60 @@
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+// assets/js/pages/login.js
 
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const errorMessage = document.getElementById("error-message");
+// 1. 함수 이름을 api.js에 정의된 'login'으로 가져옵니다.
+import { login, getUserType } from "/utils/api.js";
 
-  // 초기화
-  errorMessage.style.display = "none";
-  errorMessage.textContent = "";
+const loginForm = document.getElementById("loginForm");
+const errorMessage = document.getElementById("error-message");
 
-  // 계정 데이터 (이미지 기준)
-  const validUsers = [
-    { id: "buyer1", pw: "weniv1234", type: "BUYER" },
-    { id: "buyer2", pw: "weniv1234", type: "BUYER" },
-    { id: "buyer3", pw: "weniv1234", type: "BUYER" },
-    { id: "seller1", pw: "weniv1234", type: "SELLER" },
-    { id: "seller2", pw: "weniv1234", type: "SELLER" },
-    { id: "seller3", pw: "weniv1234", type: "SELLER" },
-  ];
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  // 검증 로직
-  if (!username) {
-    errorMessage.textContent = "아이디를 입력해 주세요.";
-    errorMessage.style.display = "block";
-  } else if (!password) {
-    errorMessage.textContent = "비밀번호를 입력해 주세요.";
-    errorMessage.style.display = "block";
-  } else {
-    const user = validUsers.find((u) => u.id === username && u.pw === password);
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    if (user) {
-      alert(`${username}님(${user.type}), 환영합니다!`);
-      // 타입에 따른 페이지 이동 (폴더가 생성되어 있어야 합니다)
-      if (user.type === "BUYER") {
-        window.location.href = "/pages/buyer_main/index.html";
-      } else {
-        window.location.href = "/pages/seller_main/index.html";
-      }
-    } else {
-      errorMessage.textContent = "아이디 또는 비밀번호가 일치하지 않습니다.";
-      errorMessage.style.display = "block";
+    // 에러 메시지 초기화
+    errorMessage.style.display = "none";
+    errorMessage.textContent = "";
+
+    // 유효성 검사
+    if (!username || !password) {
+      showError("아이디와 비밀번호를 모두 입력해주세요.");
+      return;
     }
-  }
-});
+
+    try {
+      // 2. api.js의 login 함수 호출
+      // (이 함수 내부에서 이미 localStorage에 토큰과 유저정보를 저장합니다)
+      const data = await login(username, password);
+
+      // 3. 로그인 성공 시 처리
+      if (data) {
+        alert("환영합니다!");
+
+        // api.js의 getUserType 함수를 사용하여 경로 판단
+        const userType = getUserType();
+
+        let targetPath = "/"; // 기본 홈
+
+        if (userType === "BUYER") {
+          targetPath = "/pages/buyer_main/index.html";
+        } else if (userType === "SELLER") {
+          targetPath = "/pages/seller_main/index.html";
+        }
+
+        // 페이지 이동
+        window.location.href = targetPath;
+      }
+    } catch (error) {
+      // 4. 에러 발생 시 처리 (400, 401 등)
+      console.error("Login Error:", error);
+      showError("아이디 또는 비밀번호가 일치하지 않습니다.");
+    }
+  });
+}
+
+function showError(message) {
+  errorMessage.textContent = message;
+  errorMessage.style.display = "block";
+}
