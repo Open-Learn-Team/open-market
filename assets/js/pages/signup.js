@@ -145,6 +145,13 @@ function validate() {
   });
 });
 
+// 폰 번호 네 자리 입력 시 다음 칸으로 자동 넘어가는 기능
+phone2.addEventListener("input", () => {
+  if (phone2.value.length === 4) {
+    phone3.focus();
+  }
+});
+
 submit.addEventListener("click", async () => {
   const phone = phone1.value + phone2.value + phone3.value;
 
