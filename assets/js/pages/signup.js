@@ -60,6 +60,8 @@ requiredFields.forEach((field, index) => {
   });
 });
 
+const USERNAME_REGEX = /^[A-Za-z0-9]{1,20}$/;
+
 requiredFields.forEach((field) => {
   field.addEventListener("input", () => {
     const msg = field.closest(".field")?.querySelector(".msg");
