@@ -1,5 +1,6 @@
 import { validateUsername } from "/utils/api.js";
 import { signupBuyer, signupSeller } from "/utils/api.js";
+import { validateCompanyNumber } from "/utils/api.js";
 
 const tabs = document.querySelectorAll(".tab");
 const sellerArea = document.getElementById("sellerArea");
@@ -19,9 +20,11 @@ tabs.forEach((tab) => {
   });
 });
 
-const checkBtn = document.getElementById("checkId");
 const idInput = document.getElementById("userid");
+
+const checkBtn = document.getElementById("checkId");
 const idMsg = document.getElementById("idMsg");
+let idOk = false;
 
 const pw = document.getElementById("pw");
 const pw2 = document.getElementById("pw2");
@@ -29,18 +32,22 @@ const pwCheck = document.getElementById("pwCheck");
 const pw2Check = document.getElementById("pw2Check");
 const pwMsg = document.getElementById("pwMsg");
 
-const agree = document.getElementById("agree");
-const submit = document.getElementById("submitBtn");
-
-let idOk = false;
-
 const nameInput = document.querySelector("input[name='name']");
+
 const phone1 = document.getElementById("phone1");
 const phone2 = document.getElementById("phone2");
 const phone3 = document.getElementById("phone3");
 
 const companyInput = document.getElementById("companyNumber");
+
+const companyBtn = document.getElementById("checkCompany");
+const companyMsg = document.getElementById("companyMsg");
+let companyOk = false;
+
 const storeInput = document.getElementById("storeName");
+
+const agree = document.getElementById("agree");
+const submit = document.getElementById("submitBtn");
 
 function getRequiredFields() {
   const base = [idInput, pw, pw2, nameInput, phone2, phone3];
@@ -172,7 +179,9 @@ function validate() {
   let sellerOk = true;
   if (isSeller) {
     sellerOk =
-      companyInput.value.trim() !== "" && storeInput.value.trim() !== "";
+      companyOk &&
+      companyInput.value.trim() !== "" &&
+      storeInput.value.trim() !== "";
   }
 
   const allFilled =
@@ -210,6 +219,51 @@ phone2.addEventListener("input", () => {
   if (phone2.value.length === 4) {
     phone3.focus();
   }
+});
+
+// 사업자등록번호는 10자리 숫자만
+companyInput.addEventListener("input", () => {
+  // 숫자만 남기기
+  companyInput.value = companyInput.value.replace(/[^0-9]/g, "");
+
+  // 10자리까지만
+  if (companyInput.value.length > 10) {
+    companyInput.value = companyInput.value.slice(0, 10);
+  }
+});
+
+companyBtn.addEventListener("click", async () => {
+  const number = companyInput.value;
+
+  if (!number) {
+    companyMsg.textContent = "사업자등록번호를 입력해주세요.";
+    companyMsg.style.color = "red";
+    companyOk = false;
+    return;
+  }
+
+  if (number.length !== 10) {
+    companyMsg.textContent = "사업자등록번호는 10자리 숫자여야 합니다.";
+    companyMsg.style.color = "red";
+    companyOk = false;
+    return;
+  }
+
+  try {
+    const data = await validateCompanyNumber(number);
+
+    // 성공 (200)
+    companyMsg.textContent = data.message; // "사용 가능한 사업자등록번호입니다."
+    companyMsg.style.color = "green";
+    companyOk = true;
+  } catch (err) {
+    // 실패 (400, 409)
+    companyMsg.textContent = err.data?.error || "사업자등록번호 확인 실패";
+    companyMsg.style.color = "red";
+    companyOk = false;
+  }
+
+  validate();
 });
 
 submit.addEventListener("click", async () => {
