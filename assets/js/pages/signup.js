@@ -5,21 +5,6 @@ import { validateCompanyNumber } from "/utils/api.js";
 const tabs = document.querySelectorAll(".tab");
 const sellerArea = document.getElementById("sellerArea");
 
-tabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    // active 클래스 이동
-    tabs.forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-
-    // 판매자 / 구매자 전환
-    if (tab.dataset.type === "seller") {
-      sellerArea.style.display = "block";
-    } else {
-      sellerArea.style.display = "none";
-    }
-  });
-});
-
 const idInput = document.getElementById("userid");
 
 const checkBtn = document.getElementById("checkId");
@@ -61,6 +46,40 @@ const AGREE_ON = "/assets/images/check-fill-box.svg";
 const agree = document.getElementById("agree");
 const agreeIcon = document.getElementById("agreeIcon");
 const submit = document.getElementById("submitBtn");
+
+function resetSellerForm() {
+  companyOk = false;
+
+  // 값 초기화
+  companyInput.value = "";
+  storeInput.value = "";
+
+  // 메시지 제거
+  companyMsg.textContent = "";
+  storeMsg.textContent = "";
+
+  // input 이벤트 강제로 발생 → validate & UI 동기화
+  companyInput.dispatchEvent(new Event("input"));
+  storeInput.dispatchEvent(new Event("input"));
+
+  validate();
+}
+
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    // active 클래스 이동
+    tabs.forEach((t) => t.classList.remove("active"));
+    tab.classList.add("active");
+
+    // 판매자 / 구매자 전환
+    if (tab.dataset.type === "seller") {
+      sellerArea.style.display = "block";
+    } else {
+      sellerArea.style.display = "none";
+      resetSellerForm();
+    }
+  });
+});
 
 function getRequiredFields() {
   const base = [idInput, pwInput, pw2Input, nameInput, phone2, phone3];
@@ -387,8 +406,7 @@ submit.addEventListener("click", async () => {
       const msg = data.username[0];
       idMsg.textContent = msg;
       idMsg.style.color = "red";
-      phone2.value = "";
-      phone3.value = "";
+      idInput.value = "";
       idInput.focus();
       idOk = false;
       return;
