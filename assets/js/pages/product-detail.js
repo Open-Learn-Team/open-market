@@ -1,7 +1,7 @@
 // /assets/js/pages/product-detail.js
 
 import { getProductDetail, isLoggedIn } from "/utils/api.js";
-import { initCommon } from "/assets/js/common.js";  // ✅ 추가
+import { initCommon } from "/assets/js/common.js";  
 import { showLoginModal, showAlertModal } from "/components/Modal.js"
 
 // ─────────────────────────────
@@ -38,7 +38,7 @@ let quantity = 1;
 // 예: /pages/product-detail/?id=3
 // ─────────────────────────────
 const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");  // ✅ "product_id" → "id"로 변경
+const productId = params.get("id");  // "product_id" → "id"로 변경
 
 if (!productId) {
   alert("");
@@ -76,7 +76,7 @@ async function loadProduct() {
 
     console.log("상품 데이터:", product);
 
-    // ✅ 구조 분해 대신 직접 접근
+    // 구조 분해 대신 직접 접근
     unitPrice = Number(product.price);
     stock = Number(product.stock);
 
@@ -153,7 +153,7 @@ function addToCart() {
       price: unitPrice,
       image: product.image
     });
-    showAlertModal("장바구니에 담았습니다.");  // ✅ alert → showAlertModal
+    showAlertModal("장바구니에 담았습니다.");  
   } else {
     cart[index].quantity = quantity;
     showAlertModal("이미 장바구니에 있는 상품입니다.<br>수량을 업데이트했습니다.");
@@ -212,7 +212,7 @@ function initTabs() {
 // 9. 초기화
 // ─────────────────────────────
 function initPage() {
-  initCommon();  // ✅ 헤더/푸터 렌더링 추가!
+  initCommon();  
   initQuantityControls();
   initTabs();
 
