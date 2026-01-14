@@ -106,6 +106,7 @@ pw2.addEventListener("input", () => {
   } else {
     pw2Check.style.display = "none";
     pwMsg.textContent = "비밀번호가 일치하지 않습니다.";
+    pwMsg.style.color = "red";
   }
   validate();
 });
