@@ -55,7 +55,11 @@ let companyOk = false;
 const storeInput = document.getElementById("storeName");
 const storeMsg = document.getElementById("storeMsg");
 
+const AGREE_OFF = "/assets/images/check-box.svg";
+const AGREE_ON = "/assets/images/check-fill-box.svg";
+
 const agree = document.getElementById("agree");
+const agreeIcon = document.getElementById("agreeIcon");
 const submit = document.getElementById("submitBtn");
 
 function getRequiredFields() {
@@ -206,6 +210,28 @@ pw2Input.addEventListener("input", () => {
 
 agree.addEventListener("change", validate);
 
+function updateAgreeIcon() {
+  agreeIcon.src = agree.checked ? AGREE_ON : AGREE_OFF;
+}
+
+// 아이콘 클릭 → 체크 토글
+agreeIcon.addEventListener("click", () => {
+  agree.checked = !agree.checked;
+  updateAgreeIcon();
+  validate();
+});
+
+// 라벨 클릭해도 토글
+document.querySelector(".agree label").addEventListener("click", () => {
+  setTimeout(() => {
+    updateAgreeIcon();
+    validate();
+  }, 0);
+});
+
+// 처음 로드 시 OFF 상태 세팅
+updateAgreeIcon();
+
 function validate() {
   const phoneOk = phone2.value.length === 4 && phone3.value.length === 4;
   const nameOk = nameInput.value.trim().length > 0;
@@ -318,9 +344,6 @@ submit.addEventListener("click", async () => {
     phone_number: phone,
     name: document.querySelector("input[name='name']").value,
   };
-
-  const isSeller =
-    document.querySelector(".tab.active").dataset.type === "seller";
 
   try {
     const isSeller =

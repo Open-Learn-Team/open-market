@@ -143,13 +143,22 @@ select {
 }
 
 .agree {
+  margin: 16px 16px 16px 16px;
   text-align: left;
   font-size: 12px;
-  margin: 16px 16px 16px 16px;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.agree-check {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
 
 .submit {
-  width: 90%;
+  width: 92%;
   padding: 12px;
   background: #22c55e;
   color: white;
