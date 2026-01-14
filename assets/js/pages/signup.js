@@ -78,14 +78,9 @@ idInput.addEventListener("input", () => {
 
   idOk = false; // 아이디 바뀌면 다시 중복확인 필요
 
-  if (value.length > 20) {
-    idMsg.textContent = "아이디는 20자 이내로 입력해주세요.";
-    idMsg.style.color = "red";
-    return;
-  }
-
-  if (!/^[A-Za-z0-9]*$/.test(value)) {
-    idMsg.textContent = "아이디는 영문자와 숫자만 사용할 수 있습니다.";
+  if (value.length > 20 || !/^[A-Za-z0-9]*$/.test(value)) {
+    idMsg.textContent =
+      "20자 이내의 영문 소문자, 대문자, 숫자만 사용 가능합니다.";
     idMsg.style.color = "red";
     return;
   }
