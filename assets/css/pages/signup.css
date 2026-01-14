@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: Arial;
+  font-family: "Spoqa Han Sans Neo", Arial, sans-serif;
 }
 
 body {
@@ -15,14 +15,14 @@ body {
 }
 
 .logo {
-  margin: 60px 0 40px; /* 여백도 살짝 줄이기 */
+  margin: 60px 0 40px;
 }
 
 .logo img {
-  width: 150px; /* 원하는 크기로 조절 */
-  height: auto; /* 비율 유지 */
+  width: 150px;
+  height: auto;
   display: block;
-  margin: 0 auto; /* 가운데 정렬 */
+  margin: 0 auto;
 }
 
 .card {
@@ -53,7 +53,7 @@ body {
   color: #747474;
   padding: 15px;
   border: 1px solid #ddd;
-  border-bottom: none; /* 카드랑 연결되게 */
+  border-bottom: none;
   background: #f5f5f5;
   cursor: pointer;
   border-radius: 10px 10px 0 0;
@@ -84,12 +84,27 @@ body {
   margin-bottom: 15px;
 }
 
-.field input,
-select {
+.field input {
   width: 100%;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+/* ✅ focus 시 초록색 border */
+.field input:focus {
+  border-color: #22c55e;
+}
+
+/* ❌ 에러 시 빨간색 border */
+.field input.input-error {
+  border-color: #eb5757;
+}
+
+.field input.input-error:focus {
+  border-color: #eb5757;
 }
 
 .row {
@@ -103,7 +118,7 @@ select {
 
 .input-wrap input {
   width: 100%;
-  padding-right: 40px; /* 아이콘 공간 확보 */
+  padding-right: 40px;
 }
 
 .input-wrap .check {
@@ -119,9 +134,14 @@ select {
   background: #22c55e;
   border: none;
   color: white;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   border-radius: 5px;
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.check-btn:hover {
+  background: #1eb854;
 }
 
 .msg {
@@ -138,25 +158,156 @@ select {
   gap: 10px;
 }
 
+.phone input {
+  flex: 1;
+}
+
+/* ========== 커스텀 드롭다운 ========== */
+.custom-select {
+  position: relative;
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.select-trigger {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #1c1c1c;
+  transition: border-color 0.2s;
+}
+
+/* ✅ 드롭다운 trigger focus 시 초록색 border */
+.select-trigger:focus,
+.select-trigger.active {
+  border-color: #22c55e;
+  outline: none;
+}
+
+.select-trigger .arrow {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+}
+
+.select-trigger.active .arrow {
+  transform: rotate(180deg);
+}
+
+/* 드롭다운 메뉴 - 피그마 스펙 */
+.select-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 152px;
+  height: 240px;
+  background: white;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  display: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.select-dropdown.open {
+  display: flex;
+}
+
+/* 리스트 영역 */
+.dropdown-list {
+  width: 134px;
+  height: 240px;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE */
+}
+
+.dropdown-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+/* 각 아이템 - 피그마 스펙 */
+.dropdown-item {
+  width: 134px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Spoqa Han Sans Neo", sans-serif;
+  color: black;
+  cursor: pointer;
+  background: white;
+  transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+.dropdown-item.selected {
+  background: #f0f0f0;
+}
+
+/* 커스텀 스크롤바 - 피그마 스펙 */
+.dropdown-scrollbar {
+  width: 18px;
+  height: 240px;
+  background: #f2f2f2;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.scrollbar-thumb {
+  width: 6px;
+  background: #c4c4c4;
+  border-radius: 10px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 6px;
+  cursor: pointer;
+  transition: top 0.1s ease-out;
+}
+
+/* ========== 판매자 영역 ========== */
 #sellerArea {
   display: none;
 }
 
+/* ========== 동의 체크박스 ========== */
 .agree {
-  margin: 16px 16px 16px 16px;
+  margin: 16px;
   text-align: left;
   font-size: 12px;
   display: flex;
   gap: 8px;
   cursor: pointer;
+  align-items: flex-start;
 }
 
 .agree-check {
   width: 18px;
   height: 18px;
   cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
+.agree label {
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+/* ========== 제출 버튼 ========== */
 .submit {
   width: 92%;
   padding: 12px;
@@ -165,8 +316,16 @@ select {
   border: none;
   border-radius: 5px;
   opacity: 0.5;
+  cursor: not-allowed;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .submit.active {
   opacity: 1;
+  cursor: pointer;
+}
+
+.submit.active:hover {
+  background: #1eb854;
 }
