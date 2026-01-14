@@ -45,40 +45,6 @@ body {
   background: #fff;
 }
 
-.login-tabs {
-  display: flex;
-}
-
-.tab-btn {
-  flex: 1;
-  height: 60px;
-  font-size: 18px;
-  font-weight: 500;
-  background: #F2F2F2;
-  border-bottom: 1px solid #C4C4C4;
-  color: #767676;
-  /* border: none, cursor, font-family 등은 reset에서 처리됨 */
-}
-
-.tab-btn.active {
-  background: #fff;
-  color: #000;
-  border-bottom: none;
-}
-
-.tab-btn:first-child {
-  border-right: 1px solid #C4C4C4;
-}
-
-/* 인풋 그룹 스타일 최적화 */
-.input-group {
-  margin-bottom: 12px;
-}
-
-.input-group:first-child {
-    margin-top: 20px;
-}
-
 .input-group .input {
   /* 전역 .input의 스타일을 초기화하고 로그인 전용 스타일 적용 */
   width: 100%;
