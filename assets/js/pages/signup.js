@@ -60,6 +60,17 @@ requiredFields.forEach((field, index) => {
   });
 });
 
+requiredFields.forEach((field) => {
+  field.addEventListener("input", () => {
+    const msg = field.closest(".field")?.querySelector(".msg");
+
+    if (msg && field.value.trim() !== "") {
+      msg.textContent = "";
+      msg.classList.remove("error");
+    }
+  });
+});
+
 checkBtn.addEventListener("click", async () => {
   console.log(checkBtn);
   if (!idInput.value) {
