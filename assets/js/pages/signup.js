@@ -26,11 +26,14 @@ const checkBtn = document.getElementById("checkId");
 const idMsg = document.getElementById("idMsg");
 let idOk = false;
 
-const pw = document.getElementById("pw");
-const pw2 = document.getElementById("pw2");
+const pwInput = document.getElementById("pw");
+const pw2Input = document.getElementById("pw2");
 const pwCheck = document.getElementById("pwCheck");
 const pw2Check = document.getElementById("pw2Check");
 const pwMsg = document.getElementById("pwMsg");
+
+const USERNAME_REGEX = /^[A-Za-z0-9]{1,20}$/;
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*\d).{8,}$/;
 
 const nameInput = document.querySelector("input[name='name']");
 
@@ -50,7 +53,7 @@ const agree = document.getElementById("agree");
 const submit = document.getElementById("submitBtn");
 
 function getRequiredFields() {
-  const base = [idInput, pw, pw2, nameInput, phone2, phone3];
+  const base = [idInput, pwInput, pw2Input, nameInput, phone2, phone3];
 
   const isSeller =
     document.querySelector(".tab.active").dataset.type === "seller";
@@ -85,8 +88,6 @@ document.querySelectorAll("input, select").forEach((field) => {
     }
   });
 });
-
-const USERNAME_REGEX = /^[A-Za-z0-9]{1,20}$/;
 
 document.querySelectorAll("input").forEach((field) => {
   field.addEventListener("input", () => {
@@ -150,19 +151,37 @@ checkBtn.addEventListener("click", async () => {
   validate();
 });
 
-pw.addEventListener("input", () => {
-  pwCheck.style.display = pw.value.length >= 8 ? "inline" : "none";
+pwInput.addEventListener("input", () => {
+  const value = pwInput.value;
+
+  if (value === "") {
+    pwMsg1.textContent = "";
+    pwCheck.style.display = "none";
+    validate();
+    return;
+  }
+
+  if (!PASSWORD_REGEX.test(value)) {
+    pwMsg1.textContent =
+      "8자 이상, 영문 소문자와 숫자를 각각 1개 이상 포함하세요.";
+    pwMsg1.style.color = "red";
+    pwCheck.style.display = "none";
+  } else {
+    pwMsg1.textContent = "";
+    pwCheck.style.display = "inline";
+  }
+
   validate();
 });
 
-pw2.addEventListener("input", () => {
-  if (pw.value === pw2.value && pw2.value !== "") {
+pw2Input.addEventListener("input", () => {
+  if (pwInput.value === pw2Input.value && pw2Input.value !== "") {
     pw2Check.style.display = "inline";
-    pwMsg.textContent = "";
+    pwMsg2.textContent = "";
   } else {
     pw2Check.style.display = "none";
-    pwMsg.textContent = "비밀번호가 일치하지 않습니다.";
-    pwMsg.style.color = "red";
+    pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
+    pwMsg2.style.color = "red";
   }
   validate();
 });
@@ -186,8 +205,8 @@ function validate() {
 
   const allFilled =
     idOk &&
-    pw.value.length >= 8 &&
-    pw2.value === pw.value &&
+    PASSWORD_REGEX.test(pwInput.value) &&
+    pw2Input.value === pwInput.value &&
     nameOk &&
     phoneOk &&
     agree.checked &&
@@ -271,8 +290,8 @@ submit.addEventListener("click", async () => {
 
   const userData = {
     username: idInput.value,
-    password: pw.value,
-    password2: pw2.value,
+    password: pwInput.value,
+    password2: pw2Input.value,
     phone_number: phone, // 나중에 입력값으로
     name: document.querySelector("input[name='name']").value,
   };
