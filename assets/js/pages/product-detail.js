@@ -38,10 +38,10 @@ let quantity = 1;
 // 예: /pages/product-detail/?id=3
 // ─────────────────────────────
 const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");  // "product_id" → "id"로 변경
+const productId = params.get("id");
 
 if (!productId) {
-  alert("");
+  alert("잘못된 접근입니다.");
   window.location.href = "/";
 }
 
@@ -74,12 +74,8 @@ async function loadProduct() {
   try {
     product = await getProductDetail(productId);
 
-    console.log("상품 데이터:", product);
-
-    // 구조 분해 대신 직접 접근
     unitPrice = Number(product.price);
     stock = Number(product.stock);
-
 
     $sellerName.textContent = product.seller?.store_name || "판매자";
     $productName.textContent = product.name;
@@ -94,10 +90,10 @@ async function loadProduct() {
 
     updateQuantity(1);
   } catch (error) {
-    console.error("상품 로딩 실패:", error);
     alert("상품 정보를 불러오는 중 오류가 발생했습니다.");
   }
 }
+
 // ─────────────────────────────
 // 6. 수량 버튼 이벤트
 // ─────────────────────────────
@@ -134,7 +130,6 @@ function setCart(cart) {
 }
 
 function addToCart() {
-  // ✅ 로그인 체크 - 모달 사용
   if (!isLoggedIn()) {
     showLoginModal();
     return;
@@ -146,6 +141,7 @@ function addToCart() {
   const index = cart.findIndex((item) => String(item.productId) === String(productId));
 
   if (index === -1) {
+    // 새 상품 → 담고 바로 이동
     cart.push({
       productId,
       quantity,
@@ -153,17 +149,18 @@ function addToCart() {
       price: unitPrice,
       image: product.image
     });
-    showAlertModal("장바구니에 담았습니다.");  
+    setCart(cart);
+    window.location.href = "/pages/cart/index.html";
   } else {
-    cart[index].quantity = quantity;
-    showAlertModal("이미 장바구니에 있는 상품입니다.<br>수량을 업데이트했습니다.");
+    // 이미 있는 상품 → 모달로 확인
+    showConfirmModal(
+      "이미 장바구니에 있는 상품입니다.<br>장바구니로 이동하시겠습니까?",
+      () => window.location.href = "/pages/cart/index.html"
+    );
   }
-
-  setCart(cart);
 }
 
 function buyNow() {
-  // ✅ 로그인 체크 - 모달 사용
   if (!isLoggedIn()) {
     showLoginModal();
     return;
@@ -173,7 +170,6 @@ function buyNow() {
   showAlertModal("바로구매 기능은 추후 구현 예정입니다.");
 }
 
- 
 // ─────────────────────────────
 // 8. 탭 전환
 // ─────────────────────────────
