@@ -30,7 +30,8 @@ const pwInput = document.getElementById("pw");
 const pw2Input = document.getElementById("pw2");
 const pwCheck = document.getElementById("pwCheck");
 const pw2Check = document.getElementById("pw2Check");
-const pwMsg = document.getElementById("pwMsg");
+const pwMsg1 = document.getElementById("pwMsg1");
+const pwMsg2 = document.getElementById("pwMsg2");
 
 const USERNAME_REGEX = /^[A-Za-z0-9]{1,20}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*\d).{8,}$/;
@@ -40,6 +41,7 @@ const nameInput = document.querySelector("input[name='name']");
 const phone1 = document.getElementById("phone1");
 const phone2 = document.getElementById("phone2");
 const phone3 = document.getElementById("phone3");
+const phoneMsg = document.getElementById("phoneMsg");
 
 const companyInput = document.getElementById("companyNumber");
 
@@ -48,6 +50,7 @@ const companyMsg = document.getElementById("companyMsg");
 let companyOk = false;
 
 const storeInput = document.getElementById("storeName");
+const storeMsg = document.getElementById("storeMsg");
 
 const agree = document.getElementById("agree");
 const submit = document.getElementById("submitBtn");
@@ -287,12 +290,12 @@ companyBtn.addEventListener("click", async () => {
 
 submit.addEventListener("click", async () => {
   const phone = phone1.value + phone2.value + phone3.value;
+  console.log("Sending phone:", phone, phone.length);
 
   const userData = {
     username: idInput.value,
     password: pwInput.value,
-    password2: pw2Input.value,
-    phone_number: phone, // 나중에 입력값으로
+    phone_number: phone,
     name: document.querySelector("input[name='name']").value,
   };
 
@@ -301,10 +304,8 @@ submit.addEventListener("click", async () => {
       document.querySelector(".tab.active").dataset.type === "seller";
 
     if (isSeller) {
-      userData.company_registration_number =
-        document.querySelector("#sellerArea input").value;
-      userData.store_name =
-        document.querySelectorAll("#sellerArea input")[1].value;
+      userData.company_registration_number = companyInput.value;
+      userData.store_name = storeInput.value;
 
       await signupSeller(userData);
     } else {
@@ -314,6 +315,72 @@ submit.addEventListener("click", async () => {
     alert("회원가입 성공!");
     window.location.href = "/pages/login/";
   } catch (err) {
-    alert(err.data?.error || "회원가입 실패");
+    console.log("API error data:", err.data);
+
+    const data = err.data;
+
+    // 전화번호 에러
+    if (data?.phone_number) {
+      const msg = data.phone_number[0];
+      phoneMsg.textContent = msg;
+      phoneMsg.style.color = "red";
+
+      phone2.value = "";
+      phone3.value = "";
+
+      // input 이벤트 강제 발생
+      phone2.dispatchEvent(new Event("input"));
+      phone3.dispatchEvent(new Event("input"));
+
+      phone2.focus();
+      return;
+    }
+
+    // 아이디 에러
+    if (data?.username) {
+      const msg = data.username[0];
+      idMsg.textContent = msg;
+      idMsg.style.color = "red";
+      phone2.value = "";
+      phone3.value = "";
+      idInput.focus();
+      idOk = false;
+      return;
+    }
+
+    // 비밀번호 에러
+    if (data?.password) {
+      alert(data.password[0]);
+      return;
+    }
+
+    // 스토어 이름 중복
+    if (data?.store_name) {
+      const msg = data.store_name[0];
+      storeMsg.textContent = msg;
+      storeMsg.style.color = "red";
+
+      storeInput.value = "";
+      storeInput.dispatchEvent(new Event("input"));
+
+      storeInput.focus();
+      return;
+    }
+
+    // 사업자 번호 중복
+    if (data?.company_registration_number) {
+      const msg = data.company_registration_number[0];
+      companyMsg.textContent = msg;
+      companyMsg.style.color = "red";
+
+      companyInput.value = "";
+      companyInput.dispatchEvent(new Event("input"));
+
+      companyInput.focus();
+      return;
+    }
+
+    // 그 외
+    alert("회원가입 실패");
   }
 });
