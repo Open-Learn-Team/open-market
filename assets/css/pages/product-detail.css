@@ -189,7 +189,6 @@
 
 .btn-cart,
 .btn-buy {
-  flex: 1;
   height: 60px;
   border-radius: 5px;
   border: none;
@@ -197,9 +196,16 @@
   font-weight: 500;
   cursor: pointer;
 }
+/* 바로구매 버튼 (초록) - 2배 크기 */
+.btn-buy {
+  flex: 2;
+  background-color: #21bf48;
+  color: #fff;
+}
 
-/* 장바구니 버튼 (회색) */
+/* 장바구니 버튼 (회색) - 1배 크기 */
 .btn-cart {
+  flex: 1;
   background-color: #767676;
   color: #fff;
 }
