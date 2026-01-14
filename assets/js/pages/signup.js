@@ -59,17 +59,12 @@ function initCustomDropdown() {
   const dropdownList = phone1Dropdown.querySelector(".dropdown-list");
   const scrollbarThumb = phone1Dropdown.querySelector(".scrollbar-thumb");
 
-  // 스크롤바 thumb 높이 및 위치 계산
+  // 스크롤바 thumb 위치 계산
   function updateScrollbar() {
     const listHeight = dropdownList.scrollHeight; // 전체 콘텐츠 높이
-    const visibleHeight = 240; // 보이는 영역 높이
+    const visibleHeight = 150; // 보이는 영역 높이 (4개)
     const scrollTop = dropdownList.scrollTop;
-
-    // thumb 높이 계산 (최소 30px)
-    const thumbHeight = Math.max(
-      (visibleHeight / listHeight) * visibleHeight,
-      30
-    );
+    const thumbHeight = 90; // 피그마 스펙 고정값
 
     // thumb 위치 계산 (6px 여백 고려)
     const maxScroll = listHeight - visibleHeight;
@@ -77,7 +72,6 @@ function initCustomDropdown() {
     const thumbTop =
       maxScroll > 0 ? (scrollTop / maxScroll) * maxThumbTop + 6 : 6;
 
-    scrollbarThumb.style.height = `${thumbHeight}px`;
     scrollbarThumb.style.top = `${thumbTop}px`;
   }
 
@@ -146,11 +140,12 @@ function initCustomDropdown() {
 
     const deltaY = e.clientY - startY;
     const listHeight = dropdownList.scrollHeight;
-    const visibleHeight = 240;
+    const visibleHeight = 150;
+    const thumbHeight = 90;
     const maxScroll = listHeight - visibleHeight;
 
     // 드래그 비율로 스크롤 계산
-    const scrollRatio = deltaY / (visibleHeight - 30); // thumb 이동 가능 범위
+    const scrollRatio = deltaY / (visibleHeight - thumbHeight - 12);
     const newScrollTop = startScrollTop + scrollRatio * maxScroll;
 
     dropdownList.scrollTop = Math.max(0, Math.min(newScrollTop, maxScroll));
