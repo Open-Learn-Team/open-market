@@ -252,6 +252,11 @@ companyInput.addEventListener("input", () => {
   if (companyInput.value.length > 10) {
     companyInput.value = companyInput.value.slice(0, 10);
   }
+
+  // 입력이 바뀌면 다시 인증 안된 상태로
+  companyOk = false;
+
+  validate();
 });
 
 companyBtn.addEventListener("click", async () => {
@@ -298,6 +303,9 @@ submit.addEventListener("click", async () => {
     phone_number: phone,
     name: document.querySelector("input[name='name']").value,
   };
+
+  const isSeller =
+    document.querySelector(".tab.active").dataset.type === "seller";
 
   try {
     const isSeller =
