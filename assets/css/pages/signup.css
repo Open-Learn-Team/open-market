@@ -97,6 +97,24 @@ select {
   gap: 10px;
 }
 
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap input {
+  width: 100%;
+  padding-right: 40px; /* 아이콘 공간 확보 */
+}
+
+.input-wrap .check {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+}
+
 .check-btn {
   background: #22c55e;
   border: none;
@@ -121,12 +139,6 @@ select {
 }
 
 #sellerArea {
-  display: none;
-}
-
-.check {
-  float: right;
-  color: green;
   display: none;
 }
 
