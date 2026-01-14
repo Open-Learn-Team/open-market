@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="/assets/css/pages/signup.css" />
   </head>
   <div class="container">
-    <h1 class="logo"><img src="/assets/images/logo-hodu.svg" /></h1>
+    <h1 class="logo">
+      <img src="/assets/images/logo-hodu.png" />
+    </h1>
 
     <div class="tabs">
       <button class="tab active" data-type="buyer">구매회원가입</button>
@@ -32,16 +34,32 @@
           <!-- 비밀번호 -->
           <div class="field">
             <label>비밀번호</label>
-            <input type="password" id="pw" />
-            <span class="check" id="pwCheck">✓</span>
+
+            <div class="input-wrap">
+              <input type="password" id="pw" />
+              <img
+                src="/assets/images/icon-check-off.svg"
+                class="check"
+                id="pwCheck"
+              />
+            </div>
+            <p class="msg" id="pwMsg1"></p>
           </div>
 
-          <!-- 비밀번호 확인 -->
+          <!-- 비밀번호 재확인 -->
           <div class="field">
             <label>비밀번호 재확인</label>
-            <input type="password" id="pw2" />
-            <span class="check" id="pw2Check">✓</span>
-            <p class="msg error" id="pwMsg"></p>
+
+            <div class="input-wrap">
+              <input type="password" id="pw2" />
+              <img
+                src="/assets/images/icon-check-off.svg"
+                class="check"
+                id="pw2Check"
+              />
+            </div>
+
+            <p class="msg" id="pwMsg2"></p>
           </div>
         </div>
 
@@ -50,6 +68,7 @@
           <div class="field">
             <label>이름</label>
             <input type="text" name="name" />
+            <p class="msg"></p>
           </div>
 
           <!-- 휴대폰 -->
@@ -65,6 +84,7 @@
               <input id="phone2" maxlength="4" inputmode="numeric" />
               <input id="phone3" maxlength="4" inputmode="numeric" />
             </div>
+            <p class="msg" id="phoneMsg"></p>
           </div>
         </div>
 
@@ -73,21 +93,30 @@
           <div class="field">
             <label>사업자 등록번호</label>
             <div class="row">
-              <input type="text" />
-              <button type="button" class="check-btn">인증</button>
+              <input type="text" id="companyNumber" />
+              <button type="button" class="check-btn" id="checkCompany">
+                인증
+              </button>
             </div>
+            <p class="msg" id="companyMsg"></p>
           </div>
 
           <div class="field">
             <label>스토어 이름</label>
-            <input type="text" />
+            <input type="text" id="storeName" />
+            <p class="msg" id="storeMsg"></p>
           </div>
         </div>
       </form>
     </div>
 
     <div class="agree">
-      <input type="checkbox" id="agree" />
+      <img
+        src="/assets/images/check-box.svg"
+        id="agreeIcon"
+        class="agree-check"
+      />
+      <input type="checkbox" id="agree" hidden />
       <label for="agree">
         호두샵의 이용약관 및 개인정보처리방침에 대한 내용을 확인하였고
         동의합니다.

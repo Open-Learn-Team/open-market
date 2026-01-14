@@ -15,19 +15,27 @@ body {
 }
 
 .logo {
-  font-size: 48px;
-  color: #22c55e;
-  margin: 40px 0;
+  margin: 60px 0 40px; /* 여백도 살짝 줄이기 */
+}
+
+.logo img {
+  width: 150px; /* 원하는 크기로 조절 */
+  height: auto; /* 비율 유지 */
+  display: block;
+  margin: 0 auto; /* 가운데 정렬 */
 }
 
 .card {
   border: 1px solid #ddd;
-  border-top: none;
   border-radius: 10px;
+  background-color: #fff;
   padding: 20px;
   font-size: 12px;
   color: #606060;
   padding-top: 20px;
+  position: relative;
+  top: -10px;
+  z-index: 2;
 }
 
 .cardgroup {
@@ -37,7 +45,7 @@ body {
 
 .tabs {
   display: flex;
-  z-index: 3;
+  position: relative;
 }
 
 .tab {
@@ -49,11 +57,26 @@ body {
   background: #f5f5f5;
   cursor: pointer;
   border-radius: 10px 10px 0 0;
+  z-index: 2;
+  padding-bottom: 20px;
 }
 
 .tab.active {
   color: #1c1c1c;
   background: white;
+  position: relative;
+  z-index: 3;
+}
+
+.tabs::after {
+  content: "";
+  position: absolute;
+  top: 43px;
+  left: 49%;
+  width: 10px;
+  height: 10px;
+  background: rgb(255, 255, 255);
+  z-index: 5;
 }
 
 .field {
@@ -72,6 +95,24 @@ select {
 .row {
   display: flex;
   gap: 10px;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap input {
+  width: 100%;
+  padding-right: 40px; /* 아이콘 공간 확보 */
+}
+
+.input-wrap .check {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
 }
 
 .check-btn {
@@ -101,20 +142,23 @@ select {
   display: none;
 }
 
-.check {
-  float: right;
-  color: green;
-  display: none;
-}
-
 .agree {
+  margin: 16px 16px 16px 16px;
   text-align: left;
   font-size: 12px;
-  margin: 16px 16px 16px 16px;
+  display: flex;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.agree-check {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
 }
 
 .submit {
-  width: 90%;
+  width: 92%;
   padding: 12px;
   background: #22c55e;
   color: white;

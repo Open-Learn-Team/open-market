@@ -122,6 +122,14 @@ export const validateUsername = (username) =>
     body: JSON.stringify({ username }),
   });
 
+export const validateCompanyNumber = (number) =>
+  fetchAPI("/accounts/seller/validate-registration-number/", {
+    method: "POST",
+    body: JSON.stringify({
+      company_registration_number: number,
+    }),
+  });
+
 // 상품
 export const getProducts = (page = 1) => fetchAPI(`/products/?page=${page}`);
 export const searchProducts = (query) =>
