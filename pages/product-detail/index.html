@@ -2,10 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HODU - 상품 상세</title>
 
     <!-- 폰트 -->
@@ -29,11 +26,7 @@
         <!-- 왼쪽 상품 이미지 -->
         <figure class="product-img">
           <!-- product-detail.js 에서 src, alt 채워 넣기 -->
-          <img
-            src="/assets/images/"
-            alt="상품 이미지"
-            id="productImage"
-          />
+          <img src="/assets/images/" alt="상품 이미지" id="productImage" />
         </figure>
 
         <!-- 오른쪽 텍스트 / 수량 / 버튼 영역 -->
@@ -45,20 +38,14 @@
           <h2 class="name" id="productName">상품명</h2>
 
           <!-- 가격 -->
-          <p class="price">
-            <strong id="productPrice">0</strong>원
-          </p>
+          <p class="price"><strong id="productPrice">0</strong>원</p>
 
           <!-- 배송 정보 -->
           <p class="delivery">택배배송 / 무료배송</p>
 
           <!-- 수량 선택 ( + / - 로만 변경 ) -->
           <div class="quantity" aria-label="상품 수량 선택">
-            <button
-              type="button"
-              class="qty-btn minus"
-              aria-label="수량 감소"
-            >
+            <button type="button" class="qty-btn minus" aria-label="수량 감소">
               <img
                 src="/assets/images/icon-minus-line.svg"
                 alt="/assets/images/icon-minus-line.svg"
@@ -66,19 +53,11 @@
             </button>
 
             <!-- 가운데 숫자는 직접 입력하지 않고 JS로만 변경 -->
-            <span
-              class="qty-value"
-              id="quantityValue"
-              aria-live="polite"
-            >
+            <span class="qty-value" id="quantityValue" aria-live="polite">
               1
             </span>
 
-            <button
-              type="button"
-              class="qty-btn plus"
-              aria-label="수량 증가"
-            >
+            <button type="button" class="qty-btn plus" aria-label="수량 증가">
               <img
                 src="/assets/images/icon-plus-line.svg"
                 alt="/assets/images/icon-plus-line.svg"
@@ -94,31 +73,18 @@
             <p class="total-info">
               총 수량
               <strong id="totalQty">1</strong>개 |
-              <strong
-                class="total-price"
-                id="totalPrice"
-              >
-                0
-              </strong>
+              <strong class="total-price" id="totalPrice"> 0 </strong>
               원
             </p>
           </div>
 
-          <!-- 버튼들 -->
+          <!-- 버튼 -->
           <div class="buttons">
-            <button
-              type="button"
-              class="btn-cart"
-              id="addToCartBtn"
-            >
-              장바구니
-            </button>
-            <button
-              type="button"
-              class="btn-buy"
-              id="buyNowBtn"
-            >
+            <button type="button" class="btn-buy" id="buyNowBtn">
               바로 구매
+            </button>
+            <button type="button" class="btn-cart" id="addToCartBtn">
+              장바구니
             </button>
           </div>
         </article>
@@ -126,41 +92,16 @@
 
       <!-- 탭 메뉴 -->
       <nav class="product-tabs" aria-label="상품 상세 탭">
-        <button
-          type="button"
-          class="tab active"
-          data-tab="detail"
-        >
-          버튼
-        </button>
-        <button
-          type="button"
-          class="tab"
-          data-tab="review"
-        >
-          리뷰
-        </button>
-        <button
-          type="button"
-          class="tab"
-          data-tab="qna"
-        >
-          Q&amp;A
-        </button>
-        <button
-          type="button"
-          class="tab"
-          data-tab="exchange"
-        >
+        <button type="button" class="tab active" data-tab="detail">버튼</button>
+        <button type="button" class="tab" data-tab="review">리뷰</button>
+        <button type="button" class="tab" data-tab="qna">Q&amp;A</button>
+        <button type="button" class="tab" data-tab="exchange">
           반품/교환정보
         </button>
       </nav>
 
       <!-- 탭 컨텐츠 영역 (선택 사항, JS에서 채워 넣어도 됨) -->
-      <section
-        class="product-tab-panel"
-        id="tabPanel"
-      >
+      <section class="product-tab-panel" id="tabPanel">
         <!-- 기본은 상세설명 탭 내용 -->
       </section>
     </main>
@@ -169,9 +110,6 @@
     <script type="module" src="/assets/js/common.js"></script>
 
     <!-- 상품 상세 전용 스크립트 -->
-    <script
-      type="module"
-      src="/assets/js/pages/product-detail.js"
-    ></script>
+    <script type="module" src="/assets/js/pages/product-detail.js"></script>
   </body>
 </html>
