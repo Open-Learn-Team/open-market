@@ -329,17 +329,16 @@ function setPw2Check(on) {
 }
 
 pwInput.addEventListener("input", () => {
-  const value = pwInput.value;
+  const pw = pwInput.value;
+  const pw2 = pw2Input.value;
+  const pwValid = PASSWORD_REGEX.test(pw);
 
-  if (value === "") {
+  // 비밀번호 자체 검증
+  if (pw === "") {
     pwMsg1.textContent = "";
     pwInput.classList.remove("input-error");
     setPwCheck(false);
-    validate();
-    return;
-  }
-
-  if (!PASSWORD_REGEX.test(value)) {
+  } else if (!pwValid) {
     pwMsg1.textContent =
       "8자 이상, 영문 소문자와 숫자를 각각 1개 이상 포함하세요.";
     pwMsg1.style.color = "red";
@@ -349,6 +348,25 @@ pwInput.addEventListener("input", () => {
     pwMsg1.textContent = "";
     pwInput.classList.remove("input-error");
     setPwCheck(true);
+  }
+
+  // 🔥 핵심: pw가 바뀌면 pw2를 다시 검증
+  if (pw2 !== "") {
+    if (!pwValid) {
+      setPw2Check(false);
+      pwMsg2.textContent = "올바른 비밀번호를 입력해주세요.";
+      pwMsg2.style.color = "red";
+      pw2Input.classList.add("input-error");
+    } else if (pw !== pw2) {
+      setPw2Check(false);
+      pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
+      pwMsg2.style.color = "red";
+      pw2Input.classList.add("input-error");
+    } else {
+      setPw2Check(true);
+      pwMsg2.textContent = "";
+      pw2Input.classList.remove("input-error");
+    }
   }
 
   validate();
