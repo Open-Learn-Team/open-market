@@ -26,6 +26,9 @@ const checkBtn = document.getElementById("checkId");
 const idMsg = document.getElementById("idMsg");
 let idOk = false;
 
+const CHECK_OFF = "/assets/images/icon-check-off.svg";
+const CHECK_ON = "/assets/images/icon-check-on.svg";
+
 const pwInput = document.getElementById("pw");
 const pw2Input = document.getElementById("pw2");
 const pwCheck = document.getElementById("pwCheck");
@@ -154,12 +157,24 @@ checkBtn.addEventListener("click", async () => {
   validate();
 });
 
+function setPwCheck(on) {
+  if (!pwCheck) return;
+  pwCheck.src = on ? CHECK_ON : CHECK_OFF;
+  pwCheck.style.display = "inline";
+}
+
+function setPw2Check(on) {
+  if (!pw2Check) return;
+  pw2Check.src = on ? CHECK_ON : CHECK_OFF;
+  pw2Check.style.display = "inline";
+}
+
 pwInput.addEventListener("input", () => {
   const value = pwInput.value;
 
   if (value === "") {
     pwMsg1.textContent = "";
-    pwCheck.style.display = "none";
+    setPwCheck(false);
     validate();
     return;
   }
@@ -168,10 +183,10 @@ pwInput.addEventListener("input", () => {
     pwMsg1.textContent =
       "8자 이상, 영문 소문자와 숫자를 각각 1개 이상 포함하세요.";
     pwMsg1.style.color = "red";
-    pwCheck.style.display = "none";
+    setPwCheck(false);
   } else {
     pwMsg1.textContent = "";
-    pwCheck.style.display = "inline";
+    setPwCheck(true);
   }
 
   validate();
@@ -179,10 +194,10 @@ pwInput.addEventListener("input", () => {
 
 pw2Input.addEventListener("input", () => {
   if (pwInput.value === pw2Input.value && pw2Input.value !== "") {
-    pw2Check.style.display = "inline";
+    setPw2Check(true);
     pwMsg2.textContent = "";
   } else {
-    pw2Check.style.display = "none";
+    setPw2Check(false);
     pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
     pwMsg2.style.color = "red";
   }
