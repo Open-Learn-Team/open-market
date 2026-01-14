@@ -1,113 +1,124 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Pretendard', sans-serif;
-}
+/* login.css */
 
+/* :root와 기본적인 body 설정은 common.css를 따르므로 삭제함 */
 body {
-  background-color: #ffffff;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  /* margin, background, font-family 삭제 */
 }
 
 .login-container {
-  width: 100%;
-  max-width: 420px;
-  text-align: center;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.logo {
-  color: #2CC053; /* HODU 시그니처 그린 */
-  font-size: 48px;
-  margin-bottom: 30px;
-  font-weight: bold;
+/* 전역 .logo img 설정을 덮어쓰기 위해 상세히 작성 */
+.login-container .logo img {
+  width: 238px;
+  height: auto;
+  margin-bottom: 74px;
+}
+
+.login-title {
+  width: 550px;       
+  text-align: center; 
+  font-size: 24px;   
+  font-weight: 500;
+  margin-bottom: -55px;
+  color: #000;
 }
 
 .login-box {
-  background: #fff;
-  padding: 36px 40px;
+  width: 550px;
+  /* height는 내부 요소에 따라 유동적인 것이 좋으므로 min-height 권장 */
+  min-height: 292px; 
+  margin: 60px auto 0;
   border-radius: 10px;
-  border: 1px solid #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  padding: 35px;
+  border: 1px solid #C4C4C4;
+  background: #fff;
 }
 
-.login-container h2 {
-  font-size: 15.5px;
-  margin-bottom: 15px;
+.login-tabs {
+  display: flex;
 }
 
+.tab-btn {
+  flex: 1;
+  height: 60px;
+  font-size: 18px;
+  font-weight: 500;
+  background: #F2F2F2;
+  border-bottom: 1px solid #C4C4C4;
+  color: #767676;
+  /* border: none, cursor, font-family 등은 reset에서 처리됨 */
+}
+
+.tab-btn.active {
+  background: #fff;
+  color: #000;
+  border-bottom: none;
+}
+
+.tab-btn:first-child {
+  border-right: 1px solid #C4C4C4;
+}
+
+/* 인풋 그룹 스타일 최적화 */
 .input-group {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.input-group input {
+.input-group:first-child {
+    margin-top: 20px;
+}
+
+.input-group .input {
+  /* 전역 .input의 스타일을 초기화하고 로그인 전용 스타일 적용 */
   width: 100%;
-  padding: 15px 0 12px 0;
+  padding: 20px 0 15px;
   border: none;
-  border-bottom: 1px solid #dbdbdb;
-  outline: none;
-  font-size: 13px;
+  border-bottom: 1px solid #C4C4C4;
+  border-radius: 0; /* 전역의 5px 초기화 */
+  font-size: 16px;
 }
 
-.input-group input:focus {
-  border-bottom: 1px solid #2CC053;
-}
-
-.error-text {
-  color: #eb5757;
-  font-size: 12px;
-  text-align: left;
-  margin-top: 5px;
-  /* 이 숫자를 줄여서 버튼과의 거리를 좁힙니다. */
-  margin-bottom: 5px; 
-  display: none;
-  min-height: 12px;
+.input-group .input:focus {
+  border-bottom: 1px solid var(--color-primary);
 }
 
 .login-btn {
   width: 100%;
-  padding: 13px;
-  background-color: #2CC053;
-  color: white;
-  border: none;
+  height: 60px;
+  margin-top: 36px;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: var(--color-primary);
+  color: #fff;
   border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.login-btn:hover {
-  background-color: #26a346;
 }
 
 .login-footer {
-  margin-top: 20px;
-  font-size: 12px;
-}
-
-.login-footer a {
-  text-decoration: none;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px; 
   color: #767676;
 }
 
+.login-footer a {
+  color: #767676;
+  /* text-decoration: none 삭제 */
+}
+
 .divider {
-  margin: 0 10px;
-  color: #dbdbdb;
-}
-
-/* 로고 컨테이너(h1) 및 이미지 스타일 */
-.logo img {
-  width: 150px; /* 로고의 가로 너비 (디자인에 맞춰 조절) */
-  height: auto;  /* 비율 유지 */
-  display: block;
-  margin: 0 auto 30px; /* 가운데 정렬 및 아래쪽 여백 */
-}
-
-.logo a {
-  display: inline-block; /* 링크 영역이 이미지 크기에 딱 맞게 설정 */
-  cursor: pointer;       /* 마우스를 올리면 손가락 모양으로 변경 */
-  text-decoration: none; /* 혹시 모를 밑줄 제거 */
+  margin: 0 12px;
+  color: #C4C4C4; 
 }
