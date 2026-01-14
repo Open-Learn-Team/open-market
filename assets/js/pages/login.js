@@ -47,8 +47,9 @@ if (loginForm) {
         window.location.href = targetPath;
       }
     } catch (error) {
-      // 4. 에러 발생 시 처리
-      showError("아이디 또는 비밀번호가 일치하지 않습니다.");
+      showError(
+        error.data?.error || "아이디 또는 비밀번호가 일치하지 않습니다."
+      );
     }
   });
 }
