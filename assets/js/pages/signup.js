@@ -19,38 +19,6 @@ tabs.forEach((tab) => {
   });
 });
 
-function requireBefore(current, prev, msgEl) {
-  if (!prev.value.trim()) {
-    msgEl.textContent = "필수 정보입니다.";
-    msgEl.style.color = "red";
-    prev.focus();
-    return false;
-  }
-  return true;
-}
-
-pw.addEventListener("focus", () => {
-  requireBefore(pw, idInput, idMsg);
-});
-
-pw2.addEventListener("focus", () => {
-  requireBefore(pw2, pw, pwMsg);
-});
-
-document.querySelector("input[name='name']").addEventListener("focus", () => {
-  if (!pw2.value) {
-    pwMsg.textContent = "필수 정보입니다.";
-    pw2.focus();
-  }
-});
-
-phone2.addEventListener("focus", () => {
-  if (!document.querySelector("input[name='name']").value) {
-    alert("이름은 필수 정보입니다.");
-    document.querySelector("input[name='name']").focus();
-  }
-});
-
 const checkBtn = document.getElementById("checkId");
 const idInput = document.getElementById("userid");
 const idMsg = document.getElementById("idMsg");
@@ -65,6 +33,32 @@ const agree = document.getElementById("agree");
 const submit = document.getElementById("submitBtn");
 
 let idOk = false;
+
+const nameInput = document.querySelector("input[name='name']");
+const phone1 = document.getElementById("phone1");
+const phone2 = document.getElementById("phone2");
+const phone3 = document.getElementById("phone3");
+
+const requiredFields = [idInput, pw, pw2, nameInput, phone2, phone3];
+
+function showRequiredError(input) {
+  const msg = input.closest(".field").querySelector(".msg");
+
+  if (msg) {
+    msg.textContent = "필수 정보입니다.";
+    msg.classList.add("error");
+  }
+}
+
+requiredFields.forEach((field, index) => {
+  field.addEventListener("focus", () => {
+    for (let i = 0; i < index; i++) {
+      if (!requiredFields[i].value) {
+        showRequiredError(requiredFields[i]);
+      }
+    }
+  });
+});
 
 checkBtn.addEventListener("click", async () => {
   console.log(checkBtn);
@@ -108,13 +102,18 @@ pw2.addEventListener("input", () => {
 agree.addEventListener("change", validate);
 
 function validate() {
-  if (
+  const phoneOk = phone2.value.length === 4 && phone3.value.length === 4;
+  const nameOk = nameInput.value.trim().length > 0;
+
+  const allFilled =
     idOk &&
-    pw.value &&
-    pw2.value &&
-    pw.value === pw2.value &&
-    agree.checked
-  ) {
+    pw.value.length >= 8 &&
+    pw2.value === pw.value &&
+    nameOk &&
+    phoneOk &&
+    agree.checked;
+
+  if (allFilled) {
     submit.classList.add("active");
     submit.disabled = false;
   } else {
