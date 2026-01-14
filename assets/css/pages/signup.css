@@ -71,10 +71,10 @@ body {
 .tabs::after {
   content: "";
   position: absolute;
-  top: 43px;
-  left: 49%;
-  width: 10px;
-  height: 10px;
+  top: 83%;
+  left: 48%;
+  width: 4%;
+  height: 20%;
   background: rgb(255, 255, 255);
   z-index: 5;
 }

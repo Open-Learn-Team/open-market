@@ -350,7 +350,7 @@ pwInput.addEventListener("input", () => {
     setPwCheck(true);
   }
 
-  // 🔥 핵심: pw가 바뀌면 pw2를 다시 검증
+  // pw가 바뀌면 pw2를 다시 검증
   if (pw2 !== "") {
     if (!pwValid) {
       setPw2Check(false);
