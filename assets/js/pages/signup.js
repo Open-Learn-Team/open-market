@@ -122,6 +122,18 @@ function validate() {
   }
 }
 
+[phone2, phone3].forEach((input) => {
+  input.addEventListener("input", () => {
+    // 숫자가 아닌 것 제거
+    input.value = input.value.replace(/[^0-9]/g, "");
+
+    // 4자리까지만 유지
+    if (input.value.length > 4) {
+      input.value = input.value.slice(0, 4);
+    }
+  });
+});
+
 submit.addEventListener("click", async () => {
   const phone = phone1.value + phone2.value + phone3.value;
 
