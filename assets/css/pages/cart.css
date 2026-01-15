@@ -65,8 +65,8 @@
 /* 상품 */
 .cart-product {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  align-items: center; /* ← 수직 중앙 정렬 */
+  gap: 20px;
   min-width: 0;
 }
 
@@ -80,8 +80,30 @@
 .cart-info {
   display: flex;
   flex-direction: column;
+  justify-content: center; /* 이미지와 세로 가운데 맞춤 */
   gap: 6px;
-  min-width: 0;
+}
+
+.cart-info .seller {
+  font-size: 14px;
+  color: #b7b7b7;
+}
+
+.cart-info .name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+}
+
+.cart-info .price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+.cart-info .delivery {
+  font-size: 14px;
+  color: #e4e4e4;
 }
 
 /* 수량 */
