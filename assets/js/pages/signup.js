@@ -1,6 +1,9 @@
-import { validateUsername } from "/utils/api.js";
-import { signupBuyer, signupSeller } from "/utils/api.js";
-import { validateCompanyNumber } from "/utils/api.js";
+import {
+  validateUsername,
+  validateCompanyNumber,
+  signupBuyer,
+  signupSeller,
+} from "/utils/api.js";
 
 const tabs = document.querySelectorAll(".tab");
 const sellerArea = document.getElementById("sellerArea");
@@ -26,7 +29,6 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*\d).{8,}$/;
 
 const nameInput = document.querySelector("input[name='name']");
 
-// 커스텀 드롭다운 요소들
 const phone1 = document.getElementById("phone1"); // hidden input
 const phone1Wrapper = document.getElementById("phone1Wrapper");
 const phone1Trigger = document.getElementById("phone1Trigger");
@@ -52,6 +54,10 @@ const AGREE_ON = "/assets/images/check-fill-box.svg";
 const agree = document.getElementById("agree");
 const agreeIcon = document.getElementById("agreeIcon");
 const submit = document.getElementById("submitBtn");
+
+// error & success color
+const COLOR_ERROR = "#eb5757";
+const COLOR_SUCCESS = "#22c55e";
 
 // ========== 커스텀 드롭다운 로직 ==========
 function initCustomDropdown() {
@@ -262,7 +268,7 @@ idInput.addEventListener("input", () => {
   if (value.length > 20 || !/^[A-Za-z0-9]*$/.test(value)) {
     idMsg.textContent =
       "20자 이내의 영문 소문자, 대문자, 숫자만 사용 가능합니다.";
-    idMsg.style.color = "red";
+    idMsg.style.color = COLOR_ERROR;
     idInput.classList.add("input-error");
     return;
   }
@@ -280,7 +286,7 @@ idInput.addEventListener("input", () => {
 checkBtn.addEventListener("click", async () => {
   if (!idInput.value) {
     idMsg.textContent = "아이디를 입력해주세요.";
-    idMsg.style.color = "red";
+    idMsg.style.color = COLOR_ERROR;
     idInput.classList.add("input-error");
     idOk = false;
     return;
@@ -289,7 +295,7 @@ checkBtn.addEventListener("click", async () => {
   if (!USERNAME_REGEX.test(idInput.value)) {
     idMsg.textContent =
       "아이디는 영문자와 숫자만 사용하여 20자 이내로 입력해주세요.";
-    idMsg.style.color = "red";
+    idMsg.style.color = COLOR_ERROR;
     idInput.classList.add("input-error");
     idOk = false;
     return;
@@ -298,12 +304,12 @@ checkBtn.addEventListener("click", async () => {
   try {
     await validateUsername(idInput.value);
     idMsg.textContent = "멋진 아이디네요 :)";
-    idMsg.style.color = "green";
+    idMsg.style.color = COLOR_SUCCESS;
     idInput.classList.remove("input-error");
     idOk = true;
   } catch (err) {
     idMsg.textContent = err.data?.error || "이미 사용 중인 아이디입니다.";
-    idMsg.style.color = "red";
+    idMsg.style.color = COLOR_ERROR;
     idInput.classList.add("input-error");
     idOk = false;
   }
@@ -336,7 +342,7 @@ pwInput.addEventListener("input", () => {
   } else if (!pwValid) {
     pwMsg1.textContent =
       "8자 이상, 영문 소문자와 숫자를 각각 1개 이상 포함하세요.";
-    pwMsg1.style.color = "red";
+    pwMsg1.style.color = COLOR_ERROR;
     pwInput.classList.add("input-error");
     setPwCheck(false);
   } else {
@@ -350,12 +356,12 @@ pwInput.addEventListener("input", () => {
     if (!pwValid) {
       setPw2Check(false);
       pwMsg2.textContent = "올바른 비밀번호를 입력해주세요.";
-      pwMsg2.style.color = "red";
+      pwMsg2.style.color = COLOR_ERROR;
       pw2Input.classList.add("input-error");
     } else if (pw !== pw2) {
       setPw2Check(false);
       pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
-      pwMsg2.style.color = "red";
+      pwMsg2.style.color = COLOR_ERROR;
       pw2Input.classList.add("input-error");
     } else {
       setPw2Check(true);
@@ -385,7 +391,7 @@ pw2Input.addEventListener("input", () => {
   if (!pwValid) {
     setPw2Check(false);
     pwMsg2.textContent = "올바른 비밀번호를 입력해주세요.";
-    pwMsg2.style.color = "red";
+    pwMsg2.style.color = COLOR_ERROR;
     pw2Input.classList.add("input-error");
     validate();
     return;
@@ -395,7 +401,7 @@ pw2Input.addEventListener("input", () => {
   if (pw !== pw2) {
     setPw2Check(false);
     pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
-    pwMsg2.style.color = "red";
+    pwMsg2.style.color = COLOR_ERROR;
     pw2Input.classList.add("input-error");
   }
   // 비밀번호도 유효 + 서로 같음
@@ -495,7 +501,7 @@ companyBtn.addEventListener("click", async () => {
 
   if (!number) {
     companyMsg.textContent = "사업자등록번호를 입력해주세요.";
-    companyMsg.style.color = "red";
+    companyMsg.style.color = COLOR_ERROR;
     companyInput.classList.add("input-error");
     companyOk = false;
     return;
@@ -503,7 +509,7 @@ companyBtn.addEventListener("click", async () => {
 
   if (number.length !== 10) {
     companyMsg.textContent = "사업자등록번호는 10자리 숫자여야 합니다.";
-    companyMsg.style.color = "red";
+    companyMsg.style.color = COLOR_ERROR;
     companyInput.classList.add("input-error");
     companyOk = false;
     return;
@@ -513,12 +519,12 @@ companyBtn.addEventListener("click", async () => {
     const data = await validateCompanyNumber(number);
 
     companyMsg.textContent = data.message;
-    companyMsg.style.color = "green";
+    companyMsg.style.color = COLOR_SUCCESS;
     companyInput.classList.remove("input-error");
     companyOk = true;
   } catch (err) {
     companyMsg.textContent = err.data?.error || "사업자등록번호 확인 실패";
-    companyMsg.style.color = "red";
+    companyMsg.style.color = COLOR_ERROR;
     companyInput.classList.add("input-error");
     companyOk = false;
   }
@@ -560,7 +566,7 @@ submit.addEventListener("click", async () => {
     if (data?.phone_number) {
       const msg = data.phone_number[0];
       phoneMsg.textContent = msg;
-      phoneMsg.style.color = "red";
+      phoneMsg.style.color = COLOR_ERROR;
 
       phone2.value = "";
       phone3.value = "";
@@ -577,7 +583,7 @@ submit.addEventListener("click", async () => {
     if (data?.username) {
       const msg = data.username[0];
       idMsg.textContent = msg;
-      idMsg.style.color = "red";
+      idMsg.style.color = COLOR_ERROR;
       idInput.classList.add("input-error");
       idInput.value = "";
       idInput.focus();
@@ -593,7 +599,7 @@ submit.addEventListener("click", async () => {
     if (data?.store_name) {
       const msg = data.store_name[0];
       storeMsg.textContent = msg;
-      storeMsg.style.color = "red";
+      storeMsg.style.color = COLOR_ERROR;
       storeInput.classList.add("input-error");
 
       storeInput.value = "";
@@ -606,7 +612,7 @@ submit.addEventListener("click", async () => {
     if (data?.company_registration_number) {
       const msg = data.company_registration_number[0];
       companyMsg.textContent = msg;
-      companyMsg.style.color = "red";
+      companyMsg.style.color = COLOR_ERROR;
       companyInput.classList.add("input-error");
 
       companyInput.value = "";
