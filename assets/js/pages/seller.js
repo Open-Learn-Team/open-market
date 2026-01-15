@@ -43,18 +43,12 @@ const checkAuth = () => {
 const loadProducts = async () => {
   try {
     const userInfo = getUserInfo();
-    const sellerName = userInfo?.name;
-    
-    if (!sellerName) {
-      console.error('판매자 이름을 찾을 수 없습니다.');
-      return;
-    }
     
     // 스토어명 표시
-    $storeName.textContent = userInfo?.store_name || sellerName;
+    $storeName.textContent = userInfo?.store_name || userInfo?.name || '스토어';
     
-    // 판매자 상품 불러오기
-    const data = await getSellerProducts(sellerName);
+    // 판매자 상품 불러오기 (토큰 인증 기반)
+    const data = await getSellerProducts();
     
     // 상품 개수 표시
     $productCount.textContent = data.count || 0;
