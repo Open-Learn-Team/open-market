@@ -18,10 +18,10 @@ export function createCartItem(
     <div class="cart-product">
       <img src="${item.image}" />
       <div class="cart-info">
-        <p class="brand">${item.brand}</p>
+        <p class="seller">${item.brand}</p>
         <p class="name">${item.name}</p>
         <p class="price">${item.price.toLocaleString()}원</p>
-        <p class="shipping">택배배송 / 무료배송</p>
+        <p class="delivery">택배배송 / 무료배송</p>
       </div>
     </div>
 
