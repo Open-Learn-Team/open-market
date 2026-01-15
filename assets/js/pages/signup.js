@@ -232,9 +232,17 @@ document
   .forEach((field) => {
     field.addEventListener("focus", () => {
       const fields = getRequiredFields();
-      const index = fields.indexOf(field);
+      let index = fields.indexOf(field);
 
-      if (index === -1) return;
+      // phone2나 phone3이면, name까지만 검사
+      if (field === phone2 || field === phone3) {
+        index = fields.indexOf(nameInput) + 1;
+      }
+
+      // 사업자번호면 phone3까지 검사
+      if (field === companyInput) {
+        index = fields.indexOf(phone3) + 1;
+      }
 
       for (let i = 0; i < index; i++) {
         if (!fields[i].value) {
