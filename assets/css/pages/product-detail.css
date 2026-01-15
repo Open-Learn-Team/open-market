@@ -4,7 +4,7 @@
 
 .product-detail {
   max-width: 1280px;
-  margin: 160px auto 120px; /* 헤더 높이 고려해서 위 여백 넉넉히 */
+  margin: 100px auto 120px; /* 헤더 높이 고려 */
   padding: 0 20px;
   font-family: "Spoqa Han Sans Neo", -apple-system, BlinkMacSystemFont,
     system-ui, sans-serif;
@@ -16,7 +16,7 @@
 .product-info {
   display: flex;
   gap: 80px;
-  align-items: flex-start;
+  align-items: stretch; /* 오른쪽 박스도 이미지 높이에 맞게 */
 }
 
 /* ============================
@@ -45,6 +45,8 @@
 .product-content {
   flex: 1;
   font-size: 18px;
+  display: flex;
+  flex-direction: column; /* 위에서부터 쌓고 버튼을 맨 아래로 보내기 위해 */
 }
 
 /* 판매자 */
@@ -73,10 +75,12 @@
   font-weight: 700;
 }
 
-/* 배송 정보 */
+/* 배송 정보 (수량 위 선 포함) */
 .product-content .delivery {
   font-size: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 0;            /* 아래 여백 줄이기 */
+  padding-bottom: 10px;        /* 선과의 간격 */
+  border-bottom: 1px solid #c4c4c4; /* 수량 버튼 위에 가로선 */
 }
 
 /* ============================
@@ -92,6 +96,7 @@
   border-radius: 5px;
   overflow: hidden;
   background-color: #fff;
+  margin-top: 16px; /* 위 선과의 간격 */
 }
 
 /* - / + 버튼 공통 */
@@ -138,13 +143,13 @@
 }
 
 /* ============================
-   구분선
+   수량 아래 구분선
    ============================ */
 
 .product-content hr {
   border: 0;
   border-top: 1px solid #c4c4c4;
-  margin: 24px 0 20px;
+  margin: 16px 0 12px; /* 수량과 총 금액 사이 간격 */
 }
 
 /* ============================
@@ -155,7 +160,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 32px;
+  margin-bottom: 16px; /* 버튼과 거리 */
 }
 
 .total > span {
@@ -185,6 +190,7 @@
 .buttons {
   display: flex;
   gap: 8px;
+  margin-top: auto; /* 이게 있어서 버튼이 박스 맨 아래로 내려감 */
 }
 
 .btn-cart,
@@ -196,6 +202,7 @@
   font-weight: 500;
   cursor: pointer;
 }
+
 /* 바로구매 버튼 (초록) - 2배 크기 */
 .btn-buy {
   flex: 2;
@@ -207,12 +214,6 @@
 .btn-cart {
   flex: 1;
   background-color: #767676;
-  color: #fff;
-}
-
-/* 바로구매 버튼 (초록) */
-.btn-buy {
-  background-color: #21bf48;
   color: #fff;
 }
 
@@ -286,7 +287,8 @@
 
   .product-info {
     flex-direction: column;
-    gap: 40px;
+    gap: 80px;
+    align-items: stretch;
   }
 
   .product-img {
