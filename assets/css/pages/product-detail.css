@@ -4,7 +4,7 @@
 
 .product-detail {
   max-width: 1280px;
-  margin: 160px auto 120px; /* 헤더 높이 고려해서 위 여백 넉넉히 */
+  margin: 160px auto 120px;
   padding: 0 20px;
   font-family: "Spoqa Han Sans Neo", -apple-system, BlinkMacSystemFont,
     system-ui, sans-serif;
@@ -196,6 +196,7 @@
   font-weight: 500;
   cursor: pointer;
 }
+
 /* 바로구매 버튼 (초록) - 2배 크기 */
 .btn-buy {
   flex: 2;
@@ -207,12 +208,6 @@
 .btn-cart {
   flex: 1;
   background-color: #767676;
-  color: #fff;
-}
-
-/* 바로구매 버튼 (초록) */
-.btn-buy {
-  background-color: #21bf48;
   color: #fff;
 }
 
@@ -267,7 +262,7 @@
   background-color: #21bf48;
 }
 
-/* 탭 콘텐츠 영역(선택사항, 필요 시 사용) */
+/* 탭 콘텐츠 영역 */
 .product-tab-panel {
   padding: 40px 0;
   font-size: 16px;
@@ -301,26 +296,6 @@
     margin: 120px auto 80px;
     padding: 0 16px;
   }
-  
-  /* ============================
-   판매자 - 버튼 비활성화
-   ============================ */
-
-.btn-buy.disabled,
-.btn-cart.disabled {
-  background-color: #c4c4c4 !important;
-  cursor: not-allowed;
-}
-
-.btn-buy.disabled:hover,
-.btn-cart.disabled:hover {
-  background-color: #c4c4c4 !important;
-}
-
-.qty-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 
   .product-content .name {
     font-size: 28px;
@@ -344,4 +319,24 @@
   .product-tabs .tab {
     font-size: 16px;
   }
+}
+
+/* ============================
+   판매자 - 버튼 비활성화
+   ============================ */
+
+.btn-buy.disabled,
+.btn-cart.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
+
+.btn-buy.disabled:hover,
+.btn-cart.disabled:hover {
+  background-color: #c4c4c4 !important;
+}
+
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

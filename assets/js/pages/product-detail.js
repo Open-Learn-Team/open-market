@@ -88,14 +88,6 @@ async function loadProduct() {
 
     updateQuantity(1);
     
-    if (getUserType() === 'SELLER') {
-      $qtyMinus.disabled = true;
-      $qtyPlus.disabled = true;
-      $btnCart.disabled = true;
-      $btnBuy.disabled = true;
-      $btnCart.classList.add('disabled');
-      $btnBuy.classList.add('disabled');
-    }
   } catch (error) {
     alert("상품 정보를 불러오는 중 오류가 발생했습니다.");
   }
@@ -221,6 +213,16 @@ function initPage() {
 
   $btnCart?.addEventListener("click", addToCart);
   $btnBuy?.addEventListener("click", buyNow);
+
+  // 판매자면 미리 비활성화
+  if (getUserType() === 'SELLER') {
+    $qtyMinus.disabled = true;
+    $qtyPlus.disabled = true;
+    $btnCart.disabled = true;
+    $btnBuy.disabled = true;
+    $btnCart.classList.add('disabled');
+    $btnBuy.classList.add('disabled');
+  }
 
   if (productId) {
     loadProduct();
