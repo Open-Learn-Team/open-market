@@ -1,5 +1,11 @@
 // /assets/js/pages/product-detail.js
-import { getProductDetail, isLoggedIn, getUserType } from "/utils/api.js";
+import {
+  getProductDetail,
+  isLoggedIn,
+  getUserType, // ← 추가됨
+  getCart,
+  addToCart,
+} from "/utils/api.js";
 import { initCommon } from "/assets/js/common.js";
 import { showLoginModal, showAlertModal } from "/components/Modal.js";
 
@@ -33,7 +39,7 @@ let stock = 0;
 let quantity = 1;
 
 // ─────────────────────────────
-// 3. URL에서 id 읽기 (home.js와 맞춤)
+// 3. URL에서 id 읽기
 // ─────────────────────────────
 const pathParts = window.location.pathname.split("/").filter(Boolean);
 const productId = pathParts[pathParts.length - 1];
@@ -43,7 +49,6 @@ if (!productId) {
   window.location.href = "/";
 }
 
-// 숫자에 콤마 붙이기
 const formatNumber = (num) => Number(num).toLocaleString("ko-KR");
 
 // ─────────────────────────────
@@ -88,7 +93,6 @@ async function loadProduct() {
 
     updateQuantity(1);
 
-    // 판매자면 다시 비활성화 (updateQuantity가 풀어버리니까)
     if (getUserType() === "SELLER") {
       $qtyMinus.disabled = true;
       $qtyPlus.disabled = true;
@@ -102,38 +106,21 @@ async function loadProduct() {
 // 6. 수량 버튼 이벤트
 // ─────────────────────────────
 function initQuantityControls() {
-  if ($qtyMinus) {
-    $qtyMinus.addEventListener("click", () => {
-      if (quantity <= 1) return;
-      updateQuantity(quantity - 1);
-    });
-  }
+  $qtyMinus?.addEventListener("click", () => {
+    if (quantity <= 1) return;
+    updateQuantity(quantity - 1);
+  });
 
-  if ($qtyPlus) {
-    $qtyPlus.addEventListener("click", () => {
-      if (stock && quantity >= stock) return;
-      updateQuantity(quantity + 1);
-    });
-  }
+  $qtyPlus?.addEventListener("click", () => {
+    if (stock && quantity >= stock) return;
+    updateQuantity(quantity + 1);
+  });
 }
 
 // ─────────────────────────────
-// 7. 장바구니 / 바로구매
+// 7. 장바구니 / 바로구매 (API 방식)
 // ─────────────────────────────
-function getCart() {
-  try {
-    const raw = localStorage.getItem("cart");
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function setCart(cart) {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-function addToCart() {
+async function addToCartHandler() {
   if (!isLoggedIn()) {
     showLoginModal();
     return;
@@ -141,28 +128,22 @@ function addToCart() {
 
   if (!product) return;
 
-  const cart = getCart();
-  const index = cart.findIndex(
-    (item) => String(item.productId) === String(productId)
-  );
-
-  if (index === -1) {
-    // 새 상품 → 담고 바로 이동
-    cart.push({
-      productId,
-      quantity,
-      productName: product.name,
-      price: unitPrice,
-      image: product.image,
-    });
-    setCart(cart);
-    window.location.href = "/pages/cart/index.html";
-  } else {
-    // 이미 있는 상품 → 모달로 확인
-    showConfirmModal(
-      "이미 장바구니에 있는 상품입니다.<br>장바구니로 이동하시겠습니까?",
-      () => (window.location.href = "/pages/cart/index.html")
+  try {
+    const cart = await getCart();
+    const exists = cart.results?.some(
+      (item) => String(item.product?.id) === String(productId)
     );
+
+    if (exists) {
+      showAlertModal("이미 장바구니에 담긴 상품입니다.");
+      return;
+    }
+
+    await addToCart(productId, quantity);
+    showAlertModal("장바구니에 담겼습니다.");
+  } catch (error) {
+    console.error("장바구니 추가 실패:", error);
+    showAlertModal("장바구니 추가에 실패했습니다.");
   }
 }
 
@@ -218,10 +199,9 @@ function initPage() {
   initQuantityControls();
   initTabs();
 
-  $btnCart?.addEventListener("click", addToCart);
+  $btnCart?.addEventListener("click", addToCartHandler);
   $btnBuy?.addEventListener("click", buyNow);
 
-  // 판매자면 미리 비활성화
   if (getUserType() === "SELLER") {
     $qtyMinus.disabled = true;
     $qtyPlus.disabled = true;
