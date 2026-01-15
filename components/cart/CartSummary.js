@@ -4,27 +4,29 @@ export function renderSummary(cart, container) {
 
   container.innerHTML = `
     <div class="summary-box">
-      <div>
-        <p>총 상품금액</p>
-        <strong>${total.toLocaleString()}원</strong>
-      </div>
+      <div class="shipping">
+        <div>
+          <p>총 상품금액</p>
+          <strong>${total.toLocaleString()}원</strong>
+        </div>
 
-      <div class="summary-icon">
-        <img src="/assets/images/cart/cart-minus-icon.svg" alt="minus" />
-      </div>
+        <div class="summary-icon">
+          <img src="/assets/images/cart/cart-minus-icon.svg" alt="minus" />
+        </div>
 
-      <div>
-        <p>상품 할인</p>
-        <strong>0원</strong>
-      </div>
+        <div>
+          <p>상품 할인</p>
+          <strong>0원</strong>
+        </div>
 
-      <div class="summary-icon">
-        <img src="/assets/images/cart/cart-plus-icon.svg" alt="plus" />
-      </div>
+        <div class="summary-icon">
+          <img src="/assets/images/cart/cart-plus-icon.svg" alt="plus" />
+        </div>
 
-      <div>
-        <p>배송비</p>
-        <strong>0원</strong>
+        <div>
+          <p>배송비</p>
+          <strong>0원</strong>
+        </div>
       </div>
 
       <div class="final">
