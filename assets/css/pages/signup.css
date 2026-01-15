@@ -99,15 +99,10 @@ body {
   transition: border-color 0.2s;
 }
 
-/* focus 시 초록색 border */
-.field input:focus {
-  border-color: var(--color-primary);
-}
-
 /* 에러 시 빨간색 border */
 .field input.input-error,
 .field input.input-error:focus {
-  border-color: --color-error;
+  border-color: var(--color-error);
 }
 
 .row {
