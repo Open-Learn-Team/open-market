@@ -1,7 +1,7 @@
 // /assets/js/pages/product-detail.js
 import { getProductDetail, isLoggedIn, getUserType } from "/utils/api.js";
-import { initCommon } from "/assets/js/common.js";  
-import { showLoginModal, showAlertModal } from "/components/Modal.js"
+import { initCommon } from "/assets/js/common.js";
+import { showLoginModal, showAlertModal } from "/components/Modal.js";
 
 // ─────────────────────────────
 // 1. DOM 요소 가져오기
@@ -35,7 +35,7 @@ let quantity = 1;
 // ─────────────────────────────
 // 3. URL에서 id 읽기 (home.js와 맞춤)
 // ─────────────────────────────
-const pathParts = window.location.pathname.split('/').filter(Boolean);
+const pathParts = window.location.pathname.split("/").filter(Boolean);
 const productId = pathParts[pathParts.length - 1];
 
 if (!productId) {
@@ -87,7 +87,12 @@ async function loadProduct() {
     document.title = `${product.name} | HODU`;
 
     updateQuantity(1);
-    
+
+    // 판매자면 다시 비활성화 (updateQuantity가 풀어버리니까)
+    if (getUserType() === "SELLER") {
+      $qtyMinus.disabled = true;
+      $qtyPlus.disabled = true;
+    }
   } catch (error) {
     alert("상품 정보를 불러오는 중 오류가 발생했습니다.");
   }
@@ -137,7 +142,9 @@ function addToCart() {
   if (!product) return;
 
   const cart = getCart();
-  const index = cart.findIndex((item) => String(item.productId) === String(productId));
+  const index = cart.findIndex(
+    (item) => String(item.productId) === String(productId)
+  );
 
   if (index === -1) {
     // 새 상품 → 담고 바로 이동
@@ -146,7 +153,7 @@ function addToCart() {
       quantity,
       productName: product.name,
       price: unitPrice,
-      image: product.image
+      image: product.image,
     });
     setCart(cart);
     window.location.href = "/pages/cart/index.html";
@@ -154,7 +161,7 @@ function addToCart() {
     // 이미 있는 상품 → 모달로 확인
     showConfirmModal(
       "이미 장바구니에 있는 상품입니다.<br>장바구니로 이동하시겠습니까?",
-      () => window.location.href = "/pages/cart/index.html"
+      () => (window.location.href = "/pages/cart/index.html")
     );
   }
 }
@@ -207,7 +214,7 @@ function initTabs() {
 // 9. 초기화
 // ─────────────────────────────
 function initPage() {
-  initCommon();  
+  initCommon();
   initQuantityControls();
   initTabs();
 
@@ -215,13 +222,13 @@ function initPage() {
   $btnBuy?.addEventListener("click", buyNow);
 
   // 판매자면 미리 비활성화
-  if (getUserType() === 'SELLER') {
+  if (getUserType() === "SELLER") {
     $qtyMinus.disabled = true;
     $qtyPlus.disabled = true;
     $btnCart.disabled = true;
     $btnBuy.disabled = true;
-    $btnCart.classList.add('disabled');
-    $btnBuy.classList.add('disabled');
+    $btnCart.classList.add("disabled");
+    $btnBuy.classList.add("disabled");
   }
 
   if (productId) {
