@@ -278,9 +278,19 @@ idInput.addEventListener("input", () => {
     idInput.classList.remove("input-error");
     return;
   }
-
   idMsg.textContent = "";
   idInput.classList.remove("input-error");
+});
+
+idInput.addEventListener("blur", () => {
+  if (
+    idInput.value !== "" && // 값이 있고
+    !idOk && // 아직 중복확인 안 했고
+    USERNAME_REGEX.test(idInput.value) // 형식도 맞으면
+  ) {
+    idMsg.textContent = "아이디 중복확인을 해주세요.";
+    idMsg.style.color = COLOR_ERROR;
+  }
 });
 
 checkBtn.addEventListener("click", async () => {
@@ -485,8 +495,10 @@ phone2.addEventListener("input", () => {
 });
 
 companyInput.addEventListener("input", () => {
+  // 숫자만 입력되도록
   companyInput.value = companyInput.value.replace(/[^0-9]/g, "");
 
+  // 10자리까지 입력되도록
   if (companyInput.value.length > 10) {
     companyInput.value = companyInput.value.slice(0, 10);
   }
@@ -494,6 +506,16 @@ companyInput.addEventListener("input", () => {
   companyOk = false;
 
   validate();
+});
+
+companyInput.addEventListener("blur", () => {
+  if (
+    companyInput.value.length === 10 && // 10자리 다 입력했고
+    !companyOk // 아직 인증 안 했고
+  ) {
+    companyMsg.textContent = "사업자등록번호 인증을 해주세요.";
+    companyMsg.style.color = COLOR_ERROR;
+  }
 });
 
 companyBtn.addEventListener("click", async () => {
