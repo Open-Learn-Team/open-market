@@ -1,3 +1,9 @@
+:root {
+  --color-primary: #22c55e;
+  --color-error: #eb5757;
+  --color-border: #ddd;
+}
+
 * {
   box-sizing: border-box;
   font-family: "Spoqa Han Sans Neo", Arial, sans-serif;
@@ -26,7 +32,7 @@ body {
 }
 
 .card {
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   background-color: #fff;
   padding: 20px;
@@ -52,7 +58,7 @@ body {
   flex: 1;
   color: #747474;
   padding: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-bottom: none;
   background: #f5f5f5;
   cursor: pointer;
@@ -87,7 +93,7 @@ body {
 .field input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 5px;
   outline: none;
   transition: border-color 0.2s;
@@ -95,13 +101,13 @@ body {
 
 /* focus 시 초록색 border */
 .field input:focus {
-  border-color: #22c55e;
+  border-color: var(--color-primary);
 }
 
 /* 에러 시 빨간색 border */
 .field input.input-error,
 .field input.input-error:focus {
-  border-color: #eb5757;
+  border-color: --color-error;
 }
 
 .row {
@@ -128,7 +134,7 @@ body {
 }
 
 .check-btn {
-  background: #22c55e;
+  background: var(--color-primary);
   border: none;
   color: white;
   padding: 10px 20px;
@@ -169,7 +175,7 @@ body {
 .select-trigger {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 5px;
   background: white;
   cursor: pointer;
@@ -184,7 +190,7 @@ body {
 /* 드롭다운 trigger focus 시 초록색 border */
 .select-trigger:focus,
 .select-trigger.active {
-  border-color: #22c55e;
+  border-color: var(--color-primary);
   outline: none;
 }
 
@@ -309,7 +315,7 @@ body {
 .submit {
   width: 92%;
   padding: 12px;
-  background: #22c55e;
+  background: var(--color-primary);
   color: white;
   border: none;
   border-radius: 5px;
