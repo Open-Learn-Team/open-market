@@ -534,7 +534,6 @@ companyBtn.addEventListener("click", async () => {
 
 submit.addEventListener("click", async () => {
   const phone = phone1.value + phone2.value + phone3.value;
-  console.log("Sending phone:", phone, phone.length);
 
   const userData = {
     username: idInput.value,
@@ -559,8 +558,6 @@ submit.addEventListener("click", async () => {
     alert("회원가입 성공!");
     window.location.href = "/pages/login/";
   } catch (err) {
-    console.log("API error data:", err.data);
-
     const data = err.data;
 
     if (data?.phone_number) {
