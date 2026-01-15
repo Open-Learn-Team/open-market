@@ -27,8 +27,6 @@
   flex: 0 0 600px;
   height: 600px;
   margin: 0;
-  border: 1px solid #f2f2f2;
-  background-color: #fafafa;
   overflow: hidden;
 }
 
@@ -78,9 +76,13 @@
 /* 배송 정보 (수량 위 선 포함) */
 .product-content .delivery {
   font-size: 16px;
-  margin-bottom: 0;            /* 아래 여백 줄이기 */
-  padding-bottom: 10px;        /* 선과의 간격 */
-  border-bottom: 1px solid #c4c4c4; /* 수량 버튼 위에 가로선 */
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c4c4c4;
+  
+  /* [추가] 여기가 핵심입니다! */
+  /* 가격 정보와 배송 정보 사이를 벌려서, 배송 정보부터 바닥으로 밉니다 */
+  margin-top: auto; 
 }
 
 /* ============================
@@ -96,7 +98,11 @@
   border-radius: 5px;
   overflow: hidden;
   background-color: #fff;
-  margin-top: 16px; /* 위 선과의 간격 */
+  
+  /* [수정] 아래 margin-top 값을 auto로 변경 */
+  /* 이렇게 하면 수량 박스 위쪽의 남은 여백을 모두 차지하여 
+     수량 박스부터 그 아래 요소들(총 금액, 버튼 등)을 바닥으로 밀어버립니다. */
+  margin-top: 16px;
 }
 
 /* - / + 버튼 공통 */
@@ -190,7 +196,7 @@
 .buttons {
   display: flex;
   gap: 8px;
-  margin-top: auto; /* 이게 있어서 버튼이 박스 맨 아래로 내려감 */
+  /* margin-top: auto;  ← 이 줄 삭제! */
 }
 
 .btn-cart,
@@ -313,11 +319,15 @@
     font-size: 28px;
   }
 
-  .total {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  /* 여기 두 줄로 역할을 바꿔줌 */
+  margin-top: auto;     /* 위쪽 여백 자동 → 이 줄이 빨간 박스를 아래로 밀어 줌 */
+  margin-bottom: 16px;  /* 버튼과의 간격 */
+}
 
   .buttons {
     flex-direction: column;
