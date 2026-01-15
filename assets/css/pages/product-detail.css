@@ -301,6 +301,26 @@
     margin: 120px auto 80px;
     padding: 0 16px;
   }
+  
+  /* ============================
+   판매자 - 버튼 비활성화
+   ============================ */
+
+.btn-buy.disabled,
+.btn-cart.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
+
+.btn-buy.disabled:hover,
+.btn-cart.disabled:hover {
+  background-color: #c4c4c4 !important;
+}
+
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
   .product-content .name {
     font-size: 28px;
