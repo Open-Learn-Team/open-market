@@ -281,7 +281,7 @@
   background-color: #21bf48;
 }
 
-/* 탭 콘텐츠 영역(선택사항, 필요 시 사용) */
+/* 탭 콘텐츠 영역 */
 .product-tab-panel {
   padding: 40px 0;
   font-size: 16px;
@@ -343,4 +343,24 @@
   .product-tabs .tab {
     font-size: 16px;
   }
+}
+
+/* ============================
+   판매자 - 버튼 비활성화
+   ============================ */
+
+.btn-buy.disabled,
+.btn-cart.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
+
+.btn-buy.disabled:hover,
+.btn-cart.disabled:hover {
+  background-color: #c4c4c4 !important;
+}
+
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

@@ -1,0 +1,317 @@
+/* 판매자 센터 전용 Header */
+.seller-header {
+  background: #fff;
+  box-shadow: 0 1px 0 #e0e0e0;
+}
+
+.seller-header .header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.seller-header .logo img {
+  height: 32px;
+}
+
+.seller-header .header-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #000;
+}
+
+/* 메인 레이아웃 */
+.seller-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+/* 대시보드 타이틀 */
+.dashboard-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.title-left {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.title-left h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.store-name {
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: #21BF48;
+}
+
+.btn-upload {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: #21BF48;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btn-upload:hover {
+  opacity: 0.85;
+}
+
+.btn-upload img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+/* 대시보드 콘텐츠 */
+.dashboard-content {
+  display: flex;
+  gap: 2rem;
+}
+
+/* 사이드바 */
+.sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.sidebar-nav ul {
+  background: #fff;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.sidebar-nav li {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.sidebar-nav li:last-child {
+  border-bottom: none;
+}
+
+.sidebar-nav a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  color: #000;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.sidebar-nav a:hover {
+  background: #f5f5f5;
+}
+
+.sidebar-nav li.active a {
+  background: #21BF48;
+  color: #fff;
+}
+
+.sidebar-nav .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 0.5rem;
+  background: #EB5757;
+  color: #fff;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sidebar-nav li.active .badge {
+  background: #fff;
+  color: #21BF48;
+}
+
+/* 상품 테이블 */
+.product-table-section {
+  flex: 1;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-table thead {
+  background: #f5f5f5;
+}
+
+.product-table th,
+.product-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.product-table th:first-child,
+.product-table td:first-child {
+  text-align: left;
+  width: 50%;
+}
+
+.product-table th {
+  font-weight: 500;
+  color: #000;
+}
+
+/* 상품 정보 셀 */
+.product-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.product-info img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.product-info .info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.product-info .name {
+  font-weight: 500;
+  color: #000;
+}
+
+.product-info .stock {
+  font-size: 0.875rem;
+  color: #767676;
+}
+
+/* 가격 */
+.product-price {
+  font-weight: 500;
+  color: #000;
+}
+
+/* 버튼들 */
+.btn-edit,
+.btn-delete {
+  padding: 0.625rem 2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-edit {
+  background: #21BF48;
+  color: #fff;
+  border: none;
+}
+
+.btn-delete {
+  background: #fff;
+  color: #767676;
+  border: 1px solid #c4c4c4;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+  opacity: 0.85;
+}
+
+/* 빈 상태 */
+.empty-state {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.empty-state p {
+  color: #767676;
+  margin-bottom: 1.5rem;
+}
+
+.btn-upload-small {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: #21BF48;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+/* 삭제 모달 */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 300px;
+}
+
+.modal p {
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.modal-buttons button {
+  padding: 0.75rem 2rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #fff;
+  color: #767676;
+  border: 1px solid #c4c4c4;
+}
+
+.btn-confirm {
+  background: #21BF48;
+  color: #fff;
+  border: none;
+}

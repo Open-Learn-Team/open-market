@@ -13,6 +13,8 @@ export default defineConfig({
         signup: resolve(__dirname, 'pages/signup/index.html'),
         productDetail: resolve(__dirname, 'pages/product-detail/index.html'),
         notFound: resolve(__dirname, 'pages/not-found/index.html'),
+        seller: resolve(__dirname, 'pages/seller/index.html'),
+        sellerUpload: resolve(__dirname, 'pages/seller/upload/index.html'),
       }
     }
   },
@@ -43,9 +45,12 @@ export default defineConfig({
               '/pages/login',
               '/pages/signup',
               '/pages/product-detail',
-            //   '/pages/product-list',
+              '/pages/product-list',
             //   '/pages/cart',
               '/pages/not-found',
+              '/pages/seller/upload',
+              '/pages/seller',
+
             ];
             
             if (!validPaths.includes(normalizedPath)) {
