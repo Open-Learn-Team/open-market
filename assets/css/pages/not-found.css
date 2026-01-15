@@ -1,0 +1,91 @@
+/* 404 Not Found 페이지 */
+.error-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.error-container {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  max-width: 800px;
+}
+
+.error-icon img {
+  width: 276px;
+  height: auto;
+}
+
+.error-content h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 1.25rem;
+}
+
+.error-content p {
+  font-size: 1rem;
+  color: #767676;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.error-buttons {
+  display: flex;
+  gap: 0.875rem;
+}
+
+.error-buttons .btn {
+  padding: 1.125rem 2.75rem;
+  border-radius: 5px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.error-buttons .btn:hover {
+  opacity: 0.85;
+}
+
+.error-buttons .btn-primary {
+  background-color: #21BF48;
+  color: #fff;
+  border: none;
+  text-decoration: none;
+}
+
+.error-buttons .btn-secondary {
+  background-color: #fff;
+  color: #767676;
+  border: 1px solid #c4c4c4;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .error-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .error-icon img {
+    width: 200px;
+  }
+
+  .error-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .error-buttons {
+    justify-content: center;
+  }
+
+  .error-buttons .btn {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
+}

@@ -2,6 +2,36 @@ import { renderHeader } from '/components/Header.js';
 import { renderFooter } from '/components/Footer.js';
 import { initModalListeners } from '/components/Modal.js';
 
+// ========== 경로 체크 (404 리다이렉트) ==========
+const validPaths = [
+  '/',
+  '/pages/login/',
+  '/pages/login',
+  '/pages/signup/',
+  '/pages/signup',
+  '/pages/product-list/',
+  '/pages/product-list',
+  '/pages/product-detail/',
+  '/pages/product-detail',
+  '/pages/cart/',
+  '/pages/cart',
+  '/pages/not-found/',
+  '/pages/not-found'
+];
+
+
+const currentPath = window.location.pathname;
+const isValidPath = validPaths.some(path => 
+  currentPath === path || 
+  currentPath === path.slice(0, -1) ||
+  currentPath.startsWith(path)
+);
+
+if (!isValidPath && !currentPath.includes('.')) {
+  window.location.replace('/pages/not-found/');
+}
+// ================================================
+
 // 공통 초기화
 export const initCommon = () => {
   renderHeader(document.body);

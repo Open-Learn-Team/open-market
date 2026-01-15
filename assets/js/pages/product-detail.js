@@ -35,10 +35,9 @@ let quantity = 1;
 
 // ─────────────────────────────
 // 3. URL에서 id 읽기 (home.js와 맞춤)
-// 예: /pages/product-detail/?id=3
 // ─────────────────────────────
-const params = new URLSearchParams(window.location.search);
-const productId = params.get("id");
+const pathParts = window.location.pathname.split('/').filter(Boolean);
+const productId = pathParts[pathParts.length - 1];
 
 if (!productId) {
   alert("잘못된 접근입니다.");
