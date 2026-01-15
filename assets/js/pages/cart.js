@@ -15,6 +15,7 @@ initCommon();
 const cartList = document.getElementById("cartList");
 const summaryEl = document.getElementById("cartSummary");
 const orderBtn = document.getElementById("order-btn");
+const checkAll = document.getElementById("checkAll");
 
 let cart = [];
 
@@ -98,6 +99,13 @@ async function removeItem(id) {
   }
 }
 
+// 전체 상품 선택
+checkAll.addEventListener("change", (e) => {
+  const checked = e.target.checked;
+  cart = cart.map((item) => ({ ...item, checked }));
+  renderCart();
+});
+
 function toggleItem(id, checked) {
   cart = cart.map((item) => (item.id === id ? { ...item, checked } : item));
   renderCart();
@@ -105,6 +113,7 @@ function toggleItem(id, checked) {
 
 function renderCart() {
   cartList.innerHTML = "";
+  checkAll.checked = cart.length > 0 && cart.every((i) => i.checked);
 
   cart.forEach((item) => {
     const el = createCartItem(item, {
