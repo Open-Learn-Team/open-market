@@ -1,0 +1,336 @@
+/* 판매자 센터 전용 Header */
+.seller-header {
+  background: #fff;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+}
+
+.seller-header .header-inner {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 1.625rem 6.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.seller-header .logo img {
+  height: 24px;
+}
+
+.seller-header .header-title {
+  font-size: 1.875rem;
+  font-weight: 500;
+  color: #000;
+}
+
+/* 메인 레이아웃 */
+.upload-main {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 3rem 6.25rem;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+/* 폼 레이아웃 - 3열 그리드 */
+.form-layout {
+  display: grid;
+  grid-template-columns: 320px 454px 1fr;
+  gap: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* 주의사항 박스 */
+.caution-box {
+  background: #FFEFE8;
+  padding: 1.25rem;
+  border-radius: 5px;
+  height: fit-content;
+}
+
+.caution-box h3 {
+  color: #EB5757;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.caution-box ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.caution-box li {
+  font-size: 0.875rem;
+  color: #000;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/* 이미지 업로드 섹션 */
+.image-upload-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.section-label {
+  font-size: 1rem;
+  color: #767676;
+}
+
+.image-upload {
+  width: 454px;
+  height: 454px;
+  background: #c4c4c4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.upload-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-placeholder .icon-wrap {
+  width: 50px;
+  height: 50px;
+  background: #767676;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-placeholder .icon-wrap img {
+  width: 30px;
+  height: 30px;
+  filter: brightness(0) invert(1);
+}
+
+.preview-image {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.preview-image.active {
+  display: block;
+}
+
+/* 오른쪽 폼 필드 영역 */
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-group label {
+  font-size: 1rem;
+  color: #767676;
+}
+
+/* 상품명 input (넓게) */
+.field-name .input-wrap {
+  position: relative;
+}
+
+.field-name .input-wrap input {
+  width: 100%;
+  height: 54px;
+  padding: 0 4rem 0 1rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.char-count {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.875rem;
+  color: #c4c4c4;
+}
+
+/* 단위 input (판매가, 배송비, 재고) */
+.input-with-unit {
+  display: flex;
+  width: 220px;
+}
+
+.input-with-unit input {
+  flex: 1;
+  height: 54px;
+  padding: 0 1rem;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px 0 0 5px;
+  font-size: 1rem;
+  border-right: none;
+}
+
+/* 숫자 input 스피너 제거 */
+.input-with-unit input::-webkit-outer-spin-button,
+.input-with-unit input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-with-unit input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.input-with-unit .unit {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c4c4c4;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  font-size: 1rem;
+}
+
+/* 배송방법 버튼 */
+.shipping-method {
+  display: flex;
+  gap: 0.625rem;
+}
+
+.method-btn {
+  width: 220px;
+  height: 54px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #767676;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.method-btn.active {
+  background: #21BF48;
+  color: #fff;
+  border-color: #21BF48;
+}
+
+/* 상품 상세 정보 */
+.detail-section {
+  margin-bottom: 2.5rem;
+}
+
+.detail-section > label {
+  display: block;
+  font-size: 1rem;
+  color: #767676;
+  margin-bottom: 0.5rem;
+}
+
+.editor-area {
+  background: #F2F2F2;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  min-height: 700px;
+}
+
+.editor-area textarea {
+  width: 100%;
+  height: 700px;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  resize: none;
+  background: transparent;
+}
+
+.editor-area textarea::placeholder {
+  color: #c4c4c4;
+  font-size: 3rem;
+  text-align: center;
+  line-height: 650px;
+}
+
+/* 버튼 */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.875rem;
+}
+
+.btn-cancel,
+.btn-submit {
+  width: 200px;
+  height: 60px;
+  border-radius: 5px;
+  font-size: 1.125rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #fff;
+  color: #767676;
+  border: 1px solid #c4c4c4;
+}
+
+.btn-submit {
+  background: #21BF48;
+  color: #fff;
+  border: none;
+}
+
+.btn-cancel:hover,
+.btn-submit:hover {
+  opacity: 0.85;
+}
+
+/* 반응형 */
+@media (max-width: 1280px) {
+  .upload-main {
+    padding: 2rem;
+  }
+  
+  .form-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .image-upload {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  
+  .input-with-unit,
+  .method-btn {
+    width: 100%;
+  }
+  
+  .shipping-method {
+    flex-direction: column;
+  }
+}
