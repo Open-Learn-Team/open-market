@@ -1,119 +1,160 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상품 등록 - HODU 판매자 센터</title>
-  <link rel="stylesheet" href="/assets/css/reset.css">
-  <link rel="stylesheet" href="/assets/css/pages/seller-upload.css">
-</head>
-<body>
-  <!-- 판매자 센터 전용 Header -->
-  <header class="seller-header">
-    <div class="header-inner">
-      <h1 class="logo">
-        <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU"></a>
-      </h1>
-      <span class="header-title">판매자 센터</span>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상품 등록 - HODU 판매자 센터</title>
+    <link
+      rel="stylesheet"
+      href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css"
+    />
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/pages/seller-upload.css" />
+  </head>
+  <body>
+    <!-- 판매자 센터 전용 Header -->
+    <header class="seller-header">
+      <div class="header-inner">
+        <h1 class="logo">
+          <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU" /></a>
+        </h1>
+        <span class="header-title">판매자 센터</span>
+      </div>
+    </header>
 
-  <main class="upload-main">
-    <h2 class="page-title">상품 등록</h2>
+    <main class="upload-main">
+      <h2 class="page-title">상품 등록</h2>
 
-    <form id="productForm" class="product-form">
-      <div class="form-layout">
-        <!-- 왼쪽: 주의사항 -->
-        <aside class="caution-box">
-          <h3>*상품 등록 주의사항</h3>
-          <ul>
-            <li>- 너무 귀여운 사진은 심장이 아파올 수 있습니다.</li>
-            <li>- 유소년에게서 천자만홍이 피고 이상이 온갖 들어 약동하다. 이상의 가지에 사랑의 있는가? 주며, 끓는 힘차게 얼음이 얼음 가치를 황금시대의 있음으로써 사라지지 것이다. 이 뜨거운지라, 이상의 속에서 이것은 피가 보배를 황금시대의 싹이 사막이다.</li>
-            <li>- 자신과 우는 옷을 지혜는 아니다. 더운지라 설레는 기쁘며, 위하여서, 평화스러운 광야에서 그리하였는가? 소담스러운 위하여 인도하겠다는 어디 무엇을 이상을 같지 따뜻한 청춘 칼이다.</li>
-            <li>- 가치를 그들을 예수는 찬미를 가슴이 과실이 이것이다. 희망의 것이다.보라, 풍부하게 이것은 황금시대를 얼마나 인간에 돋고, 이것이다.</li>
-          </ul>
-        </aside>
+      <form id="productForm" class="product-form">
+        <div class="form-layout">
+          <!-- 왼쪽: 주의사항 -->
+          <aside class="caution-section">
+            <p class="caution-title">*상품 등록 주의사항</p>
+            <div class="caution-box">
+              <p class="caution-text">
+                - 너무 귀여운 사진은 심장이 아파올 수 있습니다.<br /><br />-
+                유소년에게서 천자만홍이 피고 이상이 온갖 들어 약동하다. 이상의
+                가지에 사랑의 있는가? 주며, 끓는 힘차게 얼음이 얼음 가치를
+                황금시대의 있음으로써 사라지지 것이다. 이 뜨거운지라, 이상의
+                속에서 이것은 피가 보배를 황금시대의 싹이 사막이다.<br /><br />-
+                자신과 우는 옷을 지혜는 아니다. 더운지라 설레는 기쁘며,
+                위하여서, 평화스러운 광야에서 그리하였는가? 소담스러운 위하여
+                인도하겠다는 어디 무엇을 이상을 같지 따뜻한 청춘 칼이다.<br /><br />-
+                가치를 그들을 예수는 찬미를 가슴이 과실이 이것이다. 희망의
+                것이다.보라, 풍부하게 이것은 황금시대를 얼마나 인간에 돋고,
+                이것이다.
+              </p>
+            </div>
+          </aside>
 
-        <!-- 중앙: 이미지 업로드 -->
-        <div class="image-upload-section">
-          <span class="section-label">상품 이미지</span>
-          <label class="image-upload" id="imageUploadLabel">
-            <input type="file" id="productImage" name="image" accept="image/png, image/jpeg, image/gif" hidden>
-            <div class="upload-placeholder" id="uploadPlaceholder">
-              <div class="icon-wrap">
-                <img src="/assets/images/icon-img.svg" alt="">
+          <!-- 중앙: 이미지 업로드 -->
+          <div class="image-upload-section">
+            <span class="section-label">상품 이미지</span>
+            <label class="image-upload" id="imageUploadLabel">
+              <input
+                type="file"
+                id="productImage"
+                name="image"
+                accept="image/png, image/jpeg, image/gif"
+                hidden
+              />
+              <div class="upload-placeholder" id="uploadPlaceholder">
+                <div class="icon-wrap">
+                 <img src="/assets/images/icon-img.png" alt="이미지 업로드" class="upload-icon">
+                </div>
+              </div>
+              <img src="" alt="" class="preview-image" id="previewImage" />
+            </label>
+          </div>
+
+          <!-- 오른쪽: 입력 필드들 -->
+          <div class="form-fields">
+            <!-- 상품명 -->
+            <div class="field-group field-name">
+              <label for="productName">상품명</label>
+              <div class="input-wrap">
+                <input
+                  type="text"
+                  id="productName"
+                  name="name"
+                  maxlength="20"
+                />
+                <span class="char-count"><span id="nameCount">0</span>/20</span>
               </div>
             </div>
-            <img src="" alt="" class="preview-image" id="previewImage">
-          </label>
+
+            <!-- 판매가 -->
+            <div class="field-group">
+              <label for="productPrice">판매가</label>
+              <div class="input-with-unit">
+                <input type="number" id="productPrice" name="price" />
+                <span class="unit">원</span>
+              </div>
+            </div>
+
+            <!-- 배송방법 -->
+            <div class="field-group">
+              <label>배송방법</label>
+              <div class="shipping-method">
+                <button
+                  type="button"
+                  class="method-btn active"
+                  data-method="PARCEL"
+                >
+                  택배, 소포, 등기
+                </button>
+                <button type="button" class="method-btn" data-method="DELIVERY">
+                  직접배송(화물배달)
+                </button>
+              </div>
+              <input
+                type="hidden"
+                id="shippingMethod"
+                name="shipping_method"
+                value="PARCEL"
+              />
+            </div>
+
+            <!-- 기본 배송비 -->
+            <div class="field-group">
+              <label for="shippingFee">기본 배송비</label>
+              <div class="input-with-unit">
+                <input type="number" id="shippingFee" name="shipping_fee" />
+                <span class="unit">원</span>
+              </div>
+            </div>
+
+            <!-- 재고 -->
+            <div class="field-group">
+              <label for="productStock">재고</label>
+              <div class="input-with-unit">
+                <input type="number" id="productStock" name="stock" />
+                <span class="unit">개</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- 오른쪽: 입력 필드들 -->
-        <div class="form-fields">
-          <!-- 상품명 -->
-          <div class="field-group field-name">
-            <label for="productName">상품명</label>
-            <div class="input-wrap">
-              <input type="text" id="productName" name="name" maxlength="20">
-              <span class="char-count"><span id="nameCount">0</span>/20</span>
-            </div>
-          </div>
-
-          <!-- 판매가 -->
-          <div class="field-group">
-            <label for="productPrice">판매가</label>
-            <div class="input-with-unit">
-              <input type="number" id="productPrice" name="price">
-              <span class="unit">원</span>
-            </div>
-          </div>
-
-          <!-- 배송방법 -->
-          <div class="field-group">
-            <label>배송방법</label>
-            <div class="shipping-method">
-              <button type="button" class="method-btn active" data-method="PARCEL">택배, 소포, 등기</button>
-              <button type="button" class="method-btn" data-method="DELIVERY">직접배송(화물배달)</button>
-            </div>
-            <input type="hidden" id="shippingMethod" name="shipping_method" value="PARCEL">
-          </div>
-
-          <!-- 기본 배송비 -->
-          <div class="field-group">
-            <label for="shippingFee">기본 배송비</label>
-            <div class="input-with-unit">
-              <input type="number" id="shippingFee" name="shipping_fee">
-              <span class="unit">원</span>
-            </div>
-          </div>
-
-          <!-- 재고 -->
-          <div class="field-group">
-            <label for="productStock">재고</label>
-            <div class="input-with-unit">
-              <input type="number" id="productStock" name="stock">
-              <span class="unit">개</span>
-            </div>
+        <!-- 상품 상세 정보 -->
+        <div class="detail-section">
+          <label for="productInfo">상품 상세 정보</label>
+          <div class="editor-area">
+            <textarea
+              id="productInfo"
+              name="info"
+              placeholder="에디터 영역"
+            ></textarea>
           </div>
         </div>
-      </div>
 
-      <!-- 상품 상세 정보 -->
-      <div class="detail-section">
-        <label for="productInfo">상품 상세 정보</label>
-        <div class="editor-area">
-          <textarea id="productInfo" name="info" placeholder="에디터 영역"></textarea>
+        <!-- 버튼 -->
+        <div class="form-buttons">
+          <button type="button" class="btn-cancel" id="cancelBtn">취소</button>
+          <button type="submit" class="btn-submit">저장하기</button>
         </div>
-      </div>
+      </form>
+    </main>
 
-      <!-- 버튼 -->
-      <div class="form-buttons">
-        <button type="button" class="btn-cancel" id="cancelBtn">취소</button>
-        <button type="submit" class="btn-submit">저장하기</button>
-      </div>
-    </form>
-  </main>
-
-  <script type="module" src="/assets/js/pages/seller-upload.js"></script>
-</body>
+    <script type="module" src="/assets/js/pages/seller-upload.js"></script>
+  </body>
 </html>
