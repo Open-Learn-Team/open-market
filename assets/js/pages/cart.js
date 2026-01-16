@@ -26,21 +26,48 @@ let cart = [];
 async function loadCart() {
   const data = await getCart();
 
-  cart = data.results.map((item) => ({
-    id: item.id,
-    productId: item.product.id,
-    brand: item.product.seller.store_name,
-    name: item.product.name,
-    price: item.product.price,
-    shipping_method: item.product.shipping_method,
-    shipping_fee: item.product.shipping_fee,
-    stock: item.product.stock,
-    qty: item.quantity,
-    image: item.product.image,
-    checked: true,
-  }));
+  const correctedItems = [];
+  let hasAdjusted = false;
 
+  for (const item of data.results) {
+    const stock = item.product.stock;
+    let qty = item.quantity;
+
+    // ✅ 재고 초과 → 자동 보정
+    if (stock > 0 && qty > stock) {
+      qty = stock;
+      hasAdjusted = true;
+
+      // 서버에도 반영
+      await updateCartItem(item.id, qty);
+    }
+
+    // 품절이면 수량 0
+    if (stock === 0) {
+      qty = 0;
+    }
+
+    correctedItems.push({
+      id: item.id,
+      productId: item.product.id,
+      brand: item.product.seller.store_name,
+      name: item.product.name,
+      price: item.product.price,
+      shipping_method: item.product.shipping_method,
+      shipping_fee: item.product.shipping_fee,
+      stock,
+      qty,
+      image: item.product.image,
+      checked: stock > 0, // 품절은 체크 해제
+    });
+  }
+
+  cart = correctedItems;
   renderCart();
+
+  if (hasAdjusted) {
+    showAlertModal("일부 상품의 재고가 변경되어 수량이 조정되었습니다.");
+  }
 }
 
 // 상품 추가
