@@ -80,22 +80,22 @@ function updateQuantity(newQty) {
 }
 
 // ─────────────────────────────
-// 5. 품절 처리 함수 
+// 5. 품절 처리 함수
 // ─────────────────────────────
 function handleSoldOut() {
   // 수량 0으로 표시 (기본 검정색)
   $qtyValue.textContent = "0";
-  
+
   // 총 수량, 가격 표시
   $totalQty.textContent = "0";
   $totalPrice.textContent = "0";
-  
+
   // 버튼 모두 비활성화
   $qtyMinus.disabled = true;
   $qtyPlus.disabled = true;
   $btnCart.disabled = true;
   $btnBuy.disabled = true;
-  
+
   // 버튼 스타일 변경
   $btnCart.classList.add("disabled");
   $btnBuy.classList.add("disabled");
@@ -116,16 +116,18 @@ async function loadProduct() {
     $productName.textContent = product.name;
     $productPrice.textContent = formatNumber(product.price);
 
-    // ✅ 배송 정보 표시 추가
-    const shippingMethod = product.shipping_method === "PARCEL" ? "택배배송" : "직접배송";
+    // 배송 정보 표시
+    const shippingMethod =
+      product.shipping_method === "PARCEL" ? "택배배송" : "직접배송";
     const shippingFee = product.shipping_fee || 0;
-    
+
     if (shippingFee === 0) {
       $deliveryInfo.textContent = `${shippingMethod} / 무료배송`;
     } else {
-      $deliveryInfo.textContent = `${shippingMethod} / 배송비 ${formatNumber(shippingFee)}원`;
+      $deliveryInfo.textContent = `${shippingMethod} / 배송비 ${formatNumber(
+        shippingFee
+      )}원`;
     }
-
 
     if (product.image) {
       $productImage.src = product.image;
@@ -134,10 +136,13 @@ async function loadProduct() {
 
     document.title = `${product.name} | HODU`;
 
-    // 품절 체크 추가
+    // ✅ 상품 상세 정보 표시 (품절 여부와 관계없이)
+    $tabPanel.textContent = product.info || "상품 상세 정보가 없습니다.";
+
+    // 품절 체크
     if (stock === 0) {
       handleSoldOut();
-      return;  // 품절이면 여기서 종료
+      return;
     }
 
     updateQuantity(1);
@@ -161,13 +166,13 @@ async function loadProduct() {
 // ─────────────────────────────
 function initQuantityControls() {
   $qtyMinus?.addEventListener("click", () => {
-    if (stock === 0) return;  // ✅ 품절이면 무시
+    if (stock === 0) return;
     if (quantity <= 1) return;
     updateQuantity(quantity - 1);
   });
 
   $qtyPlus?.addEventListener("click", () => {
-    if (stock === 0) return;  // ✅ 품절이면 무시
+    if (stock === 0) return;
     if (stock && quantity >= stock) return;
     updateQuantity(quantity + 1);
   });
@@ -182,7 +187,6 @@ async function addToCartHandler() {
     return;
   }
 
-  // ✅ 품절 체크 추가
   if (stock === 0) {
     showAlertModal("품절된 상품입니다.");
     return;
@@ -219,7 +223,6 @@ function buyNow() {
     return;
   }
 
-  // ✅ 품절 체크 추가
   if (stock === 0) {
     showAlertModal("품절된 상품입니다.");
     return;
@@ -261,7 +264,7 @@ function initTabs() {
       const type = tab.dataset.tab;
       switch (type) {
         case "detail":
-          $tabPanel.textContent = "상품 상세 정보 영역입니다.";
+          $tabPanel.textContent = product?.info || "상품 상세 정보가 없습니다.";  // ✅ 수정
           break;
         case "review":
           $tabPanel.textContent = "아직 등록된 리뷰가 없습니다.";
@@ -278,7 +281,7 @@ function initTabs() {
     });
   });
 
-  $tabPanel.textContent = "상품 상세 정보 영역입니다.";
+  // ✅ 삭제: 초기 텍스트는 loadProduct()에서 설정
 }
 
 // ─────────────────────────────
@@ -292,7 +295,6 @@ function initPage() {
   $btnCart?.addEventListener("click", addToCartHandler);
   $btnBuy?.addEventListener("click", buyNow);
 
-  // 판매자 체크는 loadProduct에서 처리하므로 여기서 제거
   if (productId) {
     loadProduct();
   }
