@@ -55,30 +55,54 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-right: 40px;
+  /* margin-right: 40px;  삭제 */
 }
 
-.caution-title {
+/* 주의사항 제목 */
+.caution-title{
   color: #EB5757;
   font-size: 16px;
   font-weight: 500;
 }
 
-.caution-box {
+/* 주의사항 박스(배경 포함) */
+.caution-box{
   background: #FFEFE8;
   border-radius: 5px;
   width: 320px;
-  height: 346px;
-  padding: 20px;
+  padding: 24px;  /* 20도 가능, 2번째 느낌이면 24 추천 */
   box-sizing: border-box;
 }
 
+/* 텍스트 공통(깔끔한 줄간격/줄바꿈) */
+.caution-text{
+  font-size: 14px;
+  font-weight: 400;
+  color: #000;
+  line-height: 1.6;
+  white-space: normal;
+  word-break: keep-all;
+}
+
+/* p 구조일 때 */
+.caution-box p { margin: 0; }
+.caution-box p + p { margin-top: 18px; }
+
+.caution-box ul, .caution-box ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.caution-box li + li { margin-top: 18px; }
+
+/* 실제 텍스트 스타일 */
 .caution-text {
   font-size: 14px;
   font-weight: 400;
   color: #000;
-  line-height: 100%; /* 1.6 → 100% */
-  word-wrap: break-word;
+  line-height: 1.6;
+  white-space: normal;     /* pre-line 끄기 (br/구조에 맡김) */
+  word-break: keep-all;
 }
 
 /* 이미지 업로드 섹션 */
@@ -241,7 +265,7 @@
 
 /* 상품 상세 정보 */
 .detail-section {
-  margin-left: 400px; /* 주의사항(320) + gap(80) */
+  margin-left: 360px;   
   margin-bottom: 40px;
 }
 
@@ -254,8 +278,8 @@
 }
 
 .editor-area {
-  width: 1320px;
-  height: 700px;
+  width: 100%;          /* 1320px 제거 */
+  height: 700px;        /* 필요하면 유지 */
   background: #F2F2F2;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
@@ -272,19 +296,33 @@
   resize: none;
   background: transparent;
   box-sizing: border-box;
+  text-align: center;  
 }
 
-.editor-area textarea::placeholder {
-  color: #c4c4c4;
-  font-size: 48px;
-  font-weight: 400;
+.editor-placeholder{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#c4c4c4;
+  font-size:48px;
+  pointer-events:none;
+}
+
+.editor-area textarea:not(:placeholder-shown) + .editor-placeholder{
+  display:none;
 }
 
 /* 버튼 - 오른쪽 정렬 */
 .form-buttons {
+  margin-left: 360px;
+  width: calc(100% - 360px);
   display: flex;
   justify-content: flex-end;
   gap: 14px;
+
+  margin-bottom: 40px;  /* ✅ 버튼 아래 간격 늘리기 (원하는 만큼) */
 }
 
 .btn-cancel,
@@ -330,9 +368,9 @@
 }
 
 @media (max-width: 1280px) {
-  .upload-main {
-    padding: 32px;
-  }
+.upload-main {
+  padding-bottom: 100px; /* ✅ 페이지 하단 전체 여백 */
+}
   
   .seller-header .header-inner {
     padding: 26px 32px;

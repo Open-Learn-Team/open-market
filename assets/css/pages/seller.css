@@ -18,7 +18,7 @@
 }
 
 .seller-header .header-title {
-  font-size: 1.5rem;
+  font-size: 30px;
   font-weight: 500;
   color: #000;
 }
@@ -27,7 +27,7 @@
 .seller-main {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2.5rem 2rem;
+  padding: 1.5rem 2rem;   /*  2.5rem → 1.5rem 로 줄이기 */
 }
 
 /* 대시보드 타이틀 */
@@ -83,7 +83,8 @@
 /* 대시보드 콘텐츠 */
 .dashboard-content {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;            /* 2rem → 1.5rem */
+  align-items: stretch; /* 세로로 늘어나게 */
 }
 
 /* 사이드바 */
@@ -99,7 +100,7 @@
 }
 
 .sidebar-nav li {
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: none;
 }
 
 .sidebar-nav li:last-child {
@@ -108,7 +109,7 @@
 
 .sidebar-nav a {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 1rem 1.25rem;
   color: #000;
@@ -116,19 +117,27 @@
   transition: background 0.2s;
 }
 
-.sidebar-nav a:hover {
-  background: #f5f5f5;
+
+/* hover: active 제외하고만 연두 */
+.sidebar-nav li:not(.active) a:hover{
+  background-color: #EFFFF2;
 }
 
-.sidebar-nav li.active a {
+/* active: 초록 고정 */
+.sidebar-nav li.active a{
   background: #21BF48;
   color: #fff;
+  border-radius: 12px;   /*  첫번째 버튼처럼 둥글게 (값은 원하는 만큼 조절) */
+}
+
+/* active hover에도 초록 유지 */
+.sidebar-nav li.active a:hover{
+  background: #21BF48;
 }
 
 .sidebar-nav .badge {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
+ margin-left: auto;
   min-width: 24px;
   height: 24px;
   padding: 0 0.5rem;
@@ -137,6 +146,7 @@
   border-radius: 50%;
   font-size: 0.875rem;
   font-weight: 500;
+
 }
 
 .sidebar-nav li.active .badge {
@@ -150,6 +160,15 @@
   background: #fff;
   border-radius: 5px;
   border: 1px solid #e0e0e0;
+    display: flex;           /* 추가 */
+  flex-direction: column;  /* 추가 */
+  min-height: 900px;       /* 회색 영역 포함 전체 높이(원하는 값으로 조절) */
+}
+
+/* 테이블 아래 남는 공간 회색 채우기 */
+.table-filler{
+  flex: 1;               /* 남는 높이 전부 */
+  background: #f2f2f2;
 }
 
 .product-table {
@@ -158,11 +177,12 @@
 }
 
 .product-table thead {
-  background: #f5f5f5;
+  background: #fff;
 }
 
 .product-table th,
 .product-table td {
+  
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid #e0e0e0;
@@ -170,7 +190,7 @@
 
 .product-table th:first-child,
 .product-table td:first-child {
-  text-align: left;
+  text-align: center;
   width: 50%;
 }
 
@@ -184,7 +204,8 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-}
+} 
+
 
 .product-info img {
   width: 70px;
@@ -197,6 +218,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  align-items: flex-start; /* 왼쪽 정렬 */
 }
 
 .product-info .name {
@@ -207,6 +229,8 @@
 .product-info .stock {
   font-size: 0.875rem;
   color: #767676;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }
 
 /* 가격 */
@@ -239,8 +263,11 @@
 }
 
 .btn-edit:hover,
+/* hover: 테두리/글자 진하게 */ 
 .btn-delete:hover {
-  opacity: 0.85;
+  opacity: 1;              /* 기존 opacity 효과 끄기 */
+  border-color: #000;      /* 또는 #333 */
+  color: #000;             /* 글자 진하게 */
 }
 
 /* 빈 상태 */
@@ -255,6 +282,9 @@
 }
 
 .btn-upload-small {
+  width: 100%;
+height: 54px;
+position: relative;
   display: inline-block;
   padding: 0.75rem 1.5rem;
   background: #21BF48;
