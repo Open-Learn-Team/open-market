@@ -35,6 +35,21 @@
   font-weight: 500;
 }
 
+/* 모든 헤더 기본: 가운데 */
+.cart-table-header > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-qty {
+  transform: translateX(-17%);
+}
+
+.header-total {
+  transform: translateX(-6%);
+}
+
 .cart-table-header span {
   text-align: center;
 }
