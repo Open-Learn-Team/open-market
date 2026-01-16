@@ -9,30 +9,34 @@
     <link rel="stylesheet" href="/assets/css/pages/cart.css" />
   </head>
   <body>
-    <!-- Header 삽입 -->
+    <div class="page-wrapper">
+      <!-- Header 삽입 -->
 
-    <main class="cart-page">
-      <h1 class="cart-title">장바구니</h1>
+      <main class="cart-page">
+        <h1 class="cart-title">장바구니</h1>
 
-      <section class="cart-table-header">
-        <div class="cart-check">
-          <input type="checkbox" id="checkAll" />
-          <label for="checkAll">
-            <span></span>
-          </label>
-        </div>
+        <section class="cart-table-header">
+          <div class="cart-check">
+            <input type="checkbox" id="checkAll" />
+            <label for="checkAll">
+              <span></span>
+            </label>
+          </div>
 
-        <span>상품정보</span>
-        <span>수량</span>
-        <span>상품금액</span>
-      </section>
+          <span>상품정보</span>
+          <span>수량</span>
+          <span>상품금액</span>
+        </section>
 
-      <ul class="cart-list" id="cartList"></ul>
+        <ul class="cart-list" id="cartList"></ul>
 
-      <section class="cart-summary-wrapper" id="cartSummary"></section>
+        <section class="cart-summary-wrapper" id="cartSummary"></section>
 
-      <button class="order-btn" id="order-btn">주문하기</button>
-    </main>
+        <button class="order-btn" id="order-btn">주문하기</button>
+      </main>
+
+      <!-- Footer 삽입 -->
+    </div>
 
     <script type="module" src="/assets/js/common.js"></script>
     <script type="module" src="/assets/js/pages/cart.js"></script>
