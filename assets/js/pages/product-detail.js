@@ -207,8 +207,10 @@ async function addToCartHandler() {
 
     await addToCart(productId, quantity);
     showAlertModal("장바구니에 담겼습니다.");
-  } catch (e) {
-    showAlertModal(getApiErrorMessage(e, "장바구니에 담을 수 없습니다."));
+  } catch (error) {
+    // 상품이 없으면 404 페이지로 이동
+    window.location.href = "/pages/not-found/";
+    return;
   }
 }
 
@@ -264,7 +266,7 @@ function initTabs() {
       const type = tab.dataset.tab;
       switch (type) {
         case "detail":
-          $tabPanel.textContent = product?.info || "상품 상세 정보가 없습니다.";  // ✅ 수정
+          $tabPanel.textContent = product?.info || "상품 상세 정보가 없습니다."; // ✅ 수정
           break;
         case "review":
           $tabPanel.textContent = "아직 등록된 리뷰가 없습니다.";
@@ -281,7 +283,7 @@ function initTabs() {
     });
   });
 
-  // ✅ 삭제: 초기 텍스트는 loadProduct()에서 설정
+  // 삭제: 초기 텍스트는 loadProduct()에서 설정
 }
 
 // ─────────────────────────────
