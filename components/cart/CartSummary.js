@@ -1,12 +1,14 @@
 export function renderSummary(cart, container) {
   const checkedItems = cart.filter((i) => i.checked);
   const total = checkedItems.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const delivery = checkedItems.reduce((sum, i) => sum + i.shipping_fee, 0);
 
   container.innerHTML = `
     <div class="summary-box">
       <div>
         <p>총 상품금액</p>
-        <strong>${total.toLocaleString()}원</strong>
+        <strong><span class="text">${total.toLocaleString()}</span>
+          <span class="won">원</span></strong>
       </div>
 
       <div class="summary-icon">
@@ -15,7 +17,8 @@ export function renderSummary(cart, container) {
 
       <div>
         <p>상품 할인</p>
-        <strong>0원</strong>
+        <strong><span class="text">0</span>
+          <span class="won">원</span></strong>
       </div>
 
       <div class="summary-icon">
@@ -24,7 +27,8 @@ export function renderSummary(cart, container) {
 
       <div>
         <p>배송비</p>
-        <strong>0원</strong>
+        <strong><span class="text">${delivery.toLocaleString()}</span>
+          <span class="won">원</span></strong>
       </div>
 
       <div class="final">

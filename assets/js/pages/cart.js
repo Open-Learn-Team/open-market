@@ -22,7 +22,6 @@ let cart = [];
 // 장바구니 로드해오기
 async function loadCart() {
   const data = await getCart();
-  console.log("🧾 CART API RAW:", data);
 
   cart = data.results.map((item) => ({
     id: item.id,
@@ -30,6 +29,7 @@ async function loadCart() {
     brand: item.product.seller.store_name,
     name: item.product.name,
     price: item.product.price,
+    shipping_fee: item.product.shipping_fee, // ⭐ 여기!
     qty: item.quantity,
     image: item.product.image,
     checked: true,
@@ -139,3 +139,6 @@ orderBtn.onclick = () => {
 };
 
 loadCart();
+
+console.log(cart);
+console.log(cart[0]);
