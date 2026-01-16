@@ -364,3 +364,31 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ============================
+   품절 스타일
+   ============================ */
+
+/* 수량 영역 품절 텍스트 */
+.qty-value.sold-out {
+  color: #eb5757;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* 품절 시 수량 박스 스타일 */
+.quantity.sold-out {
+  border-color: #eb5757;
+  background-color: #fafafa;
+}
+
+/* 품절 버튼 스타일 */
+.btn-buy.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
+
+.btn-cart.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
