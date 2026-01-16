@@ -1,3 +1,10 @@
+// 이미지 URL을 https로 변환
+export const toHttps = (url) => {
+  if (url && url.startsWith('http://')) {
+    return url.replace('http://', 'https://');
+  }
+  return url;
+};
 const BASE_URL = "https://api.wenivops.co.kr/services/open-market";
 
 // ─────────────────────────────
