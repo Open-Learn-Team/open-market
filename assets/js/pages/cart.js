@@ -84,11 +84,26 @@ export async function addProductToCart(productId, quantity = 1) {
 async function orderItem(cartItemId) {
   try {
     const detail = await cartDetail(cartItemId);
+    const product = detail.product;
 
-    console.log("서버에서 검증된 장바구니 아이템:", detail);
+    // 주문 데이터를 localStorage에 저장
+    const orderData = {
+      orderType: "cart",
+      items: [{
+        id: product.id,
+        cartItemId: detail.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: detail.quantity,
+        shipping_method: product.shipping_method,
+        shipping_fee: product.shipping_fee,
+        store_name: product.seller?.store_name || "판매자",
+      }],
+    };
 
-    showAlertModal(`"${detail.product.name}" 주문 페이지로 이동`);
-    // 여기에 나중에 주문 페이지 이동
+    localStorage.setItem("orderData", JSON.stringify(orderData));
+    window.location.href = "/pages/order/";
   } catch (e) {
     showAlertModal(getApiErrorMessage(e, "이 상품은 주문할 수 없습니다."));
   }
