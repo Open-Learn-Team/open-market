@@ -17,6 +17,7 @@ const $productImage = document.getElementById("productImage");
 const $sellerName = document.getElementById("sellerName");
 const $productName = document.getElementById("productName");
 const $productPrice = document.getElementById("productPrice");
+const $deliveryInfo = document.getElementById("deliveryInfo");
 
 const $qtyMinus = document.querySelector(".qty-btn.minus");
 const $qtyPlus = document.querySelector(".qty-btn.plus");
@@ -56,7 +57,7 @@ const formatNumber = (num) => Number(num).toLocaleString("ko-KR");
 // 4. 수량 / 총 금액 갱신 함수
 // ─────────────────────────────
 function updateQuantity(newQty) {
-  // ✅ 품절이면 수량 변경 불가
+  // 품절이면 수량 변경 불가
   if (stock === 0) {
     $qtyMinus.disabled = true;
     $qtyPlus.disabled = true;
@@ -114,6 +115,17 @@ async function loadProduct() {
     $sellerName.textContent = product.seller?.store_name || "판매자";
     $productName.textContent = product.name;
     $productPrice.textContent = formatNumber(product.price);
+
+    // ✅ 배송 정보 표시 추가
+    const shippingMethod = product.shipping_method === "PARCEL" ? "택배배송" : "직접배송";
+    const shippingFee = product.shipping_fee || 0;
+    
+    if (shippingFee === 0) {
+      $deliveryInfo.textContent = `${shippingMethod} / 무료배송`;
+    } else {
+      $deliveryInfo.textContent = `${shippingMethod} / 배송비 ${formatNumber(shippingFee)}원`;
+    }
+
 
     if (product.image) {
       $productImage.src = product.image;
