@@ -1,6 +1,8 @@
 import { initCommon } from "/assets/js/common.js";
 import { createDirectOrder, createCartOrder, deleteCartItem } from "/utils/api.js";
 import { showAlertModal } from "/components/Modal.js";
+import checkBox from "/assets/images/check-box.svg";
+import checkFillBox from "/assets/images/check-fill-box.svg";
 
 initCommon();
 
@@ -14,8 +16,10 @@ const discountTotal = document.getElementById("discountTotal");
 const shippingTotal = document.getElementById("shippingTotal");
 const finalTotal = document.getElementById("finalTotal");
 const agreeCheckbox = document.getElementById("agreeCheckbox");
+const agreeIcon = document.getElementById("agreeIcon"); 
 const submitOrderBtn = document.getElementById("submitOrderBtn");
 const searchZipBtn = document.getElementById("searchZipBtn");
+
 
 // ─────────────────────────────
 // 주문 데이터 로드
@@ -88,14 +92,24 @@ searchZipBtn.addEventListener("click", () => {
 // ─────────────────────────────
 // 동의 체크박스 → 버튼 활성화
 // ─────────────────────────────
-agreeCheckbox.addEventListener("change", (e) => {
-  if (e.target.checked) {
+
+agreeIcon.addEventListener("click", () => {
+  agreeCheckbox.checked = !agreeCheckbox.checked;
+  
+  if (agreeCheckbox.checked) {
+    agreeIcon.src = checkFillBox;
     submitOrderBtn.disabled = false;
     submitOrderBtn.classList.add("active");
   } else {
+    agreeIcon.src = checkBox;
     submitOrderBtn.disabled = true;
     submitOrderBtn.classList.remove("active");
   }
+});
+
+// 라벨 클릭해도 토글되게
+document.querySelector(".agree-checkbox label").addEventListener("click", () => {
+  agreeIcon.click();
 });
 
 // ─────────────────────────────
