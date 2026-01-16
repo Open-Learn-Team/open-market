@@ -249,15 +249,17 @@ body {
 /* 푸터 */
 .footer {
   background: #f2f2f2;
-  height: 298px;          /* 피그마 높이 */
-  padding: 40px 0;        /* 위아래 여백 조금 줄여서 안쪽 정리 */
-  box-sizing: border-box; /* padding + border 포함해서 298px이 되도록 */
+  height: 298px;
+  padding: 40px 0;
+  box-sizing: border-box;
+  max-width: 1920px;   /* 추가 */
+  margin: 0 auto;      /*중앙 정렬 */
 }
 
 .footer-inner {
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 100px;
 
   height: 100%;                 /* 부모 .footer의 높이 따라가기 */
   display: flex;
