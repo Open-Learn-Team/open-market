@@ -1,12 +1,13 @@
 :root {
-  --color-primary: #21BF48;
+  --color-primary: #21bf48;
   --color-primary-dark: #1ca83f;
-  --color-error: #EB5757;
+  --color-error: #eb5757;
 }
 
 body {
-  font-family: 'Spoqa Han Sans Neo', sans-serif;
+  font-family: "Spoqa Han Sans Neo", sans-serif;
   color: #333;
+  overflow-x: hidden;
 }
 
 .sr-only {
@@ -78,7 +79,7 @@ body {
   top: 0;
   height: 90px;
   background: #fff;
-  box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
   z-index: 100;
 }
 
@@ -115,8 +116,8 @@ body {
   font-size: 16px;
 }
 
-.search-bar input::placeholder { 
-  color: #767676; 
+.search-bar input::placeholder {
+  color: #767676;
 }
 
 .search-bar button {
@@ -124,7 +125,6 @@ body {
   border: none;
   cursor: pointer;
 }
-
 
 .user-menu {
   margin-left: auto;
@@ -152,13 +152,13 @@ body {
 }
 
 .menu-link:hover,
-.mypage-btn:hover { 
-  color: #333; 
+.mypage-btn:hover {
+  color: #333;
 }
 
 /* 마이페이지 드롭다운 */
-.mypage-wrap { 
-  position: relative; 
+.mypage-wrap {
+  position: relative;
 }
 
 .dropdown {
@@ -171,16 +171,16 @@ body {
   width: 130px;
   background: #fff;
   border-radius: 10px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.25);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.25);
   padding: 10px;
 }
 
-.dropdown.active { 
-  display: flex; 
+.dropdown.active {
+  display: flex;
 }
 
 .dropdown::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -8px;
   left: 50%;
@@ -190,8 +190,8 @@ body {
   border-bottom-color: #fff;
 }
 
-.dropdown li { 
-  list-style: none; 
+.dropdown li {
+  list-style: none;
 }
 
 .dropdown a,
@@ -280,7 +280,7 @@ body {
 }
 
 .footer-links li:not(:last-child)::after {
-  content: '|';
+  content: "|";
   margin-left: 14px;
   color: #333;
 }
@@ -291,12 +291,12 @@ body {
   text-decoration: none;
 }
 
-.footer-links a:hover { 
-  text-decoration: underline; 
+.footer-links a:hover {
+  text-decoration: underline;
 }
 
-.footer-links .bold { 
-  font-weight: 700; 
+.footer-links .bold {
+  font-weight: 700;
 }
 
 .social-links {
@@ -304,8 +304,8 @@ body {
   gap: 14px;
 }
 
-.social-links a:hover { 
-  opacity: 0.8; 
+.social-links a:hover {
+  opacity: 0.8;
 }
 
 .company-info {
@@ -325,7 +325,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -383,10 +383,9 @@ body {
   color: #fff;
 }
 
-.btn-confirm.only { 
-  width: 120px; 
+.btn-confirm.only {
+  width: 120px;
 }
-
 
 .loading-spinner {
   display: flex;
@@ -404,22 +403,24 @@ body {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 640px) {
-  .search-bar { 
-    display: none; 
+  .search-bar {
+    display: none;
   }
-  
+
   .footer-top {
     flex-direction: column;
     gap: 20px;
     align-items: flex-start;
   }
-  
-  .footer-links { 
-    flex-wrap: wrap; 
+
+  .footer-links {
+    flex-wrap: wrap;
   }
 
   .seller-center-btn {

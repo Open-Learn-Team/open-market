@@ -9,30 +9,35 @@
     <link rel="stylesheet" href="/assets/css/pages/cart.css" />
   </head>
   <body>
-    <!-- Header 삽입 -->
+    <div class="page-wrapper">
+      <main class="cart-page">
+        <h1 class="cart-title">장바구니</h1>
 
-    <main class="cart-page">
-      <h1 class="cart-title">장바구니</h1>
+        <section class="cart-table-header">
+          <div class="cart-check">
+            <input type="checkbox" id="checkAll" />
+            <label for="checkAll">
+              <span></span>
+            </label>
+          </div>
 
-      <section class="cart-table-header">
-        <div class="cart-check">
-          <input type="checkbox" id="checkAll" />
-          <label for="checkAll">
-            <span></span>
-          </label>
+          <div class="header-product">상품정보</div>
+          <div class="header-qty">수량</div>
+          <div class="header-total">상품금액</div>
+        </section>
+
+        <ul class="cart-list" id="cartList"></ul>
+
+        <section class="cart-summary-wrapper" id="cartSummary"></section>
+
+        <div class="cart-actions">
+          <button class="delete-selected-btn" id="delete-selected-btn">
+            선택 삭제
+          </button>
+          <button class="order-btn" id="order-btn">주문하기</button>
         </div>
-
-        <span>상품정보</span>
-        <span>수량</span>
-        <span>상품금액</span>
-      </section>
-
-      <ul class="cart-list" id="cartList"></ul>
-
-      <section class="cart-summary-wrapper" id="cartSummary"></section>
-
-      <button class="order-btn" id="order-btn">주문하기</button>
-    </main>
+      </main>
+    </div>
 
     <script type="module" src="/assets/js/common.js"></script>
     <script type="module" src="/assets/js/pages/cart.js"></script>
