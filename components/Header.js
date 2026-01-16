@@ -1,5 +1,12 @@
 import { isLoggedIn, getUserType, logout } from '/utils/api.js';
 
+// 이미지 import
+import logoHodu from '/assets/images/Logo-hodu.svg';
+import searchIcon from '/assets/images/search.png';
+import cartIcon from '/assets/images/icon-shopping-cart.svg';
+import userIcon from '/assets/images/icon-user.svg';
+import shoppingBagIcon from '/assets/images/icon-shopping-bag.svg';
+
 export const createHeader = () => {
   const header = document.createElement('header');
   header.className = 'header';
@@ -11,34 +18,32 @@ export const createHeader = () => {
   header.innerHTML = `
     <section class="header-inner">
       <h1 class="logo">
-        <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU" /></a>
+        <a href="/"><img src="${logoHodu}" alt="HODU" /></a>
       </h1>
 
       <form class="search-bar" role="search">
         <label for="search-input" class="sr-only">상품 검색</label>
         <input type="search" id="search-input" placeholder="상품을 검색해보세요!" />
         <button type="submit" aria-label="검색">
-          <img src="/assets/images/search.png" alt="" width="28" height="28">
+          <img src="${searchIcon}" alt="" width="28" height="28">
         </button>
       </form>
 
       <nav class="user-menu">
         <ul>
           ${!isSeller ? `
-            <!-- 구매자: 장바구니 -->
             <li>
               <a href="${loggedIn ? '/pages/cart/' : '#'}" class="menu-link ${!loggedIn ? 'require-login' : ''}">
-                <img src="/assets/images/icon-shopping-cart.svg" alt="" width="32" height="32">
+                <img src="${cartIcon}" alt="" width="32" height="32">
                 <span>장바구니</span>
               </a>
             </li>
           ` : ''}
           
           ${loggedIn ? `
-            <!-- 로그인: 마이페이지 드롭다운 -->
             <li class="mypage-wrap">
               <button type="button" class="mypage-btn" aria-expanded="false">
-                <img src="/assets/images/icon-user.svg" alt="" width="32" height="32">
+                <img src="${userIcon}" alt="" width="32" height="32">
                 <span>마이페이지</span>
               </button>
               <ul class="dropdown">
@@ -48,19 +53,17 @@ export const createHeader = () => {
             </li>
             
             ${isSeller ? `
-              <!-- 판매자: 판매자 센터 버튼 -->
               <li>
                 <a href="/pages/seller/" class="seller-center-btn">
-                  <img src="/assets/images/icon-shopping-bag.svg" alt="" width="32" height="32">
+                  <img src="${shoppingBagIcon}" alt="" width="32" height="32">
                   <span>판매자 센터</span>
                 </a>
               </li>
             ` : ''}
           ` : `
-            <!-- 비로그인: 로그인 버튼 -->
             <li>
               <a href="/pages/login/" class="menu-link">
-                <img src="/assets/images/icon-user.svg" alt="" width="32" height="32">
+                <img src="${userIcon}" alt="" width="32" height="32">
                 <span>로그인</span>
               </a>
             </li>
