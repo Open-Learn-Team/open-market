@@ -16,6 +16,7 @@ const cartList = document.getElementById("cartList");
 const summaryEl = document.getElementById("cartSummary");
 const orderBtn = document.getElementById("order-btn");
 const checkAll = document.getElementById("checkAll");
+const deleteSelectedBtn = document.getElementById("delete-selected-btn");
 
 let cart = [];
 
@@ -99,6 +100,31 @@ async function removeItem(id) {
     console.error(e);
   }
 }
+
+// 선택 상품 삭제
+deleteSelectedBtn.onclick = async () => {
+  const selectedItems = cart.filter((item) => item.checked);
+
+  if (selectedItems.length === 0) {
+    alert("삭제할 상품을 선택해주세요.");
+    return;
+  }
+
+  if (!confirm(`${selectedItems.length}개의 상품을 삭제할까요?`)) return;
+
+  try {
+    // 서버에 하나씩 삭제 요청
+    await Promise.all(selectedItems.map((item) => deleteCartItem(item.id)));
+
+    // 프론트 상태에서도 제거
+    cart = cart.filter((item) => !item.checked);
+
+    renderCart();
+  } catch (e) {
+    alert("선택 상품 삭제에 실패했습니다.");
+    console.error(e);
+  }
+};
 
 // 전체 상품 선택
 checkAll.addEventListener("change", (e) => {
