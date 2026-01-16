@@ -45,6 +45,7 @@ const companyInput = document.getElementById("companyNumber");
 const companyBtn = document.getElementById("checkCompany");
 const companyMsg = document.getElementById("companyMsg");
 let companyOk = false;
+let checkingCompany = false;
 
 const storeInput = document.getElementById("storeName");
 const storeMsg = document.getElementById("storeMsg");
@@ -439,6 +440,87 @@ pw2Input.addEventListener("input", () => {
   validate();
 });
 
+phone2.addEventListener("input", () => {
+  if (phone2.value.length === 4) {
+    phone3.focus();
+  }
+});
+
+[phone2, phone3].forEach((input) => {
+  input.addEventListener("input", () => {
+    input.value = input.value.replace(/[^0-9]/g, "");
+
+    if (input.value.length > 4) {
+      input.value = input.value.slice(0, 4);
+    }
+  });
+});
+
+companyInput.addEventListener("input", () => {
+  // 숫자만 입력되도록
+  companyInput.value = companyInput.value.replace(/[^0-9]/g, "");
+
+  // 10자리까지 입력되도록
+  if (companyInput.value.length > 10) {
+    companyInput.value = companyInput.value.slice(0, 10);
+  }
+
+  companyOk = false;
+
+  validate();
+});
+
+companyBtn.addEventListener("mousedown", () => {
+  checkingCompany = true;
+});
+
+companyBtn.addEventListener("click", async () => {
+  const number = companyInput.value;
+
+  if (!number) {
+    companyMsg.textContent = "사업자등록번호를 입력해주세요.";
+    companyMsg.style.color = COLOR_ERROR;
+    companyInput.classList.add("input-error");
+    companyOk = false;
+    return;
+  }
+
+  if (number.length !== 10) {
+    companyMsg.textContent = "사업자등록번호는 10자리 숫자여야 합니다.";
+    companyMsg.style.color = COLOR_ERROR;
+    companyInput.classList.add("input-error");
+    companyOk = false;
+    return;
+  }
+
+  try {
+    const data = await validateCompanyNumber(number);
+
+    companyMsg.textContent = data.message;
+    companyMsg.style.color = COLOR_SUCCESS;
+    companyInput.classList.remove("input-error");
+    companyOk = true;
+  } catch (err) {
+    companyMsg.textContent = err.data?.error || "사업자등록번호 확인 실패";
+    companyMsg.style.color = COLOR_ERROR;
+    companyInput.classList.add("input-error");
+    companyOk = false;
+  }
+  checkingCompany = false;
+  validate();
+});
+
+companyInput.addEventListener("blur", () => {
+  if (checkingCompany) return;
+  if (
+    companyInput.value.length === 10 && // 10자리 다 입력했고
+    !companyOk // 아직 인증 안 했고
+  ) {
+    companyMsg.textContent = "사업자등록번호 인증을 해주세요.";
+    companyMsg.style.color = COLOR_ERROR;
+  }
+});
+
 agree.addEventListener("change", validate);
 
 function updateAgreeIcon() {
@@ -492,82 +574,6 @@ function validate() {
     submit.disabled = true;
   }
 }
-
-[phone2, phone3].forEach((input) => {
-  input.addEventListener("input", () => {
-    input.value = input.value.replace(/[^0-9]/g, "");
-
-    if (input.value.length > 4) {
-      input.value = input.value.slice(0, 4);
-    }
-  });
-});
-
-phone2.addEventListener("input", () => {
-  if (phone2.value.length === 4) {
-    phone3.focus();
-  }
-});
-
-companyInput.addEventListener("input", () => {
-  // 숫자만 입력되도록
-  companyInput.value = companyInput.value.replace(/[^0-9]/g, "");
-
-  // 10자리까지 입력되도록
-  if (companyInput.value.length > 10) {
-    companyInput.value = companyInput.value.slice(0, 10);
-  }
-
-  companyOk = false;
-
-  validate();
-});
-
-companyInput.addEventListener("blur", () => {
-  if (
-    companyInput.value.length === 10 && // 10자리 다 입력했고
-    !companyOk // 아직 인증 안 했고
-  ) {
-    companyMsg.textContent = "사업자등록번호 인증을 해주세요.";
-    companyMsg.style.color = COLOR_ERROR;
-  }
-});
-
-companyBtn.addEventListener("click", async () => {
-  const number = companyInput.value;
-
-  if (!number) {
-    companyMsg.textContent = "사업자등록번호를 입력해주세요.";
-    companyMsg.style.color = COLOR_ERROR;
-    companyInput.classList.add("input-error");
-    companyOk = false;
-    return;
-  }
-
-  if (number.length !== 10) {
-    companyMsg.textContent = "사업자등록번호는 10자리 숫자여야 합니다.";
-    companyMsg.style.color = COLOR_ERROR;
-    companyInput.classList.add("input-error");
-    companyOk = false;
-    return;
-  }
-
-  try {
-    const data = await validateCompanyNumber(number);
-
-    companyMsg.textContent = data.message;
-    companyMsg.style.color = COLOR_SUCCESS;
-    companyInput.classList.remove("input-error");
-    companyOk = true;
-  } catch (err) {
-    companyMsg.textContent = err.data?.error || "사업자등록번호 확인 실패";
-    companyMsg.style.color = COLOR_ERROR;
-    companyInput.classList.add("input-error");
-    companyOk = false;
-  }
-
-  validate();
-});
 
 submit.addEventListener("click", async () => {
   const phone = phone1.value + phone2.value + phone3.value;
