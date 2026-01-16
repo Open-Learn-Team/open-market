@@ -9,6 +9,8 @@ import {
   deleteCartItem,
   deleteCartAll,
 } from "/utils/api.js";
+import { getApiErrorMessage } from "/utils/error.js";
+import { showAlertModal } from "/components/Modal.js";
 
 initCommon();
 
@@ -45,19 +47,9 @@ async function loadCart() {
 export async function addProductToCart(productId, quantity = 1) {
   try {
     await addToCart(productId, quantity);
-    alert("장바구니에 담겼습니다!");
+    showAlertModal("장바구니에 담겼습니다!");
   } catch (err) {
-    console.error(err);
-    console.log("에러 전체:", e);
-    console.log("status:", e?.status);
-    console.log("data:", e?.data);
-
-    const message =
-      err?.data?.detail ||
-      err?.data?.quantity?.[0] ||
-      "장바구니에 담을 수 없습니다.";
-
-    alert(message);
+    showAlertModal(getApiErrorMessage(e, "수량을 변경할 수 없습니다."));
   }
 }
 
@@ -68,10 +60,12 @@ async function orderItem(cartItemId) {
 
     console.log("서버에서 검증된 장바구니 아이템:", detail);
 
-    alert(`"${detail.product.name}" 주문 페이지로 이동`);
+    showAlertModal(`"${detail.product.name}" 주문 페이지로 이동`);
     // 여기에 나중에 주문 페이지 이동
   } catch (e) {
-    alert("이 상품은 주문할 수 없습니다.");
+    showAlertModal(
+      showAlertModal(getApiErrorMessage(e, "이 상품은 주문할 수 없습니다."))
+    );
   }
 }
 
@@ -89,13 +83,7 @@ async function changeQty(id, delta) {
 
     renderCart();
   } catch (e) {
-    console.error(e);
-
-    // ✅ 서버 메시지 우선
-    const message =
-      e?.data?.detail || e?.data?.quantity?.[0] || "수량을 변경할 수 없습니다.";
-
-    alert(message);
+    showAlertModal(getApiErrorMessage(e, "수량을 변경할 수 없습니다."));
   }
 }
 
@@ -110,7 +98,7 @@ async function removeItem(id) {
     cart = cart.filter((item) => item.id !== id);
     renderCart();
   } catch (e) {
-    alert("삭제 실패");
+    showAlertModal("삭제 실패");
     console.error(e);
   }
 }
@@ -120,7 +108,7 @@ deleteSelectedBtn.onclick = async () => {
   const selectedItems = cart.filter((item) => item.checked);
 
   if (selectedItems.length === 0) {
-    alert("삭제할 상품을 선택해주세요.");
+    showAlertModal("삭제할 상품을 선택해주세요.");
     return;
   }
 
@@ -135,7 +123,7 @@ deleteSelectedBtn.onclick = async () => {
 
     renderCart();
   } catch (e) {
-    alert("선택 상품 삭제에 실패했습니다.");
+    showAlertModal("선택 상품 삭제에 실패했습니다.");
     console.error(e);
   }
 };
@@ -172,11 +160,11 @@ function renderCart() {
 orderBtn.onclick = () => {
   const checkedItems = cart.filter((i) => i.checked);
   if (checkedItems.length === 0) {
-    alert("주문할 상품을 선택해주세요.");
+    showAlertModal("주문할 상품을 선택해주세요.");
     return;
   }
 
-  alert(`${checkedItems.length}개의 상품을 주문합니다 (추후 구현)`);
+  showAlertModal(`${checkedItems.length}개의 상품을 주문합니다 (추후 구현)`);
 };
 
 loadCart();
