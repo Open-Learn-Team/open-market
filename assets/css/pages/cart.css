@@ -1,7 +1,7 @@
 .page-wrapper {
   overflow-x: auto; /* ← 여기만 스크롤 */
   width: 100%;
-  max-width: 1300px; /* ⭐ 피그마 기준 */
+  max-width: 1300px;
   margin: 0 auto; /* 가운데 정렬 */
   padding: 0 16px;
 }
