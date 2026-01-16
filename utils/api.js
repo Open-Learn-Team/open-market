@@ -237,22 +237,23 @@ export const deleteCartAll = () => fetchAPI("/cart/", { method: "DELETE" });
 // ─────────────────────────────
 // 주문 (BUYER)
 // ─────────────────────────────
-// direct_order에서 order_kind vs order_type은 명세에 혼용이 있어 확실하지 않음.
-// 지금은 네 기존 코드 유지(order_kind)로 둠.
 export const createDirectOrder = (orderData) =>
   fetchAPI("/order/", {
     method: "POST",
-    body: JSON.stringify({ order_kind: "direct_order", ...orderData }),
+    body: JSON.stringify({ 
+      order_type: "direct_order",  
+      ...orderData 
+    }),
   });
 
 export const createCartOrder = (orderData) =>
   fetchAPI("/order/", {
     method: "POST",
-    body: JSON.stringify({ order_type: "cart_order", ...orderData }),
+    body: JSON.stringify({ 
+      order_type: "cart_order",  
+      ...orderData 
+    }),
   });
-
-export const getOrders = () => fetchAPI("/order/");
-
 // ─────────────────────────────
 // ========== 판매자 기능 ==========
 // ─────────────────────────────

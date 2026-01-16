@@ -3,6 +3,7 @@ import { renderFooter } from '/components/Footer.js';
 import { initModalListeners } from '/components/Modal.js';
 
 // ========== 경로 체크 (404 리다이렉트) ==========
+// 새로운 코드
 const validPaths = [
   '/',
   '/pages/login/',
@@ -16,7 +17,10 @@ const validPaths = [
   '/pages/cart/',
   '/pages/cart',
   '/pages/not-found/',
-  '/pages/not-found'
+  '/pages/not-found',
+  '/pages/order/',        // ← 추가
+  '/pages/order',         // ← 추가
+  '/pages/seller/',
 ];
 
 

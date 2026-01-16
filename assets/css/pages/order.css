@@ -1,0 +1,387 @@
+/* ===========================
+   주문/결제 페이지
+   =========================== */
+
+.order-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 50px 0 100px;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+/* ─────────────────────────────
+   상품 목록 테이블
+   ───────────────────────────── */
+.order-products {
+  margin-bottom: 50px;
+}
+
+.table-header {
+  display: grid;
+  grid-template-columns: 1fr 150px 150px 150px;
+  background: #f2f2f2;
+  border-radius: 10px;
+  padding: 18px 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.table-header .col-info {
+  text-align: center;
+}
+
+.order-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.order-item {
+  display: grid;
+  grid-template-columns: 1fr 150px 150px 150px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.order-item .item-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.order-item .item-image {
+  width: 104px;
+  height: 104px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.order-item .item-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.order-item .item-seller {
+  font-size: 14px;
+  color: #767676;
+}
+
+.order-item .item-name {
+  font-size: 18px;
+  color: #000;
+}
+
+.order-item .item-qty {
+  font-size: 14px;
+  color: #767676;
+}
+
+.order-item .item-discount,
+.order-item .item-shipping {
+  text-align: center;
+  font-size: 18px;
+  color: #767676;
+}
+
+.order-item .item-price {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* 총 주문금액 */
+.order-total-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.order-total-row .label {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.order-total-row .total-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #eb5757;
+}
+
+/* ─────────────────────────────
+   배송정보
+   ───────────────────────────── */
+.shipping-info {
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 18px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #c4c4c4;
+}
+
+.info-group {
+  margin-bottom: 30px;
+}
+
+.group-title {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 15px 0;
+  border-bottom: 2px solid #c4c4c4;
+}
+
+.form-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid #c4c4c4;
+}
+
+.form-label {
+  width: 170px;
+  font-size: 16px;
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+.form-input {
+  height: 40px;
+  padding: 0 15px;
+  border: 1px solid #c4c4c4;
+  font-size: 16px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #21bf48;
+}
+
+.input-small {
+  width: 80px;
+  text-align: center;
+}
+
+.input-medium {
+  width: 334px;
+}
+
+.input-address {
+  width: 800px;
+  margin-bottom: 8px;
+}
+
+.input-address:last-child {
+  margin-bottom: 0;
+}
+
+.input-zipcode {
+  width: 170px;
+}
+
+.phone-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.phone-inputs .separator {
+  color: #000;
+}
+
+.phone-inputs .input-small:nth-child(3) {
+  width: 100px;
+}
+
+.phone-inputs .input-small:nth-child(5) {
+  width: 100px;
+}
+
+.address-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.address-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-zipcode {
+  width: 154px;
+  height: 40px;
+  background: #21bf48;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-zipcode:hover {
+  background: #1ca63e;
+}
+
+/* ─────────────────────────────
+   하단: 결제수단 + 최종결제정보
+   ───────────────────────────── */
+.order-bottom {
+  display: flex;
+  gap: 40px;
+}
+
+/* 결제수단 */
+.payment-method {
+  flex: 1;
+}
+
+.payment-method .section-title {
+  border-bottom: 2px solid #c4c4c4;
+}
+
+.method-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 20px 0;
+  border-bottom: 2px solid #c4c4c4;
+}
+
+.method-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.method-option input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #21bf48;
+}
+
+.method-option span {
+  font-size: 16px;
+}
+
+/* 최종결제 정보 */
+.final-payment {
+  width: 480px;
+  flex-shrink: 0;
+}
+
+.payment-box {
+  border: 2px solid #21bf48;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.payment-detail {
+  padding: 30px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  font-size: 16px;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: #767676;
+}
+
+.detail-value strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+}
+
+.payment-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-top: 1px solid #c4c4c4;
+}
+
+.total-label {
+  font-size: 16px;
+}
+
+.total-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #eb5757;
+}
+
+.payment-footer {
+  background: #f2f2f2;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.agree-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.agree-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: #21bf48;
+}
+
+.agree-checkbox span {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.btn-submit {
+  width: 220px;
+  height: 68px;
+  background: #c4c4c4;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+.btn-submit.active {
+  background: #21bf48;
+  cursor: pointer;
+}
+
+.btn-submit.active:hover {
+  background: #1ca63e;
+}

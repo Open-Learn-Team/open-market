@@ -16,6 +16,7 @@ export default defineConfig({
         seller: resolve(__dirname, "pages/seller/index.html"),
         sellerUpload: resolve(__dirname, "pages/seller/upload/index.html"),
         cart: resolve(__dirname, "pages/cart/index.html"),
+        order: resolve(__dirname, "pages/order/index.html"),  // ✅ 추가!
       },
     },
   },
@@ -53,6 +54,7 @@ export default defineConfig({
               "/pages/product-detail",
               "/pages/product-list",
               "/pages/cart",
+              "/pages/order",       // ✅ 추가!
               "/pages/not-found",
               "/pages/seller/upload",
               "/pages/seller",

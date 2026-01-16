@@ -184,6 +184,7 @@ function renderCart() {
   renderSummary(cart, summaryEl);
 }
 
+// 새로운 코드
 orderBtn.onclick = () => {
   const checkedItems = cart.filter((i) => i.checked);
   if (checkedItems.length === 0) {
@@ -191,7 +192,24 @@ orderBtn.onclick = () => {
     return;
   }
 
-  showAlertModal(`${checkedItems.length}개의 상품을 주문합니다 (추후 구현)`);
+  // 주문 데이터를 localStorage에 저장
+  const orderData = {
+    orderType: "cart",
+    items: checkedItems.map((item) => ({
+      id: item.productId,
+      cartItemId: item.id,
+      name: item.name,
+      image: item.image,
+      price: item.price,
+      quantity: item.qty,
+      shipping_method: item.shipping_method,
+      shipping_fee: item.shipping_fee,
+      store_name: item.brand,
+    })),
+  };
+
+  localStorage.setItem("orderData", JSON.stringify(orderData));
+  window.location.href = "/pages/order/";
 };
 
 loadCart();
