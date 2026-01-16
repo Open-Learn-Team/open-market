@@ -59,6 +59,12 @@ export function createCartItem(
 
   `;
 
+  const productArea = li.querySelector(".cart-product");
+
+  productArea.addEventListener("click", () => {
+    window.location.href = `/product/${item.productId}`;
+  });
+
   const minus = li.querySelector(".qty-btn.minus");
   const plus = li.querySelector(".qty-btn.plus");
   const qtyValue = li.querySelector(".qty-value");
