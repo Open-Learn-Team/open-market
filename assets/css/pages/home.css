@@ -2,6 +2,8 @@
 .banner {
   position: relative;
   width: 100%;
+  max-width: 1920px;    
+  margin: 0 auto;       
   height: 500px;
   background: #f2f2f2;
   overflow: hidden;
@@ -72,11 +74,12 @@
 .banner-dot.active { 
   background: #000; 
 }
+
 /* 상품 */
 .products {
-  max-width: 1280px;
+  max-width: 1920px;    /* 1280px → 1920px */
   margin: 0 auto 60px; 
-  padding: 80px 20px;
+  padding: 80px 100px;  /* 80px 20px → 80px 100px */
 }
 
 .products-grid {
