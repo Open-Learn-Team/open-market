@@ -8,6 +8,7 @@ import {
 } from "/utils/api.js";
 import { initCommon } from "/assets/js/common.js";
 import { showLoginModal, showAlertModal } from "/components/Modal.js";
+import { getApiErrorMessage } from "/utils/error.js";
 
 // ─────────────────────────────
 // 1. DOM 요소 가져오기
@@ -141,9 +142,8 @@ async function addToCartHandler() {
 
     await addToCart(productId, quantity);
     showAlertModal("장바구니에 담겼습니다.");
-  } catch (error) {
-    console.error("장바구니 추가 실패:", error);
-    showAlertModal("장바구니 추가에 실패했습니다.");
+  } catch (e) {
+    showAlertModal(getApiErrorMessage(e, "수량을 변경할 수 없습니다."));
   }
 }
 
