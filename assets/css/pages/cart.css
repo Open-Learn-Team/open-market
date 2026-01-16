@@ -1,9 +1,14 @@
-.cart-page {
-  /* max-width: 1200px; */
+.page-wrapper {
+  overflow-x: auto; /* ← 여기만 스크롤 */
   width: 100%;
+  max-width: 100vw;
+}
+
+.cart-page {
+  /* width: 100%; */
   padding: 0 16px;
   margin: 40px auto;
-  min-width: 960px;
+  min-width: 900px;
 }
 
 .cart-title {
