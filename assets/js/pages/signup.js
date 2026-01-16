@@ -13,6 +13,7 @@ const idInput = document.getElementById("userid");
 const checkBtn = document.getElementById("checkId");
 const idMsg = document.getElementById("idMsg");
 let idOk = false;
+let checkingId = false;
 
 const CHECK_OFF = "/assets/images/icon-check-off.svg";
 const CHECK_ON = "/assets/images/icon-check-on.svg";
@@ -291,6 +292,8 @@ idInput.addEventListener("input", () => {
 });
 
 idInput.addEventListener("blur", () => {
+  if (checkingId) return;
+
   if (
     idInput.value !== "" && // 값이 있고
     !idOk && // 아직 중복확인 안 했고
@@ -299,6 +302,10 @@ idInput.addEventListener("blur", () => {
     idMsg.textContent = "아이디 중복확인을 해주세요.";
     idMsg.style.color = COLOR_ERROR;
   }
+});
+
+checkBtn.addEventListener("mousedown", () => {
+  checkingId = true;
 });
 
 checkBtn.addEventListener("click", async () => {
@@ -331,7 +338,7 @@ checkBtn.addEventListener("click", async () => {
     idInput.classList.add("input-error");
     idOk = false;
   }
-
+  checkingId = false;
   validate();
 });
 
