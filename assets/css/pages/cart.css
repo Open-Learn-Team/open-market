@@ -263,6 +263,7 @@
   cursor: not-allowed;
 }
 
+/* 주문 품절 버튼 */
 .order-small.soldout {
   background: #c8c8c8;
   cursor: not-allowed;
