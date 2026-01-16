@@ -30,7 +30,7 @@
   display: grid;
   grid-template-columns: 50px 1fr 160px 200px;
   background: #f5f5f5;
-  padding: 15px;
+  padding: 15px 24px 15px 24px;
   border-radius: 8px;
   font-weight: 500;
 }
@@ -247,6 +247,26 @@
 .cart-qty .qty-btn img {
   width: 18px;
   height: 18px;
+}
+
+.cart-qty .qty-btn.disabled {
+  cursor: not-allowed;
+}
+
+.cart-qty .qty-btn.disabled img {
+  filter: grayscale(100%);
+  opacity: 0.3;
+}
+
+.cart-check.disabled label span {
+  background-image: url("/assets/images/cart/item-check-box-block.svg");
+  cursor: not-allowed;
+}
+
+/* 주문 품절 버튼 */
+.order-small.soldout {
+  background: #c8c8c8;
+  cursor: not-allowed;
 }
 
 .cart-price-box {
