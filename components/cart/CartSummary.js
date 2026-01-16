@@ -1,5 +1,5 @@
 export function renderSummary(cart, container) {
-  const checkedItems = cart.filter((i) => i.checked);
+  const checkedItems = cart.filter((i) => i.checked && i.stock > 0);
   const total = checkedItems.reduce((sum, i) => sum + i.price * i.qty, 0);
   const delivery = checkedItems.reduce((sum, i) => sum + i.shipping_fee, 0);
 

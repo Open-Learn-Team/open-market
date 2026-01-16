@@ -258,6 +258,16 @@
   opacity: 0.3;
 }
 
+.cart-check.disabled label span {
+  background-image: url("/assets/images/cart/item-check-box-block.svg");
+  cursor: not-allowed;
+}
+
+.order-small.soldout {
+  background: #c8c8c8;
+  cursor: not-allowed;
+}
+
 .cart-price-box {
   display: flex;
   flex-direction: column;
