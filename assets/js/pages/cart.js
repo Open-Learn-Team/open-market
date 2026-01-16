@@ -29,7 +29,8 @@ async function loadCart() {
     brand: item.product.seller.store_name,
     name: item.product.name,
     price: item.product.price,
-    shipping_fee: item.product.shipping_fee, // ⭐ 여기!
+    shipping_method: item.product.shipping_method,
+    shipping_fee: item.product.shipping_fee,
     qty: item.quantity,
     image: item.product.image,
     checked: true,

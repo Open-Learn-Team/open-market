@@ -21,7 +21,9 @@ export function createCartItem(
         <p class="seller">${item.brand}</p>
         <p class="name">${item.name}</p>
         <p class="price">${item.price.toLocaleString()}원</p>
-        <p class="delivery">택배배송 / 무료배송</p>
+        <p class="delivery">${
+          item.shipping_method === "PARCEL" ? "택배배송" : "직접배송"
+        } / ${item.shipping_fee.toLocaleString()}</p>
       </div>
     </div>
 
