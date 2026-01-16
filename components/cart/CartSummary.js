@@ -1,3 +1,6 @@
+import cartMinusIcon from "/assets/images/cart/cart-minus-icon.svg";
+import cartPlusIcon from "/assets/images/cart/cart-plus-icon.svg";
+
 export function renderSummary(cart, container) {
   const checkedItems = cart.filter(
     (i) => i.checked && i.stock > 0 && i.qty > 0
@@ -14,7 +17,7 @@ export function renderSummary(cart, container) {
       </div>
 
       <div class="summary-icon">
-        <img src="/assets/images/cart/cart-minus-icon.svg" alt="minus" />
+        <img src="${cartMinusIcon}" alt="minus" />
       </div>
 
       <div>
@@ -24,7 +27,7 @@ export function renderSummary(cart, container) {
       </div>
 
       <div class="summary-icon">
-        <img src="/assets/images/cart/cart-plus-icon.svg" alt="plus" />
+        <img src="${cartPlusIcon}" alt="plus" />
       </div>
 
       <div>

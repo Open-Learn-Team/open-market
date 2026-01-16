@@ -348,21 +348,21 @@
 
 .agree-checkbox {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
   cursor: pointer;
 }
 
-.agree-checkbox input[type="checkbox"] {
+.agree-checkbox .agree-check {
   width: 16px;
   height: 16px;
-  margin-top: 2px;
-  accent-color: #21bf48;
+  cursor: pointer;
 }
 
-.agree-checkbox span {
+.agree-checkbox label {
   font-size: 16px;
   line-height: 1.4;
+  cursor: pointer;
 }
 
 .btn-submit {
