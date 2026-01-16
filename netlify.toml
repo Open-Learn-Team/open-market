@@ -6,3 +6,9 @@
   from = "/product/*"
   to = "/pages/product-detail/index.html"
   status = 200
+
+# 존재하지 않는 경로는 404 페이지로
+[[redirects]]
+  from = "/*"
+  to = "/pages/not-found/index.html"
+  status = 404
