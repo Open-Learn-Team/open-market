@@ -73,8 +73,20 @@ export function createCartItem(
   const orderBtn = li.querySelector(".order-small");
   const deleteBtn = li.querySelector(".delete-btn");
 
+  // 수량이 1이면 마이너스 비활성화
+  if (item.qty <= 1) {
+    minus.disabled = true;
+    minus.classList.add("disabled");
+  } else {
+    minus.disabled = false;
+    minus.classList.remove("disabled");
+  }
+
   plus.onclick = () => onQtyChange(item.id, +1);
-  minus.onclick = () => onQtyChange(item.id, -1);
+  minus.onclick = () => {
+    if (item.qty <= 1) return;
+    onQtyChange(item.id, -1);
+  };
 
   checkbox.onchange = (e) => onToggle(item.id, e.target.checked);
   orderBtn.onclick = () => onOrder(item.id);

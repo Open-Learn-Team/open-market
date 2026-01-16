@@ -249,6 +249,15 @@
   height: 18px;
 }
 
+.cart-qty .qty-btn.disabled {
+  cursor: not-allowed;
+}
+
+.cart-qty .qty-btn.disabled img {
+  filter: grayscale(100%);
+  opacity: 0.3;
+}
+
 .cart-price-box {
   display: flex;
   flex-direction: column;
