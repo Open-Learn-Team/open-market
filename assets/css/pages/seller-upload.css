@@ -1,33 +1,8 @@
-/* ===========================
-   판매자 센터 - 상품 등록 페이지
-   피그마 기준 정확한 간격 적용
-   =========================== */
-
-/* 판매자 센터 전용 Header */
-.seller-header {
-  background: #fff;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
-}
-
+/* 상품 등록 페이지 - 헤더 정렬 맞춤 (seller.css 덮어쓰기) */
 .seller-header .header-inner {
   max-width: 1920px;
-  margin: 0 auto;
-  padding: 26px 100px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  padding: 26px 100px;  /* 본문 .upload-main과 동일한 좌우 100px */
 }
-
-.seller-header .logo img {
-  height: 24px;
-}
-
-.seller-header .header-title {
-  font-size: 30px;
-  font-weight: 500;
-  color: #000;
-}
-
 /* 메인 레이아웃 */
 .upload-main {
   max-width: 1920px;
@@ -59,23 +34,23 @@
 }
 
 /* 주의사항 제목 */
-.caution-title{
-  color: #EB5757;
+.caution-title {
+  color: #eb5757;
   font-size: 16px;
   font-weight: 500;
 }
 
 /* 주의사항 박스(배경 포함) */
-.caution-box{
-  background: #FFEFE8;
+.caution-box {
+  background: #ffefe8;
   border-radius: 5px;
   width: 320px;
-  padding: 24px;  /* 20도 가능, 2번째 느낌이면 24 추천 */
+  padding: 24px; /* 20도 가능, 2번째 느낌이면 24 추천 */
   box-sizing: border-box;
 }
 
 /* 텍스트 공통(깔끔한 줄간격/줄바꿈) */
-.caution-text{
+.caution-text {
   font-size: 14px;
   font-weight: 400;
   color: #000;
@@ -85,15 +60,22 @@
 }
 
 /* p 구조일 때 */
-.caution-box p { margin: 0; }
-.caution-box p + p { margin-top: 18px; }
+.caution-box p {
+  margin: 0;
+}
+.caution-box p + p {
+  margin-top: 18px;
+}
 
-.caution-box ul, .caution-box ol {
+.caution-box ul,
+.caution-box ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.caution-box li + li { margin-top: 18px; }
+.caution-box li + li {
+  margin-top: 18px;
+}
 
 /* 실제 텍스트 스타일 */
 .caution-text {
@@ -101,7 +83,7 @@
   font-weight: 400;
   color: #000;
   line-height: 1.6;
-  white-space: normal;     /* pre-line 끄기 (br/구조에 맡김) */
+  white-space: normal; /* pre-line 끄기 (br/구조에 맡김) */
   word-break: keep-all;
 }
 
@@ -135,7 +117,6 @@
   align-items: center;
   justify-content: center;
 }
-
 
 .preview-image {
   display: none;
@@ -220,7 +201,7 @@
   margin: 0;
 }
 
-.input-with-unit input[type=number] {
+.input-with-unit input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
@@ -258,14 +239,14 @@
 }
 
 .method-btn.active {
-  background: #21BF48;
+  background: #21bf48;
   color: #fff;
-  border-color: #21BF48;
+  border-color: #21bf48;
 }
 
 /* 상품 상세 정보 */
 .detail-section {
-  margin-left: 360px;   
+  margin-left: 360px;
   margin-bottom: 40px;
 }
 
@@ -278,9 +259,9 @@
 }
 
 .editor-area {
-  width: 100%;          /* 1320px 제거 */
-  height: 700px;        /* 필요하면 유지 */
-  background: #F2F2F2;
+  width: 100%; /* 1320px 제거 */
+  height: 700px; /* 필요하면 유지 */
+  background: #f2f2f2;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   position: relative;
@@ -296,22 +277,22 @@
   resize: none;
   background: transparent;
   box-sizing: border-box;
-  text-align: center;  
+  text-align: center;
 }
 
-.editor-placeholder{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#c4c4c4;
-  font-size:48px;
-  pointer-events:none;
+.editor-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c4c4c4;
+  font-size: 48px;
+  pointer-events: none;
 }
 
-.editor-area textarea:not(:placeholder-shown) + .editor-placeholder{
-  display:none;
+.editor-area textarea:not(:placeholder-shown) + .editor-placeholder {
+  display: none;
 }
 
 /* 버튼 - 오른쪽 정렬 */
@@ -322,7 +303,7 @@
   justify-content: flex-end;
   gap: 14px;
 
-  margin-bottom: 40px;  /* ✅ 버튼 아래 간격 늘리기 (원하는 만큼) */
+  margin-bottom: 40px; /* ✅ 버튼 아래 간격 늘리기 (원하는 만큼) */
 }
 
 .btn-cancel,
@@ -344,7 +325,7 @@
 }
 
 .btn-submit {
-  background: #21BF48;
+  background: #21bf48;
   color: #fff;
   border: none;
 }
@@ -361,53 +342,49 @@
   .detail-section {
     margin-left: 0;
   }
-  
+
   .editor-area {
     width: 100%;
   }
 }
 
 @media (max-width: 1280px) {
-.upload-main {
-  padding-bottom: 100px; /* ✅ 페이지 하단 전체 여백 */
-}
-  
-  .seller-header .header-inner {
-    padding: 26px 32px;
+  .upload-main {
+    padding-bottom: 100px; /* ✅ 페이지 하단 전체 여백 */
   }
-  
+
   .form-layout {
     grid-template-columns: 1fr;
     gap: 24px;
   }
-  
+
   .caution-box {
     width: 100%;
     max-width: 320px;
     height: auto;
     margin-right: 0;
   }
-  
+
   .image-upload {
     width: 100%;
     max-width: 400px;
     height: auto;
     aspect-ratio: 1;
   }
-  
+
   .field-name .input-wrap input {
     max-width: 100%;
   }
-  
+
   .input-with-unit,
   .method-btn {
     width: 100%;
   }
-  
+
   .shipping-method {
     flex-direction: column;
   }
-  
+
   .editor-area {
     height: 400px;
   }

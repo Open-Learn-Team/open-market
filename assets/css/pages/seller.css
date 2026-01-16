@@ -5,9 +5,9 @@
 }
 
 .seller-header .header-inner {
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 1.25rem 2rem;
+  padding: 1.25rem 100px;  /* 좌우 100px로 변경 */
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -23,11 +23,11 @@
   color: #000;
 }
 
-/* 메인 레이아웃 */
+/* 수정 후 */
 .seller-main {
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 1.5rem 2rem;   /*  2.5rem → 1.5rem 로 줄이기 */
+  padding: 1.5rem 100px;  /* 좌우 100px로 변경 */
 }
 
 /* 대시보드 타이틀 */
