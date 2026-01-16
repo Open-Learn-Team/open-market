@@ -147,14 +147,39 @@ async function addToCartHandler() {
   }
 }
 
+// 새로운 코드
 function buyNow() {
   if (!isLoggedIn()) {
     showLoginModal();
     return;
   }
 
+  if (getUserType() === "SELLER") {
+    showAlertModal("판매자는 구매할 수 없습니다.");
+    return;
+  }
+
   if (!product) return;
-  showAlertModal("바로구매 기능은 추후 구현 예정입니다.");
+
+  // 주문 데이터를 localStorage에 저장
+  const orderData = {
+    orderType: "direct",
+    items: [
+      {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: quantity,
+        shipping_method: product.shipping_method,
+        shipping_fee: product.shipping_fee,
+        store_name: product.seller?.store_name || "판매자",
+      },
+    ],
+  };
+
+  localStorage.setItem("orderData", JSON.stringify(orderData));
+  window.location.href = "/pages/order/";
 }
 
 // ─────────────────────────────
