@@ -1,6 +1,7 @@
 import { initCommon } from "/assets/js/common.js";
 import { createDirectOrder, createCartOrder, deleteCartItem } from "/utils/api.js";
 import { showAlertModal } from "/components/Modal.js";
+import { getApiErrorMessage } from "/utils/error.js";
 import checkBox from "/assets/images/check-box.svg";
 import checkFillBox from "/assets/images/check-fill-box.svg";
 
@@ -27,7 +28,7 @@ const searchZipBtn = document.getElementById("searchZipBtn");
 const orderData = JSON.parse(localStorage.getItem("orderData"));
 
 if (!orderData || !orderData.items || orderData.items.length === 0) {
-  alert("주문할 상품이 없습니다.");
+  showAlertModal("주문할 상품이 없습니다.");
   window.location.href = "/";
 }
 
@@ -196,7 +197,7 @@ function validateForm() {
   for (const field of requiredFields) {
     const el = document.getElementById(field.id);
     if (!el.value.trim()) {
-      alert(`${field.name}을(를) 입력해주세요.`);
+      showAlertModal(`${field.name}을(를) 입력해주세요.`);
       el.focus();
       return false;
     }
@@ -257,12 +258,12 @@ submitOrderBtn.addEventListener("click", async () => {
     }
 
     localStorage.removeItem("orderData");
-    alert("주문이 완료되었습니다!");
+    await showAlertModal("주문이 완료되었습니다!");
     window.location.href = "/";
   } catch (error) {
     console.error("주문 실패:", error);
     console.error("에러 상세:", error.data);
-    alert("주문에 실패했습니다. 다시 시도해주세요.");
+    showAlertModal(getApiErrorMessage(error, "주문에 실패했습니다. 다시 시도해주세요."));
   }
 });
 // ─────────────────────────────
