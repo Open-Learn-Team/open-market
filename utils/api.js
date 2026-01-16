@@ -257,10 +257,32 @@ export const getOrders = () => fetchAPI("/order/");
 // ========== 판매자 기능 ==========
 // ─────────────────────────────
 
-// 판매자 상품 불러오기 (seller name 기반)
-export const getSellerProducts = (sellerName) =>
-  fetchAPI(`/${encodeURIComponent(sellerName)}/products/`);
-
+// 판매자 상품 불러오기 (전체 상품에서 필터링)
+export const getSellerProducts = async () => {
+  const userInfo = getUserInfo();
+  const sellerName = userInfo?.name;
+  
+  if (!sellerName) {
+    console.error('판매자 이름을 찾을 수 없습니다.');
+    return { count: 0, results: [] };
+  }
+  
+  // 바로 전체 상품에서 필터링 (서버 버그 우회)
+  try {
+    const allProducts = await fetchAPI(`/products/`);
+    const myProducts = allProducts.results?.filter(
+      product => product.seller?.name === sellerName
+    ) || [];
+    
+    return {
+      count: myProducts.length,
+      results: myProducts
+    };
+  } catch (err) {
+    console.error('상품 로딩 실패:', err);
+    return { count: 0, results: [] };
+  }
+};
 // 상품 등록 (FormData)
 export const createProduct = (formData) =>
   fetchFormAPI("/products/", {
