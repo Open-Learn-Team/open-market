@@ -90,9 +90,7 @@ async function orderItem(cartItemId) {
     showAlertModal(`"${detail.product.name}" 주문 페이지로 이동`);
     // 여기에 나중에 주문 페이지 이동
   } catch (e) {
-    showAlertModal(
-      showAlertModal(getApiErrorMessage(e, "이 상품은 주문할 수 없습니다."))
-    );
+    showAlertModal(getApiErrorMessage(e, "이 상품은 주문할 수 없습니다."));
   }
 }
 
