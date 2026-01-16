@@ -32,6 +32,7 @@ async function loadCart() {
     price: item.product.price,
     shipping_method: item.product.shipping_method,
     shipping_fee: item.product.shipping_fee,
+    stock: item.product.stock,
     qty: item.quantity,
     image: item.product.image,
     checked: true,
@@ -46,8 +47,17 @@ export async function addProductToCart(productId, quantity = 1) {
     await addToCart(productId, quantity);
     alert("장바구니에 담겼습니다!");
   } catch (err) {
-    alert("장바구니 담기에 실패했습니다.");
     console.error(err);
+    console.log("에러 전체:", e);
+    console.log("status:", e?.status);
+    console.log("data:", e?.data);
+
+    const message =
+      err?.data?.detail ||
+      err?.data?.quantity?.[0] ||
+      "장바구니에 담을 수 없습니다.";
+
+    alert(message);
   }
 }
 
@@ -75,13 +85,17 @@ async function changeQty(id, delta) {
   try {
     const updated = await updateCartItem(id, newQty);
 
-    // 서버에서 확정된 수량으로 반영
     cart = cart.map((i) => (i.id === id ? { ...i, qty: updated.quantity } : i));
 
     renderCart();
   } catch (e) {
-    alert("수량 변경 실패");
     console.error(e);
+
+    // ✅ 서버 메시지 우선
+    const message =
+      e?.data?.detail || e?.data?.quantity?.[0] || "수량을 변경할 수 없습니다.";
+
+    alert(message);
   }
 }
 
