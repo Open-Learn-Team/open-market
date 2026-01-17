@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HODU - 회원가입</title>
+    <link rel="stylesheet" href="/assets/css/pages/signup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="logo">
+        <a href="/">
+          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="HODU" />
+        </a>
+      </h1>
+
+      <div class="tabs">
+        <button class="tab active" data-type="buyer">구매회원가입</button>
+        <button class="tab" data-type="seller">판매회원가입</button>
+      </div>
+
+      <form id="signupForm">
+        <div class="card">
+          <!-- 아이디 -->
+          <div class="cardgroup">
+            <div class="field">
+              <label>아이디</label>
+              <div class="row">
+                <input type="text" id="userid" />
+                <button type="button" class="check-btn" id="checkId">
+                  중복확인
+                </button>
+              </div>
+              <p class="msg" id="idMsg"></p>
+            </div>
+
+            <!-- 비밀번호 -->
+            <div class="field">
+              <label>비밀번호</label>
+              <div class="input-wrap">
+                <input type="password" id="pw" />
+                <img
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  class="check"
+                  id="pwCheck"
+                  style="display: none;"
+                />
+              </div>
+              <p class="msg" id="pwMsg1"></p>
+            </div>
+
+            <!-- 비밀번호 재확인 -->
+            <div class="field">
+              <label>비밀번호 재확인</label>
+              <div class="input-wrap">
+                <input type="password" id="pw2" />
+                <img
+                  src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                  class="check"
+                  id="pw2Check"
+                  style="display: none;"
+                />
+              </div>
+              <p class="msg" id="pwMsg2"></p>
+            </div>
+          </div>
+
+          <div class="cardgroup">
+            <!-- 이름 -->
+            <div class="field">
+              <label>이름</label>
+              <input type="text" name="name" />
+              <p class="msg"></p>
+            </div>
+
+            <!-- 휴대폰 -->
+            <div class="field">
+              <label>휴대폰번호</label>
+              <div class="phone">
+                <!-- 커스텀 드롭다운 -->
+                <div class="custom-select" id="phone1Wrapper">
+                  <button
+                    type="button"
+                    class="select-trigger"
+                    id="phone1Trigger"
+                  >
+                    <span id="phone1Value">010</span>
+                    <img
+                      src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                      alt=""
+                      class="arrow"
+                    />
+                  </button>
+                  <div class="select-dropdown" id="phone1Dropdown">
+                    <div class="dropdown-list">
+                      <div class="dropdown-item selected" data-value="010">
+                        010
+                      </div>
+                      <div class="dropdown-item" data-value="011">011</div>
+                      <div class="dropdown-item" data-value="016">016</div>
+                      <div class="dropdown-item" data-value="017">017</div>
+                      <div class="dropdown-item" data-value="018">018</div>
+                      <div class="dropdown-item" data-value="019">019</div>
+                    </div>
+                    <div class="dropdown-scrollbar">
+                      <div class="scrollbar-thumb"></div>
+                    </div>
+                  </div>
+                  <input type="hidden" id="phone1" value="010" />
+                </div>
+                <input id="phone2" maxlength="4" inputmode="numeric" />
+                <input id="phone3" maxlength="4" inputmode="numeric" />
+              </div>
+              <p class="msg" id="phoneMsg"></p>
+            </div>
+          </div>
+
+          <!-- 판매자 전용 -->
+          <div class="cardgroup" id="sellerArea">
+            <div class="field">
+              <label>사업자 등록번호</label>
+              <div class="row">
+                <input type="text" id="companyNumber" />
+                <button type="button" class="check-btn" id="checkCompany">
+                  인증
+                </button>
+              </div>
+              <p class="msg" id="companyMsg"></p>
+            </div>
+
+            <div class="field">
+              <label>스토어 이름</label>
+              <input type="text" id="storeName" />
+              <p class="msg" id="storeMsg"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="agree">
+          <img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            id="agreeIcon"
+            class="agree-check"
+          />
+          <input type="checkbox" id="agree" hidden />
+          <label for="agree">
+            호두샵의 이용약관 및 개인정보처리방침에 대한 내용을 확인하였고
+            동의합니다.
+          </label>
+        </div>
+
+        <button type="button" class="submit" id="submitBtn" disabled>
+          가입하기
+        </button>
+      </form>
+    </div>
+
+    <script type="module" src="/assets/js/pages/signup.js"></script>
+  </body>
+</html>

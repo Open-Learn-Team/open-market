@@ -1,0 +1,394 @@
+/* ============================
+   상품 상세 공통 레이아웃
+   ============================ */
+
+.product-detail {
+  max-width: 1280px;
+  margin: 100px auto 120px; /* 헤더 높이 고려 */
+  padding: 0 20px;
+  font-family: "Spoqa Han Sans Neo", -apple-system, BlinkMacSystemFont,
+    system-ui, sans-serif;
+  color: #767676;
+  background-color: #fff;
+}
+
+/* 상단 상품 정보 영역 (좌: 이미지 / 우: 정보) */
+.product-info {
+  display: flex;
+  gap: 80px;
+  align-items: stretch; /* 오른쪽 박스도 이미지 높이에 맞게 */
+}
+
+/* ============================
+   왼쪽 상품 이미지
+   ============================ */
+
+.product-img {
+  flex: 0 0 600px;
+  height: 600px;
+  margin: 0;
+  overflow: hidden;
+  
+  /* [수정] !important를 붙여서 강제로 적용합니다 */
+  border: none !important;        /* 테두리 없음 강제 */
+  border-radius: 0 !important;    /* 모서리 직각 강제 */
+  background-color: transparent !important; /* 배경색 투명 (혹시 회색 배경이 있다면 제거) */
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+  /* 혹시 이미지 자체에 둥글기가 있을 경우를 대비해 추가 */
+  border-radius: 0 !important; 
+}
+/* ============================
+   오른쪽 텍스트 정보
+   ============================ */
+
+.product-content {
+  flex: 1;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column; /* 위에서부터 쌓고 버튼을 맨 아래로 보내기 위해 */
+}
+
+/* 판매자 */
+.product-content .seller {
+  font-size: 16px;
+  color: #767676;
+  margin-bottom: 8px;
+}
+
+/* 상품명 */
+.product-content .name {
+  font-size: 36px;
+  color: #000;
+  margin: 4px 0 24px;
+}
+
+/* 가격 */
+.product-content .price {
+  font-size: 36px;
+  color: #000;
+  font-weight: 700;
+  margin: 0 0 40px;
+}
+
+.product-content .price strong {
+  font-weight: 700;
+}
+
+/* 배송 정보 (수량 위 선 포함) */
+.product-content .delivery {
+  font-size: 16px;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c4c4c4;
+  
+  /* [추가] 여기가 핵심입니다! */
+  /* 가격 정보와 배송 정보 사이를 벌려서, 배송 정보부터 바닥으로 밉니다 */
+  margin-top: auto; 
+}
+
+/* ============================
+   수량 선택 박스 (+ / - 전용)
+   ============================ */
+
+.quantity {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: #fff;
+
+  /* [수정] 아까 auto로 바꿨던 것을 다시 원래 값(16px)으로 되돌립니다. */
+  margin-top: 16px; 
+}
+
+/* - / + 버튼 공통 */
+.qty-btn {
+  flex: 0 0 50px;
+  height: 100%;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+/* 왼쪽 - 버튼 구분선 */
+.qty-btn.minus {
+  border-right: 1px solid #c4c4c4;
+}
+
+/* 오른쪽 + 버튼 구분선 */
+.qty-btn.plus {
+  border-left: 1px solid #c4c4c4;
+}
+
+/* 아이콘 이미지 크기 */
+.qty-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/* 수량 숫자 (중앙에 표시) */
+.qty-value {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: #000;
+}
+
+/* 버튼이 재고 때문에 비활성화 되었을 때 */
+.qty-btn:disabled {
+  cursor: default;
+  opacity: 0.4;
+}
+
+/* ============================
+   수량 아래 구분선
+   ============================ */
+
+.product-content hr {
+  border: 0;
+  border-top: 1px solid #c4c4c4;
+  margin: 16px 0 12px; /* 수량과 총 금액 사이 간격 */
+}
+
+/* ============================
+   총 금액 영역
+   ============================ */
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px; /* 버튼과 거리 */
+}
+
+.total > span {
+  font-size: 16px;
+  color: #000;
+}
+
+.total-info {
+  font-size: 16px;
+  color: #000;
+}
+
+.total-info strong {
+  color: #21BF48;
+}
+
+.total-price {
+  font-size: 36px;
+  color: #21bf48;
+  margin-left: 8px;
+}
+
+/* ============================
+   버튼 영역 (바로구매 / 장바구니)
+   ============================ */
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  /* margin-top: auto;  ← 이 줄 삭제! */
+}
+
+.btn-cart,
+.btn-buy {
+  height: 60px;
+  border-radius: 5px;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* 바로구매 버튼 (초록) - 2배 크기 */
+.btn-buy {
+  flex: 2;
+  background-color: #21bf48;
+  color: #fff;
+}
+
+/* 장바구니 버튼 (회색) - 1배 크기 */
+.btn-cart {
+  flex: 1;
+  background-color: #767676;
+  color: #fff;
+}
+
+/* 호버 시 약간의 밝기 변화 */
+.btn-cart:hover {
+  background-color: #5c5c5c;
+}
+
+.btn-buy:hover {
+  background-color: #1aa23e;
+}
+
+/* ============================
+   탭 메뉴 (버튼 / 리뷰 / Q&A / 반품/교환정보)
+   ============================ */
+
+.product-tabs {
+  margin-top: 80px;
+  display: flex;
+  
+  /* [수정] 위쪽 회색 라인 제거 */
+  border-top: none; 
+}
+
+.product-tabs .tab {
+  flex: 1;
+  height: 60px;
+  border: none;
+  background-color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  color: #4f4f4f;
+  cursor: pointer;
+  position: relative;
+}
+
+/* 기본 탭 밑줄 (연회색) */
+.product-tabs .tab::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 6px;
+  background-color: #e0e0e0;
+}
+
+/* 활성 탭 (초록색 밑줄 + 글자 색상) */
+.product-tabs .tab.active {
+  color: #21bf48;
+}
+
+.product-tabs .tab.active::after {
+  background-color: #21bf48;
+}
+
+/* 탭 콘텐츠 영역 */
+.product-tab-panel {
+  padding: 40px 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4f4f4f;
+}
+
+/* ============================
+   반응형 (태블릿 / 모바일)
+   ============================ */
+
+@media (max-width: 1024px) {
+  .product-detail {
+    margin-top: 120px;
+  }
+
+  .product-info {
+    flex-direction: column;
+    gap: 80px;
+    align-items: stretch;
+  }
+
+  .product-img {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-detail {
+    margin: 120px auto 80px;
+    padding: 0 16px;
+  }
+
+  .product-content .name {
+    font-size: 28px;
+  }
+
+  .product-content .price,
+  .total-price {
+    font-size: 28px;
+  }
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  /* 여기 두 줄로 역할을 바꿔줌 */
+  margin-top: auto;     /* 위쪽 여백 자동 → 이 줄이 빨간 박스를 아래로 밀어 줌 */
+  margin-bottom: 16px;  /* 버튼과의 간격 */
+}
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .product-tabs .tab {
+    font-size: 16px;
+  }
+}
+
+/* ============================
+   판매자 - 버튼 비활성화
+   ============================ */
+
+.btn-buy.disabled,
+.btn-cart.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
+
+.btn-buy.disabled:hover,
+.btn-cart.disabled:hover {
+  background-color: #c4c4c4 !important;
+}
+
+.qty-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================
+   품절 스타일
+   ============================ */
+
+/* 수량 영역 품절 텍스트 */
+.qty-value.sold-out {
+  color: #eb5757;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* 품절 시 수량 박스 스타일 */
+.quantity.sold-out {
+  border-color: #eb5757;
+  background-color: #fafafa;
+}
+
+/* 품절 버튼 스타일 */
+.btn-buy.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}
+
+.btn-cart.disabled {
+  background-color: #c4c4c4 !important;
+  cursor: not-allowed;
+}

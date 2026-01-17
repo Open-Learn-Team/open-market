@@ -1,0 +1,99 @@
+/* login.css */
+
+/* :root와 기본적인 body 설정은 common.css를 따르므로 삭제함 */
+body {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  /* margin, background, font-family 삭제 */
+}
+
+.login-container {
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 전역 .logo img 설정을 덮어쓰기 위해 상세히 작성 */
+.login-container .logo img {
+  width: 238px;
+  height: auto;
+  margin-bottom: 74px;
+}
+
+.login-title {
+  width: 550px;       
+  text-align: center; 
+  font-size: 24px;   
+  font-weight: 500;
+  margin-bottom: -55px;
+  color: #000;
+}
+
+.login-box {
+  width: 550px;
+  /* height는 내부 요소에 따라 유동적인 것이 좋으므로 min-height 권장 */
+  min-height: 292px; 
+  margin: 60px auto 0;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; 
+  padding: 35px;
+  border: 1px solid #C4C4C4;
+  background: #fff;
+}
+
+.input-group .input {
+  /* 전역 .input의 스타일을 초기화하고 로그인 전용 스타일 적용 */
+  width: 100%;
+  padding: 20px 0 15px;
+  border: none;
+  border-bottom: 1px solid #C4C4C4;
+  border-radius: 0; /* 전역의 5px 초기화 */
+  font-size: 16px;
+}
+
+.input-group .input:focus {
+  border-bottom: 1px solid var(--color-primary);
+}
+
+/*에러 메시지 */
+.error-text {
+  color: #EB5757;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 12px;
+  display: none;
+}
+
+.login-btn {
+  width: 100%;
+  height: 60px;
+  margin-top: 36px;
+  font-size: 18px;
+  font-weight: 700;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 5px;
+}
+
+.login-footer {
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px; 
+  color: #767676;
+}
+
+.login-footer a {
+  color: #767676;
+  /* text-decoration: none 삭제 */
+}
+
+.divider {
+  margin: 0 12px;
+  color: #C4C4C4; 
+}
