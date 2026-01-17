@@ -216,6 +216,7 @@ $submitOrderBtn.addEventListener("click", async () => {
 
   try {
     if (orderType === "direct") {
+      // 바로 구매: direct_order 사용
       const item = orderData.items[0];
       const itemShipping = item.shipping_fee || 0;
 
@@ -228,24 +229,17 @@ $submitOrderBtn.addEventListener("click", async () => {
 
       await createDirectOrder(requestData);
     } else {
-      // 장바구니 주문: 각 상품을 개별 direct_order로 처리
-      for (const item of orderData.items) {
-        const itemShipping = item.shipping_fee || 0;
+      // 장바구니 주문: cart_order 사용
+      // API 문서: "cartitem에 담긴 product의 id를 리스트 형태로 보내야합니다"
+      const productIds = orderData.items.map(item => item.id);
 
-        const requestData = {
-          product: item.id,
-          quantity: item.quantity,
-          total_price: (item.price * item.quantity) + itemShipping,
-          ...formData,
-        };
+      const requestData = {
+        cart_items: productIds,
+        total_price: calculateTotalPrice(),
+        ...formData,
+      };
 
-        await createDirectOrder(requestData);
-
-        // 주문 완료 후 장바구니에서 삭제
-        if (item.cartItemId) {
-          await deleteCartItem(item.cartItemId);
-        }
-      }
+      await createCartOrder(requestData);
     }
 
     localStorage.removeItem("orderData");
