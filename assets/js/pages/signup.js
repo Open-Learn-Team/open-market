@@ -5,6 +5,14 @@ import {
   signupSeller,
 } from "/utils/api.js";
 
+// 이미지 import
+import checkOff from "/assets/images/icon-check-off.svg";
+import checkOn from "/assets/images/icon-check-on.svg";
+import agreeOff from "/assets/images/check-box.svg";
+import agreeOn from "/assets/images/check-fill-box.svg";
+import logoHodu from "/assets/images/Logo-hodu.svg";
+import iconDownArrow from "/assets/images/icon-down-arrow.svg";
+
 const tabs = document.querySelectorAll(".tab");
 const sellerArea = document.getElementById("sellerArea");
 
@@ -15,8 +23,8 @@ const idMsg = document.getElementById("idMsg");
 let idOk = false;
 let checkingId = false;
 
-const CHECK_OFF = "/assets/images/icon-check-off.svg";
-const CHECK_ON = "/assets/images/icon-check-on.svg";
+const CHECK_OFF = checkOff;
+const CHECK_ON = checkOn;
 
 const pwInput = document.getElementById("pw");
 const pw2Input = document.getElementById("pw2");
@@ -50,8 +58,8 @@ let checkingCompany = false;
 const storeInput = document.getElementById("storeName");
 const storeMsg = document.getElementById("storeMsg");
 
-const AGREE_OFF = "/assets/images/check-box.svg";
-const AGREE_ON = "/assets/images/check-fill-box.svg";
+const AGREE_OFF = agreeOff;
+const AGREE_ON = agreeOn;
 
 const agree = document.getElementById("agree");
 const agreeIcon = document.getElementById("agreeIcon");
@@ -61,6 +69,13 @@ const submit = document.getElementById("submitBtn");
 const COLOR_ERROR = "#eb5757";
 const COLOR_SUCCESS = "#22c55e";
 
+// HTML 이미지 경로 설정 (DOM 로드 후)
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('.logo img').src = logoHodu;
+  document.querySelector('#phone1Trigger .arrow').src = iconDownArrow;
+  document.querySelector('#agreeIcon').src = agreeOff;
+});
+
 // ========== 커스텀 드롭다운 로직 ==========
 function initCustomDropdown() {
   const dropdownItems = phone1Dropdown.querySelectorAll(".dropdown-item");
@@ -69,24 +84,21 @@ function initCustomDropdown() {
 
   // 스크롤바 thumb 위치 계산
   function updateScrollbar() {
-    const listHeight = dropdownList.scrollHeight; // 전체 콘텐츠 높이
-    const visibleHeight = 150; // 보이는 영역 높이 (4개)
+    const listHeight = dropdownList.scrollHeight;
+    const visibleHeight = 150;
     const scrollTop = dropdownList.scrollTop;
-    const thumbHeight = 90; // 피그마 스펙 고정값
+    const thumbHeight = 90;
 
-    // thumb 위치 계산 (6px 여백 고려)
     const maxScroll = listHeight - visibleHeight;
-    const maxThumbTop = visibleHeight - thumbHeight - 12; // 상하 6px 여백
+    const maxThumbTop = visibleHeight - thumbHeight - 12;
     const thumbTop =
       maxScroll > 0 ? (scrollTop / maxScroll) * maxThumbTop + 6 : 6;
 
     scrollbarThumb.style.top = `${thumbTop}px`;
   }
 
-  // 리스트 스크롤 시 스크롤바 업데이트
   dropdownList.addEventListener("scroll", updateScrollbar);
 
-  // 트리거 클릭 시 드롭다운 열기/닫기
   phone1Trigger.addEventListener("click", (e) => {
     e.preventDefault();
     const isOpen = phone1Dropdown.classList.contains("open");
@@ -95,21 +107,17 @@ function initCustomDropdown() {
       closeDropdown();
     } else {
       openDropdown();
-      // 열릴 때 스크롤바 초기화
       setTimeout(updateScrollbar, 0);
     }
   });
 
-  // 옵션 클릭 시 선택
   dropdownItems.forEach((item) => {
     item.addEventListener("click", () => {
       const value = item.dataset.value;
 
-      // 값 업데이트
       phone1.value = value;
       phone1Value.textContent = value;
 
-      // selected 클래스 이동
       dropdownItems.forEach((i) => i.classList.remove("selected"));
       item.classList.add("selected");
 
@@ -117,21 +125,18 @@ function initCustomDropdown() {
     });
   });
 
-  // 외부 클릭 시 닫기
   document.addEventListener("click", (e) => {
     if (!phone1Wrapper.contains(e.target)) {
       closeDropdown();
     }
   });
 
-  // ESC 키로 닫기
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
       closeDropdown();
     }
   });
 
-  // 스크롤바 드래그 기능
   let isDragging = false;
   let startY = 0;
   let startScrollTop = 0;
@@ -152,7 +157,6 @@ function initCustomDropdown() {
     const thumbHeight = 90;
     const maxScroll = listHeight - visibleHeight;
 
-    // 드래그 비율로 스크롤 계산
     const scrollRatio = deltaY / (visibleHeight - thumbHeight - 12);
     const newScrollTop = startScrollTop + scrollRatio * maxScroll;
 
@@ -174,7 +178,6 @@ function closeDropdown() {
   phone1Trigger.classList.remove("active");
 }
 
-// 초기화
 initCustomDropdown();
 
 // ========== 기존 로직 ==========
@@ -236,12 +239,10 @@ document
       const fields = getRequiredFields();
       let index = fields.indexOf(field);
 
-      // phone2나 phone3이면, name까지만 검사
       if (field === phone2 || field === phone3) {
         index = fields.indexOf(nameInput) + 1;
       }
 
-      // 사업자번호면 phone3까지 검사
       if (field === companyInput) {
         index = fields.indexOf(phone3) + 1;
       }
@@ -263,7 +264,6 @@ document.querySelectorAll("input").forEach((field) => {
       msg.classList.remove("error");
     }
 
-    // 입력 시 에러 border 제거 (특정 필드 제외 - 별도 validation 있는 것들)
     if (!["userid", "pw", "pw2", "companyNumber"].includes(field.id)) {
       field.classList.remove("input-error");
     }
@@ -296,9 +296,9 @@ idInput.addEventListener("blur", () => {
   if (checkingId) return;
 
   if (
-    idInput.value !== "" && // 값이 있고
-    !idOk && // 아직 중복확인 안 했고
-    USERNAME_REGEX.test(idInput.value) // 형식도 맞으면
+    idInput.value !== "" &&
+    !idOk &&
+    USERNAME_REGEX.test(idInput.value)
   ) {
     idMsg.textContent = "아이디 중복확인을 해주세요.";
     idMsg.style.color = COLOR_ERROR;
@@ -360,7 +360,6 @@ pwInput.addEventListener("input", () => {
   const pw2 = pw2Input.value;
   const pwValid = PASSWORD_REGEX.test(pw);
 
-  // 비밀번호 자체 검증
   if (pw === "") {
     pwMsg1.textContent = "";
     pwInput.classList.remove("input-error");
@@ -377,7 +376,6 @@ pwInput.addEventListener("input", () => {
     setPwCheck(true);
   }
 
-  // pw가 바뀌면 pw2를 다시 검증
   if (pw2 !== "") {
     if (!pwValid) {
       setPw2Check(false);
@@ -404,7 +402,6 @@ pw2Input.addEventListener("input", () => {
   const pw2 = pw2Input.value;
   const pwValid = PASSWORD_REGEX.test(pw);
 
-  // 아무것도 안 쓴 상태
   if (pw2 === "") {
     setPw2Check(false);
     pwMsg2.textContent = "";
@@ -413,7 +410,6 @@ pw2Input.addEventListener("input", () => {
     return;
   }
 
-  // 비밀번호 자체가 규칙 미달
   if (!pwValid) {
     setPw2Check(false);
     pwMsg2.textContent = "올바른 비밀번호를 입력해주세요.";
@@ -423,15 +419,12 @@ pw2Input.addEventListener("input", () => {
     return;
   }
 
-  // 비밀번호는 유효한데 서로 다름
   if (pw !== pw2) {
     setPw2Check(false);
     pwMsg2.textContent = "비밀번호가 일치하지 않습니다.";
     pwMsg2.style.color = COLOR_ERROR;
     pw2Input.classList.add("input-error");
-  }
-  // 비밀번호도 유효 + 서로 같음
-  else {
+  } else {
     setPw2Check(true);
     pwMsg2.textContent = "";
     pw2Input.classList.remove("input-error");
@@ -457,10 +450,8 @@ phone2.addEventListener("input", () => {
 });
 
 companyInput.addEventListener("input", () => {
-  // 숫자만 입력되도록
   companyInput.value = companyInput.value.replace(/[^0-9]/g, "");
 
-  // 10자리까지 입력되도록
   if (companyInput.value.length > 10) {
     companyInput.value = companyInput.value.slice(0, 10);
   }
@@ -513,8 +504,8 @@ companyBtn.addEventListener("click", async () => {
 companyInput.addEventListener("blur", () => {
   if (checkingCompany) return;
   if (
-    companyInput.value.length === 10 && // 10자리 다 입력했고
-    !companyOk // 아직 인증 안 했고
+    companyInput.value.length === 10 &&
+    !companyOk
   ) {
     companyMsg.textContent = "사업자등록번호 인증을 해주세요.";
     companyMsg.style.color = COLOR_ERROR;
