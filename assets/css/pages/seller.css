@@ -229,8 +229,8 @@
 .product-info .stock {
   font-size: 0.875rem;
   color: #767676;
-  margin-left: 0 !important;
-  padding-left: 0 !important;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 /* 가격 */
