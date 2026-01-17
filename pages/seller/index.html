@@ -1,109 +1,113 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>판매자 센터 - HODU</title>
-  <link rel="stylesheet" href="/assets/css/reset.css">
-  <link rel="stylesheet" href="/assets/css/pages/seller.css">
-</head>
-<body>
-  <!-- 판매자 센터 전용 Header -->
-  <header class="seller-header">
-    <div class="header-inner">
-      <h1 class="logo">
-        <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU"></a>
-      </h1>
-      <span class="header-title">판매자 센터</span>
-    </div>
-  </header>
-
-  <main class="seller-main">
-    <!-- 대시보드 타이틀 -->
-    <section class="dashboard-title">
-      <div class="title-left">
-        <h2>대시보드</h2>
-        <strong class="store-name" id="storeName">스토어명</strong>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>판매자 센터 - HODU</title>
+    <link rel="stylesheet" href="/assets/css/reset.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />  
+    <link rel="stylesheet" href="/assets/css/pages/seller.css" />
+  </head>
+  <body>
+    <!-- 판매자 센터 전용 Header -->
+    <header class="seller-header">
+      <div class="header-inner">
+        <h1 class="logo">
+          <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU" /></a>
+        </h1>
+        <span class="header-title">판매자 센터</span>
       </div>
-      <a href="/pages/seller/upload/" class="btn-upload">
-        <img src="/assets/images/icon-plus.svg" alt="">
-        상품 업로드
-      </a>
-    </section>
+    </header>
 
-    <div class="dashboard-content">
-      <!-- 사이드바 -->
-      <aside class="sidebar">
-        <nav class="sidebar-nav">
-          <ul>
-            <li class="active">
-            <a href="#" data-menu="products">
-    <span class="label">판매중인 상품</span>
-    <span class="count">(<span id="productCount">0</span>)</span>
-  </a>
-            </li>
-            <li>
-              <a href="#" data-menu="orders">
-                주문/배송
-                <span class="badge">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" data-menu="qna">
-                문의/리뷰
-                <span class="badge">0</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" data-menu="stats">
-                통계
-              </a>
-            </li>
-            <li>
-              <a href="#" data-menu="settings">
-                스토어 설정
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </aside>
-
-      <!-- 상품 테이블 -->
-      <section class="product-table-section">
-        <table class="product-table">
-          <thead>
-            <tr>
-              <th>상품정보</th>
-              <th>판매가격</th>
-              <th>수정</th>
-              <th>삭제</th>
-            </tr>
-          </thead>
-          <tbody id="productList">
-            <!-- JS에서 동적 생성 -->
-          </tbody>
-        </table>
-        <div class="table-filler"></div>
-        <!-- 상품 없을 때 -->
-        <div class="empty-state" id="emptyState" style="display: none;">
-          <p>등록된 상품이 없습니다.</p>
-          <a href="/pages/seller/upload/" class="btn-upload-small">상품 등록하기</a>
+    <main class="seller-main">
+      <!-- 대시보드 타이틀 -->
+      <section class="dashboard-title">
+        <div class="title-left">
+          <h2>대시보드</h2>
+          <strong class="store-name" id="storeName">스토어명</strong>
         </div>
+        <a href="/pages/seller/upload/" class="btn-upload">
+          <img src="/assets/images/icon-plus.svg" alt="" />
+          상품 업로드
+        </a>
       </section>
-    </div>
-  </main>
 
-  <!-- 삭제 확인 모달 -->
-  <div class="modal-overlay" id="deleteModal">
-    <div class="modal">
-      <p>상품을 삭제하시겠습니까?</p>
-      <div class="modal-buttons">
-        <button type="button" class="btn-cancel" id="cancelDelete">취소</button>
-        <button type="button" class="btn-confirm" id="confirmDelete">삭제</button>
+      <div class="dashboard-content">
+        <!-- 사이드바 -->
+        <aside class="sidebar">
+          <nav class="sidebar-nav">
+            <ul>
+              <li class="active">
+                <a href="#" data-menu="products">
+                  <span class="label">판매중인 상품</span>
+                  <span class="count">(<span id="productCount">0</span>)</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" data-menu="orders">
+                  주문/배송
+                  <span class="badge">2</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" data-menu="qna">
+                  문의/리뷰
+                  <span class="badge">1</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" data-menu="stats"> 통계 </a>
+              </li>
+              <li>
+                <a href="#" data-menu="settings"> 스토어 설정 </a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
+
+        <!-- 상품 테이블 -->
+        <section class="product-table-section">
+          <table class="product-table">
+            <thead>
+              <tr>
+                <th>상품정보</th>
+                <th>판매가격</th>
+                <th>수정</th>
+                <th>삭제</th>
+              </tr>
+            </thead>
+            <tbody id="productList">
+              <!-- JS에서 동적 생성 -->
+            </tbody>
+          </table>
+          <div class="table-filler"></div>
+          <!-- 상품 없을 때 -->
+          <div class="empty-state" id="emptyState" style="display: none">
+            <p>등록된 상품이 없습니다.</p>
+            <a href="/pages/seller/upload/" class="btn-upload-small"
+              >상품 등록하기</a
+            >
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- 삭제 확인 모달 -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="modal">
+        <p>상품을 삭제하시겠습니까?</p>
+        <div class="modal-buttons">
+          <button type="button" class="btn-cancel" id="cancelDelete">
+            취소
+          </button>
+          <button type="button" class="btn-confirm" id="confirmDelete">
+            삭제
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script type="module" src="/assets/js/pages/seller.js"></script>
-</body>
+    <footer class="footer" id="footer"></footer>
+    <script type="module" src="/assets/js/pages/seller.js"></script>
+  </body>
 </html>

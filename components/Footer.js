@@ -1,3 +1,8 @@
+// 이미지 import
+import instaIcon from '/assets/images/icon-insta.svg';
+import fbIcon from '/assets/images/icon-fb.svg';
+import ytIcon from '/assets/images/icon-yt.svg';
+
 export const createFooter = () => {
   const footer = document.createElement('footer');
   footer.className = 'footer';
@@ -18,17 +23,17 @@ export const createFooter = () => {
         <ul class="social-links">
           <li>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="인스타그램">
-              <img src="/assets/images/icon-insta.svg" alt="" width="32" height="32">
+              <img src="${instaIcon}" alt="" width="32" height="32">
             </a>
           </li>
           <li>
             <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="페이스북">
-              <img src="/assets/images/icon-fb.svg" alt="" width="32" height="32">
+              <img src="${fbIcon}" alt="" width="32" height="32">
             </a>
           </li>
           <li>
             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="유튜브">
-              <img src="/assets/images/icon-yt.svg" alt="" width="32" height="32">
+              <img src="${ytIcon}" alt="" width="32" height="32">
             </a>
           </li>
         </ul>

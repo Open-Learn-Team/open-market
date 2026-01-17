@@ -351,21 +351,22 @@
 }
 
 .agree-checkbox {
-  width: 100%;                /* footer 가로폭만큼 */
-  justify-content: flex-start; /* 왼쪽으로 */
-  align-items: center;         /* 체크박스/텍스트 세로정렬 */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
 }
 
-.agree-checkbox input[type="checkbox"] {
+.agree-checkbox .agree-check {
   width: 16px;
   height: 16px;
-  margin-top: 2px;
-  accent-color: #21bf48;
+  cursor: pointer;
 }
 
-.agree-checkbox span {
+.agree-checkbox label {
   font-size: 16px;
   line-height: 1.4;
+  cursor: pointer;
 }
 
 .btn-submit {

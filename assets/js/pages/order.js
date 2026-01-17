@@ -1,6 +1,9 @@
 import { initCommon } from "/assets/js/common.js";
 import { createDirectOrder, createCartOrder, deleteCartItem } from "/utils/api.js";
 import { showAlertModal } from "/components/Modal.js";
+import { getApiErrorMessage } from "/utils/error.js";
+import checkBox from "/assets/images/check-box.svg";
+import checkFillBox from "/assets/images/check-fill-box.svg";
 
 initCommon();
 
@@ -14,8 +17,10 @@ const discountTotal = document.getElementById("discountTotal");
 const shippingTotal = document.getElementById("shippingTotal");
 const finalTotal = document.getElementById("finalTotal");
 const agreeCheckbox = document.getElementById("agreeCheckbox");
+const agreeIcon = document.getElementById("agreeIcon"); 
 const submitOrderBtn = document.getElementById("submitOrderBtn");
 const searchZipBtn = document.getElementById("searchZipBtn");
+
 
 // ─────────────────────────────
 // 주문 데이터 로드
@@ -23,7 +28,7 @@ const searchZipBtn = document.getElementById("searchZipBtn");
 const orderData = JSON.parse(localStorage.getItem("orderData"));
 
 if (!orderData || !orderData.items || orderData.items.length === 0) {
-  alert("주문할 상품이 없습니다.");
+  showAlertModal("주문할 상품이 없습니다.");
   window.location.href = "/";
 }
 
@@ -88,14 +93,24 @@ searchZipBtn.addEventListener("click", () => {
 // ─────────────────────────────
 // 동의 체크박스 → 버튼 활성화
 // ─────────────────────────────
-agreeCheckbox.addEventListener("change", (e) => {
-  if (e.target.checked) {
+
+agreeIcon.addEventListener("click", () => {
+  agreeCheckbox.checked = !agreeCheckbox.checked;
+  
+  if (agreeCheckbox.checked) {
+    agreeIcon.src = checkFillBox;
     submitOrderBtn.disabled = false;
     submitOrderBtn.classList.add("active");
   } else {
+    agreeIcon.src = checkBox;
     submitOrderBtn.disabled = true;
     submitOrderBtn.classList.remove("active");
   }
+});
+
+// 라벨 클릭해도 토글되게
+document.querySelector(".agree-checkbox label").addEventListener("click", () => {
+  agreeIcon.click();
 });
 
 // ─────────────────────────────
@@ -182,7 +197,7 @@ function validateForm() {
   for (const field of requiredFields) {
     const el = document.getElementById(field.id);
     if (!el.value.trim()) {
-      alert(`${field.name}을(를) 입력해주세요.`);
+      showAlertModal(`${field.name}을(를) 입력해주세요.`);
       el.focus();
       return false;
     }
@@ -243,12 +258,12 @@ submitOrderBtn.addEventListener("click", async () => {
     }
 
     localStorage.removeItem("orderData");
-    alert("주문이 완료되었습니다!");
+    await showAlertModal("주문이 완료되었습니다!");
     window.location.href = "/";
   } catch (error) {
     console.error("주문 실패:", error);
     console.error("에러 상세:", error.data);
-    alert("주문에 실패했습니다. 다시 시도해주세요.");
+    showAlertModal(getApiErrorMessage(error, "주문에 실패했습니다. 다시 시도해주세요."));
   }
 });
 // ─────────────────────────────

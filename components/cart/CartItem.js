@@ -1,3 +1,6 @@
+import iconMinusLine from "/assets/images/icon-minus-line.svg";
+import iconPlusLine from "/assets/images/icon-plus-line.svg";
+
 export function createCartItem(
   item,
   { onQtyChange, onToggle, onOrder, onDelete }
@@ -37,13 +40,13 @@ export function createCartItem(
       <button class="qty-btn minus ${
         isSoldOut || item.qty <= 1 ? "disabled" : ""
       }">
-        <img src="/assets/images/icon-minus-line.svg" />
+        <img src="${iconMinusLine}" />
       </button>
 
       <span class="qty-value">${isSoldOut ? 0 : item.qty}</span>
 
       <button class="qty-btn plus ${isSoldOut ? "disabled" : ""}">
-        <img src="/assets/images/icon-plus-line.svg" />
+        <img src="${iconPlusLine}" />
       </button>
     </div>
 

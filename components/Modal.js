@@ -18,7 +18,6 @@ const createModal = (message, onConfirm, onCancel) => {
     </article>
   `;
 
-  // 이벤트
   modal.querySelector('.modal-close').onclick = () => closeModal(onCancel);
   modal.querySelector('.btn-cancel').onclick = () => closeModal(onCancel);
   modal.querySelector('.btn-confirm').onclick = () => closeModal(onConfirm);
@@ -52,23 +51,43 @@ export const showConfirmModal = (message, onConfirm) => {
 };
 
 export const showAlertModal = (message) => {
-  if (modalEl) return;
-  const modal = document.createElement('div');
-  modal.className = 'modal-overlay';
-  modal.innerHTML = `
-    <article class="modal">
-      <p class="modal-msg">${message}</p>
-      <div class="modal-btns">
-        <button type="button" class="btn-confirm only">확인</button>
-      </div>
-    </article>
-  `;
-  modal.querySelector('.btn-confirm').onclick = () => {
-    modal.remove();
-    modalEl = null;
-  };
-  modalEl = modal;
-  document.body.appendChild(modal);
+  return new Promise((resolve) => {
+    if (modalEl) {
+      resolve();
+      return;
+    }
+    
+    const modal = document.createElement('div');
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <article class="modal">
+        <button type="button" class="modal-close" aria-label="닫기">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M4 4l14 14M18 4L4 18" stroke="#c4c4c4" stroke-width="2"/>
+          </svg>
+        </button>
+        <p class="modal-msg">${message}</p>
+        <div class="modal-btns">
+          <button type="button" class="btn-confirm only">확인</button>
+        </div>
+      </article>
+    `;
+    
+    const closeAlertModal = () => {
+      modal.remove();
+      modalEl = null;
+      resolve();
+    };
+    
+    modal.querySelector('.modal-close').onclick = closeAlertModal;
+    modal.querySelector('.btn-confirm').onclick = closeAlertModal;
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeAlertModal();
+    });
+    
+    modalEl = modal;
+    document.body.appendChild(modal);
+  });
 };
 
 export const initModalListeners = () => {
