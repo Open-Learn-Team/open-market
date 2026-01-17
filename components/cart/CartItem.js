@@ -10,75 +10,113 @@ export function createCartItem(
   const li = document.createElement("li");
   li.className = "cart-item";
 
-  li.innerHTML = `
-    <div class="cart-check ${isSoldOut ? "disabled" : ""}">
-      <input
-        type="checkbox"
-        id="check-${item.id}"
-        ${item.checked && !isSoldOut ? "checked" : ""}
-        ${isSoldOut ? "disabled" : ""}
-      />
-      <label for="check-${item.id}">
-        <span></span>
-      </label>
-    </div>
+  const cartCheck = document.createElement("div");
+  cartCheck.className = `cart-check ${isSoldOut ? "disabled" : ""}`;
 
-    <div class="cart-product">
-      <img src="${item.image}" />
-      <div class="cart-info">
-        <p class="seller">${item.brand}</p>
-        <p class="name">${item.name}</p>
-        <p class="price">${item.price.toLocaleString()}원</p>
-        <p class="delivery">
-          ${item.shipping_method === "PARCEL" ? "택배배송" : "직접배송"}
-          / ${item.shipping_fee.toLocaleString()}
-        </p>
-      </div>
-    </div>
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = `check-${item.id}`;
+  if (item.checked && !isSoldOut) checkbox.checked = true;
+  if (isSoldOut) checkbox.disabled = true;
 
-    <div class="cart-qty">
-      <button class="qty-btn minus ${
-        isSoldOut || item.qty <= 1 ? "disabled" : ""
-      }">
-        <img src="${iconMinusLine}" />
-      </button>
+  const label = document.createElement("label");
+  label.htmlFor = `check-${item.id}`;
+  const labelSpan = document.createElement("span");
+  label.appendChild(labelSpan);
 
-      <span class="qty-value">${isSoldOut ? 0 : item.qty}</span>
+  cartCheck.appendChild(checkbox);
+  cartCheck.appendChild(label);
 
-      <button class="qty-btn plus ${isSoldOut ? "disabled" : ""}">
-        <img src="${iconPlusLine}" />
-      </button>
-    </div>
+  const cartProduct = document.createElement("div");
+  cartProduct.className = "cart-product";
 
-    <div class="cart-total">
-      <button class="delete-btn"></button>
+  const productImg = document.createElement("img");
+  productImg.src = item.image;
 
-      <div class="cart-price-box">
-        <strong>
-          ${(isSoldOut ? 0 : item.price * item.qty).toLocaleString()}원
-        </strong>
+  const cartInfo = document.createElement("div");
+  cartInfo.className = "cart-info";
 
-        <button class="order-small ${isSoldOut ? "soldout" : ""}">
-          ${isSoldOut ? "품절" : "주문하기"}
-        </button>
-      </div>
-    </div>
-  `;
+  const seller = document.createElement("p");
+  seller.className = "seller";
+  seller.textContent = item.brand;
 
-  const productArea = li.querySelector(".cart-product");
+  const name = document.createElement("p");
+  name.className = "name";
+  name.textContent = item.name;
 
-  productArea.addEventListener("click", () => {
+  const price = document.createElement("p");
+  price.className = "price";
+  price.textContent = item.price.toLocaleString() + "원";
+
+  const delivery = document.createElement("p");
+  delivery.className = "delivery";
+  delivery.textContent = `${item.shipping_method === "PARCEL" ? "택배배송" : "직접배송"} / ${item.shipping_fee.toLocaleString()}`;
+
+  cartInfo.appendChild(seller);
+  cartInfo.appendChild(name);
+  cartInfo.appendChild(price);
+  cartInfo.appendChild(delivery);
+
+  cartProduct.appendChild(productImg);
+  cartProduct.appendChild(cartInfo);
+
+  const cartQty = document.createElement("div");
+  cartQty.className = "cart-qty";
+
+  const minusBtn = document.createElement("button");
+  minusBtn.className = `qty-btn minus ${isSoldOut || item.qty <= 1 ? "disabled" : ""}`;
+  const minusImg = document.createElement("img");
+  minusImg.src = iconMinusLine;
+  minusBtn.appendChild(minusImg);
+
+  const qtyValue = document.createElement("span");
+  qtyValue.className = "qty-value";
+  qtyValue.textContent = isSoldOut ? 0 : item.qty;
+
+  const plusBtn = document.createElement("button");
+  plusBtn.className = `qty-btn plus ${isSoldOut ? "disabled" : ""}`;
+  const plusImg = document.createElement("img");
+  plusImg.src = iconPlusLine;
+  plusBtn.appendChild(plusImg);
+
+  cartQty.appendChild(minusBtn);
+  cartQty.appendChild(qtyValue);
+  cartQty.appendChild(plusBtn);
+
+  const cartTotal = document.createElement("div");
+  cartTotal.className = "cart-total";
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.className = "delete-btn";
+
+  const cartPriceBox = document.createElement("div");
+  cartPriceBox.className = "cart-price-box";
+
+  const totalPrice = document.createElement("strong");
+  totalPrice.textContent = (isSoldOut ? 0 : item.price * item.qty).toLocaleString() + "원";
+
+  const orderBtn = document.createElement("button");
+  orderBtn.className = `order-small ${isSoldOut ? "soldout" : ""}`;
+  orderBtn.textContent = isSoldOut ? "품절" : "주문하기";
+
+  cartPriceBox.appendChild(totalPrice);
+  cartPriceBox.appendChild(orderBtn);
+
+  cartTotal.appendChild(deleteBtn);
+  cartTotal.appendChild(cartPriceBox);
+
+  li.appendChild(cartCheck);
+  li.appendChild(cartProduct);
+  li.appendChild(cartQty);
+  li.appendChild(cartTotal);
+
+  cartProduct.addEventListener("click", () => {
     window.location.href = `/product/${item.productId}`;
   });
 
-  const minus = li.querySelector(".qty-btn.minus");
-  const plus = li.querySelector(".qty-btn.plus");
-  const checkbox = li.querySelector("input");
-  const orderBtn = li.querySelector(".order-small");
-
   if (!isSoldOut) {
-    plus.onclick = () => onQtyChange(item.id, +1);
-    minus.onclick = () => {
+    plusBtn.onclick = () => onQtyChange(item.id, +1);
+    minusBtn.onclick = () => {
       if (item.qty <= 1) return;
       onQtyChange(item.id, -1);
     };
@@ -87,7 +125,6 @@ export function createCartItem(
     orderBtn.onclick = () => onOrder(item.id);
   }
 
-  const deleteBtn = li.querySelector(".delete-btn");
   deleteBtn.onclick = () => onDelete(item.id);
 
   return li;

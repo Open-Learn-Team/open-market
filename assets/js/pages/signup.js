@@ -13,6 +13,11 @@ import agreeOn from "/assets/images/check-fill-box.svg";
 import logoHodu from "/assets/images/Logo-hodu.svg";
 import iconDownArrow from "/assets/images/icon-down-arrow.svg";
 
+const DROPDOWN_VISIBLE_HEIGHT = 150;
+const SCROLLBAR_THUMB_HEIGHT = 90;
+const SCROLLBAR_PADDING = 6;
+const SCROLLBAR_THUMB_MARGIN = 12;
+
 const tabs = document.querySelectorAll(".tab");
 const sellerArea = document.getElementById("sellerArea");
 
@@ -85,14 +90,12 @@ function initCustomDropdown() {
   // 스크롤바 thumb 위치 계산
   function updateScrollbar() {
     const listHeight = dropdownList.scrollHeight;
-    const visibleHeight = 150;
     const scrollTop = dropdownList.scrollTop;
-    const thumbHeight = 90;
 
-    const maxScroll = listHeight - visibleHeight;
-    const maxThumbTop = visibleHeight - thumbHeight - 12;
+    const maxScroll = listHeight - DROPDOWN_VISIBLE_HEIGHT;
+    const maxThumbTop = DROPDOWN_VISIBLE_HEIGHT - SCROLLBAR_THUMB_HEIGHT - SCROLLBAR_THUMB_MARGIN;
     const thumbTop =
-      maxScroll > 0 ? (scrollTop / maxScroll) * maxThumbTop + 6 : 6;
+      maxScroll > 0 ? (scrollTop / maxScroll) * maxThumbTop + SCROLLBAR_PADDING : SCROLLBAR_PADDING;
 
     scrollbarThumb.style.top = `${thumbTop}px`;
   }
@@ -153,11 +156,9 @@ function initCustomDropdown() {
 
     const deltaY = e.clientY - startY;
     const listHeight = dropdownList.scrollHeight;
-    const visibleHeight = 150;
-    const thumbHeight = 90;
-    const maxScroll = listHeight - visibleHeight;
+    const maxScroll = listHeight - DROPDOWN_VISIBLE_HEIGHT;
 
-    const scrollRatio = deltaY / (visibleHeight - thumbHeight - 12);
+    const scrollRatio = deltaY / (DROPDOWN_VISIBLE_HEIGHT - SCROLLBAR_THUMB_HEIGHT - SCROLLBAR_THUMB_MARGIN);
     const newScrollTop = startScrollTop + scrollRatio * maxScroll;
 
     dropdownList.scrollTop = Math.max(0, Math.min(newScrollTop, maxScroll));

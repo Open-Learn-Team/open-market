@@ -133,6 +133,8 @@
 
 .info-group {
   margin-bottom: 30px;
+  border: none;
+  padding: 0;
 }
 
 .group-title {
