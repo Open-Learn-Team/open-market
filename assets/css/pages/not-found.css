@@ -35,6 +35,10 @@
   padding: 20px;
 }
 
+.error-icon {
+  margin: 0;
+}
+
 .error-icon img {
   width: 276px;
   height: 236px;

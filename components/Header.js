@@ -1,5 +1,5 @@
 import { isLoggedIn, getUserType, logout } from "/utils/api.js";
-import { showAlertModal } from '/components/Modal.js';
+import { showAlertModal } from "/components/Modal.js";
 
 // 이미지 import
 import logoHodu from "/assets/images/Logo-hodu.svg";

@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HODU - 로그인</title>
     <link rel="stylesheet" href="/assets/css/reset.css" />
     <link rel="stylesheet" href="/assets/css/common.css" />
     <link rel="stylesheet" href="/assets/css/pages/login.css" />
-</head>
-<body>
+  </head>
+  <body>
     <div class="login-container">
-        <header>
-            <h1 class="logo">
-                <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU"></a>
-            </h1>
-        </header>
+      <header>
+        <h1 class="logo">
+          <a href="/"><img src="/assets/images/Logo-hodu.svg" alt="HODU"></a>
+        </h1>
+      </header>
 
-        <main>
-            <h2 class="login-title">로그인</h2>
-            <section class="login-box">
-                <form id="loginForm" novalidate>
-                    <div class="input-group">
-                        <label for="username" class="sr-only">아이디</label>
-                        <input type="text" id="username" class="input" placeholder="아이디" required />
-                    </div>
-                    <div class="input-group">
-                        <label for="password" class="sr-only">비밀번호</label>
-                        <input type="password" id="password" class="input" placeholder="비밀번호" required />
-                    </div>
+      <main>
+        <h2 class="login-title">로그인</h2>
+        <section class="login-box">
+          <form id="loginForm" novalidate>
+            <div class="input-group">
+              <label for="username" class="sr-only">아이디</label>
+              <input type="text" id="username" class="input" placeholder="아이디" required />
+            </div>
+            <div class="input-group">
+              <label for="password" class="sr-only">비밀번호</label>
+              <input type="password" id="password" class="input" placeholder="비밀번호" required />
+            </div>
 
-                    <p id="error-message" class="error-text"></p>
+            <p id="error-message" class="error-text"></p>
 
-                    <button type="submit" id="submitBtn" class="login-btn btn-primary">로그인</button>
-                </form>
-            </section>
-        </main>
+            <button type="submit" id="submitBtn" class="login-btn btn-primary">로그인</button>
+          </form>
+        </section>
+      </main>
 
-        <footer class="login-footer">
-            <nav>
-                <a href="../signup/index.html">회원가입</a>
-                <span class="divider" aria-hidden="true">|</span>
-                <a href="#">비밀번호 찾기</a>
-            </nav>
-        </footer>
+      <footer class="login-footer">
+        <nav>
+          <a href="../signup/index.html">회원가입</a>
+          <span class="divider" aria-hidden="true">|</span>
+          <a href="#">비밀번호 찾기</a>
+        </nav>
+      </footer>
     </div>
-    
+
     <script type="module" src="/assets/js/pages/login.js"></script>
-</body>
+  </body>
 </html>

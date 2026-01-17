@@ -6,7 +6,7 @@ import {
   getCart,
   addToCart,
 } from "/utils/api.js";
-import { initCommon } from "/assets/js/common.js";
+import { initCommon, formatPrice } from "/assets/js/common.js";
 import { showLoginModal, showAlertModal } from "/components/Modal.js";
 import { getApiErrorMessage } from "/utils/error.js";
 
@@ -51,7 +51,7 @@ if (!productId) {
   window.location.href = "/";
 }
 
-const formatNumber = (num) => Number(num).toLocaleString("ko-KR");
+const formatNumber = formatPrice;
 
 // ─────────────────────────────
 // 4. 수량 / 총 금액 갱신 함수

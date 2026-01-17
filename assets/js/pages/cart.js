@@ -7,18 +7,17 @@ import {
   cartDetail,
   updateCartItem,
   deleteCartItem,
-  deleteCartAll,
 } from "/utils/api.js";
 import { getApiErrorMessage } from "/utils/error.js";
 import { showAlertModal } from "/components/Modal.js";
 
 initCommon();
 
-const cartList = document.getElementById("cartList");
-const summaryEl = document.getElementById("cartSummary");
-const orderBtn = document.getElementById("order-btn");
-const checkAll = document.getElementById("checkAll");
-const deleteSelectedBtn = document.getElementById("delete-selected-btn");
+const $cartList = document.getElementById("cartList");
+const $cartSummary = document.getElementById("cartSummary");
+const $orderBtn = document.getElementById("order-btn");
+const $checkAll = document.getElementById("checkAll");
+const $deleteSelectedBtn = document.getElementById("delete-selected-btn");
 
 let cart = [];
 
@@ -76,7 +75,7 @@ export async function addProductToCart(productId, quantity = 1) {
     await addToCart(productId, quantity);
     showAlertModal("장바구니에 담겼습니다!");
   } catch (err) {
-    showAlertModal(getApiErrorMessage(e, "수량을 변경할 수 없습니다."));
+    showAlertModal(getApiErrorMessage(err, "수량을 변경할 수 없습니다."));
   }
 }
 
@@ -144,7 +143,7 @@ async function removeItem(id) {
 }
 
 // 선택 상품 삭제
-deleteSelectedBtn.onclick = async () => {
+$deleteSelectedBtn.onclick = async () => {
   const selectedItems = cart.filter((item) => item.checked);
 
   if (selectedItems.length === 0) {
@@ -169,7 +168,7 @@ deleteSelectedBtn.onclick = async () => {
 };
 
 // 전체 상품 선택
-checkAll.addEventListener("change", (e) => {
+$checkAll.addEventListener("change", (e) => {
   const checked = e.target.checked;
   cart = cart.map((item) => ({ ...item, checked }));
   renderCart();
@@ -181,8 +180,8 @@ function toggleItem(id, checked) {
 }
 
 function renderCart() {
-  cartList.innerHTML = "";
-  checkAll.checked = cart.length > 0 && cart.every((i) => i.checked);
+  $cartList.innerHTML = "";
+  $checkAll.checked = cart.length > 0 && cart.every((i) => i.checked);
 
   cart.forEach((item) => {
     const el = createCartItem(item, {
@@ -191,14 +190,14 @@ function renderCart() {
       onOrder: orderItem,
       onDelete: removeItem,
     });
-    cartList.appendChild(el);
+    $cartList.appendChild(el);
   });
 
-  renderSummary(cart, summaryEl);
+  renderSummary(cart, $cartSummary);
 }
 
 // 새로운 코드
-orderBtn.onclick = () => {
+$orderBtn.onclick = () => {
   const checkedItems = cart.filter((i) => i.checked);
   if (checkedItems.length === 0) {
     showAlertModal("주문할 상품을 선택해주세요.");
@@ -226,6 +225,3 @@ orderBtn.onclick = () => {
 };
 
 loadCart();
-
-console.log(cart);
-console.log(cart[0]);

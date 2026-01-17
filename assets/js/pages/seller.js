@@ -6,6 +6,7 @@ import {
   getSellerProducts,
   deleteProduct,
 } from "/utils/api.js";
+import { formatPrice } from "/assets/js/common.js";
 import { renderFooter } from "/components/Footer.js";
 
 // DOM 요소
@@ -19,9 +20,6 @@ const $confirmDelete = document.getElementById("confirmDelete");
 
 // 삭제할 상품 ID 저장
 let deleteTargetId = null;
-
-// 가격 포맷
-const formatPrice = (price) => Number(price).toLocaleString("ko-KR");
 
 // 권한 체크
 const checkAuth = () => {
@@ -70,34 +68,65 @@ const loadProducts = async () => {
 
 // 상품 목록 렌더링
 const renderProducts = (products) => {
-  $productList.innerHTML = products
-    .map(
-      (product) => `
-    <tr data-id="${product.id}">
-      <td>
-        <div class="product-info">
-          <img src="${product.image}" alt="${product.name}">
-          <div class="info">
-            <span class="name">${product.name}</span>
-            <span class="stock">재고: ${product.stock}개</span>
-          </div>
-        </div>
-      </td>
-      <td class="product-price">${formatPrice(product.price)}원</td>
-      <td>
-        <button type="button" class="btn-edit" data-id="${
-          product.id
-        }">수정</button>
-      </td>
-      <td>
-        <button type="button" class="btn-delete" data-id="${
-          product.id
-        }">삭제</button>
-      </td>
-    </tr>
-  `
-    )
-    .join("");
+  $productList.innerHTML = "";
+
+  products.forEach((product) => {
+    const tr = document.createElement("tr");
+    tr.dataset.id = product.id;
+
+    const tdProduct = document.createElement("td");
+    const productInfoDiv = document.createElement("div");
+    productInfoDiv.className = "product-info";
+
+    const img = document.createElement("img");
+    img.src = product.image;
+    img.alt = product.name;
+
+    const infoDiv = document.createElement("div");
+    infoDiv.className = "info";
+
+    const nameSpan = document.createElement("span");
+    nameSpan.className = "name";
+    nameSpan.textContent = product.name;
+
+    const stockSpan = document.createElement("span");
+    stockSpan.className = "stock";
+    stockSpan.textContent = `재고: ${product.stock}개`;
+
+    infoDiv.appendChild(nameSpan);
+    infoDiv.appendChild(stockSpan);
+
+    productInfoDiv.appendChild(img);
+    productInfoDiv.appendChild(infoDiv);
+    tdProduct.appendChild(productInfoDiv);
+
+    const tdPrice = document.createElement("td");
+    tdPrice.className = "product-price";
+    tdPrice.textContent = formatPrice(product.price) + "원";
+
+    const tdEdit = document.createElement("td");
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "btn-edit";
+    editBtn.dataset.id = product.id;
+    editBtn.textContent = "수정";
+    tdEdit.appendChild(editBtn);
+
+    const tdDelete = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.type = "button";
+    deleteBtn.className = "btn-delete";
+    deleteBtn.dataset.id = product.id;
+    deleteBtn.textContent = "삭제";
+    tdDelete.appendChild(deleteBtn);
+
+    tr.appendChild(tdProduct);
+    tr.appendChild(tdPrice);
+    tr.appendChild(tdEdit);
+    tr.appendChild(tdDelete);
+
+    $productList.appendChild(tr);
+  });
 
   // 이벤트 바인딩
   bindProductEvents();
@@ -168,8 +197,6 @@ const initSidebar = () => {
       item.parentElement.classList.add("active");
 
       // 메뉴별 동작 (추후 구현)
-      const menu = item.dataset.menu;
-      console.log("선택된 메뉴:", menu);
     });
   });
 };
