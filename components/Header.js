@@ -1,4 +1,5 @@
 import { isLoggedIn, getUserType, logout } from "/utils/api.js";
+import { showAlertModal } from '/components/Modal.js';
 
 // 이미지 import
 import logoHodu from "/assets/images/Logo-hodu.svg";
@@ -173,6 +174,15 @@ const bindEvents = (header) => {
     loginLink.addEventListener("mouseleave", () => {
       loginImg.src = userIcon;
       loginSpan.style.color = "";
+    });
+  }
+
+  // 마이페이지 링크 클릭 시 모달
+  const mypageLink = header.querySelector('a[href="/pages/mypage/"]');
+  if (mypageLink) {
+    mypageLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      showAlertModal("서비스 준비 중입니다.");
     });
   }
 };
