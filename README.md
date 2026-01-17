@@ -24,7 +24,7 @@
 		<th>팀원1 (팀장)</th>
 		<th>팀원2</th>
 		<th>팀원3</th>
-		<th>팀원4</th>
+		<th>김수진 </th>
 	</tr>
  	<tr>
 		<td><img src="profile1.jpg" width="150"></td>
