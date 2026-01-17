@@ -1,255 +1,294 @@
+// /assets/js/pages/product-detail.js
+import {
+  getProductDetail,
+  isLoggedIn,
+  getUserType,
+  getCart,
+  addToCart,
+} from "/utils/api.js";
 import { initCommon, formatPrice } from "/assets/js/common.js";
-import { createDirectOrder, createCartOrder, deleteCartItem } from "/utils/api.js";
-import { showAlertModal } from "/components/Modal.js";
+import { showLoginModal, showAlertModal } from "/components/Modal.js";
 import { getApiErrorMessage } from "/utils/error.js";
-import checkBox from "/assets/images/check-box.svg";
-import checkFillBox from "/assets/images/check-fill-box.svg";
 
-initCommon();
+// ─────────────────────────────
+// 1. DOM 요소 가져오기
+// ─────────────────────────────
+const $productImage = document.getElementById("productImage");
+const $sellerName = document.getElementById("sellerName");
+const $productName = document.getElementById("productName");
+const $productPrice = document.getElementById("productPrice");
+const $deliveryInfo = document.getElementById("deliveryInfo");
 
-const $orderItemList = document.getElementById("orderItemList");
-const $orderTotalPrice = document.getElementById("orderTotalPrice");
-const $productTotal = document.getElementById("productTotal");
-const $discountTotal = document.getElementById("discountTotal");
-const $shippingTotal = document.getElementById("shippingTotal");
-const $finalTotal = document.getElementById("finalTotal");
-const $agreeCheckbox = document.getElementById("agreeCheckbox");
-const $agreeIcon = document.getElementById("agreeIcon");
-const $submitOrderBtn = document.getElementById("submitOrderBtn");
-const $searchZipBtn = document.getElementById("searchZipBtn");
+const $qtyMinus = document.querySelector(".qty-btn.minus");
+const $qtyPlus = document.querySelector(".qty-btn.plus");
+const $qtyValue = document.getElementById("quantityValue");
 
-const orderData = JSON.parse(localStorage.getItem("orderData"));
+const $totalQty = document.getElementById("totalQty");
+const $totalPrice = document.getElementById("totalPrice");
 
-if (!orderData || !orderData.items || orderData.items.length === 0) {
-  showAlertModal("주문할 상품이 없습니다.");
+const $btnCart = document.getElementById("addToCartBtn");
+const $btnBuy = document.getElementById("buyNowBtn");
+
+const $tabs = document.querySelectorAll(".product-tabs .tab");
+const $tabPanel = document.getElementById("tabPanel");
+
+// ─────────────────────────────
+// 2. 상태 값 (가격, 재고, 수량 등)
+// ─────────────────────────────
+let product = null;
+let unitPrice = 0;
+let stock = 0;
+let quantity = 1;
+
+// ─────────────────────────────
+// 3. URL에서 id 읽기
+// ─────────────────────────────
+const pathParts = window.location.pathname.split("/").filter(Boolean);
+const productId = pathParts[pathParts.length - 1];
+
+if (!productId) {
+  alert("잘못된 접근입니다.");
   window.location.href = "/";
 }
 
-function renderOrderItems() {
-  $orderItemList.innerHTML = "";
+const formatNumber = formatPrice;
 
-  let totalProductPrice = 0;
-  let totalShippingFee = 0;
-
-  orderData.items.forEach((item) => {
-    const itemTotal = item.price * item.quantity;
-    totalProductPrice += itemTotal;
-
-    const shippingFee = item.shipping_method === "PARCEL" ? item.shipping_fee : 0;
-    totalShippingFee += shippingFee;
-
-    const li = document.createElement("li");
-    li.className = "order-item";
-
-    const itemInfo = document.createElement("div");
-    itemInfo.className = "item-info";
-
-    const itemImage = document.createElement("img");
-    itemImage.src = item.image;
-    itemImage.alt = item.name;
-    itemImage.className = "item-image";
-
-    const itemDetail = document.createElement("div");
-    itemDetail.className = "item-detail";
-
-    const itemSeller = document.createElement("span");
-    itemSeller.className = "item-seller";
-    itemSeller.textContent = item.store_name || "판매자";
-
-    const itemName = document.createElement("span");
-    itemName.className = "item-name";
-    itemName.textContent = item.name;
-
-    const itemQty = document.createElement("span");
-    itemQty.className = "item-qty";
-    itemQty.textContent = `수량 : ${item.quantity}개`;
-
-    itemDetail.appendChild(itemSeller);
-    itemDetail.appendChild(itemName);
-    itemDetail.appendChild(itemQty);
-
-    itemInfo.appendChild(itemImage);
-    itemInfo.appendChild(itemDetail);
-
-    const itemDiscount = document.createElement("span");
-    itemDiscount.className = "item-discount";
-    itemDiscount.textContent = "-";
-
-    const itemShipping = document.createElement("span");
-    itemShipping.className = "item-shipping";
-    itemShipping.textContent = shippingFee === 0 ? "무료배송" : formatPrice(shippingFee) + "원";
-
-    const itemPrice = document.createElement("span");
-    itemPrice.className = "item-price";
-    itemPrice.textContent = formatPrice(itemTotal) + "원";
-
-    li.appendChild(itemInfo);
-    li.appendChild(itemDiscount);
-    li.appendChild(itemShipping);
-    li.appendChild(itemPrice);
-
-    $orderItemList.appendChild(li);
-  });
-
-  const finalPrice = totalProductPrice + totalShippingFee;
-
-  $orderTotalPrice.textContent = formatPrice(finalPrice) + "원";
-  $productTotal.textContent = formatPrice(totalProductPrice);
-  $discountTotal.textContent = "0";
-  $shippingTotal.textContent = formatPrice(totalShippingFee);
-  $finalTotal.textContent = formatPrice(finalPrice) + "원";
-}
-
-$searchZipBtn.addEventListener("click", () => {
-  new daum.Postcode({
-    oncomplete: function (data) {
-      document.getElementById("zipCode").value = data.zonecode;
-      document.getElementById("address1").value = data.roadAddress || data.jibunAddress;
-      document.getElementById("address2").focus();
-    },
-  }).open();
-});
-
-$agreeIcon.addEventListener("click", () => {
-  $agreeCheckbox.checked = !$agreeCheckbox.checked;
-
-  if ($agreeCheckbox.checked) {
-    $agreeIcon.src = checkFillBox;
-    $submitOrderBtn.disabled = false;
-    $submitOrderBtn.classList.add("active");
-  } else {
-    $agreeIcon.src = checkBox;
-    $submitOrderBtn.disabled = true;
-    $submitOrderBtn.classList.remove("active");
-  }
-});
-
-document.querySelector(".agree-checkbox label").addEventListener("click", () => {
-  $agreeIcon.click();
-});
-
-function getPaymentMethod() {
-  const selected = document.querySelector('input[name="paymentMethod"]:checked');
-  if (!selected) return "card";
-
-  const value = selected.value;
-
-  const methodMap = {
-    "신용/체크카드": "card",
-    "무통장 입금": "deposit",
-    "휴대폰 결제": "phone",
-    "네이버페이": "naverpay",
-    "카카오페이": "kakaopay",
-    "CARD": "card",
-    "DEPOSIT": "deposit",
-    "PHONE_PAYMENT": "phone",
-    "NAVERPAY": "naverpay",
-    "KAKAOPAY": "kakaopay",
-    "card": "card",
-    "deposit": "deposit",
-    "phone": "phone",
-    "naverpay": "naverpay",
-    "kakaopay": "kakaopay",
-  };
-
-  return methodMap[value] || "card";
-}
-
-function calculateTotalPrice() {
-  let total = 0;
-  orderData.items.forEach((item) => {
-    total += item.price * item.quantity;
-    if (item.shipping_method === "PARCEL") {
-      total += item.shipping_fee || 0;
-    }
-  });
-  return total;
-}
-
-function getFormData() {
-  const receiverPhone = [
-    document.getElementById("receiverPhone1").value,
-    document.getElementById("receiverPhone2").value,
-    document.getElementById("receiverPhone3").value,
-  ].join("");
-
-  return {
-    receiver: document.getElementById("receiverName").value,
-    receiver_phone_number: receiverPhone,
-    address: `${document.getElementById("address1").value} ${document.getElementById("address2").value}`,
-    address_message: document.getElementById("deliveryMessage").value || "배송 전 연락 바랍니다",
-    payment_method: getPaymentMethod(),
-  };
-}
-
-function validateForm() {
-  const requiredFields = [
-    { id: "buyerName", name: "주문자 이름" },
-    { id: "buyerPhone1", name: "주문자 휴대폰" },
-    { id: "buyerPhone2", name: "주문자 휴대폰" },
-    { id: "buyerPhone3", name: "주문자 휴대폰" },
-    { id: "receiverName", name: "수령인" },
-    { id: "receiverPhone1", name: "수령인 휴대폰" },
-    { id: "receiverPhone2", name: "수령인 휴대폰" },
-    { id: "receiverPhone3", name: "수령인 휴대폰" },
-    { id: "zipCode", name: "우편번호" },
-    { id: "address1", name: "배송주소" },
-  ];
-
-  for (const field of requiredFields) {
-    const el = document.getElementById(field.id);
-    if (!el.value.trim()) {
-      showAlertModal(`${field.name}을(를) 입력해주세요.`);
-      el.focus();
-      return false;
-    }
+// ─────────────────────────────
+// 4. 수량 / 총 금액 갱신 함수
+// ─────────────────────────────
+function updateQuantity(newQty) {
+  if (stock === 0) {
+    $qtyMinus.disabled = true;
+    $qtyPlus.disabled = true;
+    return;
   }
 
-  return true;
+  if (newQty < 1) newQty = 1;
+  if (stock && newQty > stock) newQty = stock;
+
+  quantity = newQty;
+
+  $qtyValue.textContent = quantity;
+  $totalQty.textContent = quantity;
+
+  const total = unitPrice * quantity;
+  $totalPrice.textContent = formatNumber(total);
+
+  $qtyMinus.disabled = quantity <= 1;
+  $qtyPlus.disabled = stock ? quantity >= stock : false;
 }
 
-$submitOrderBtn.addEventListener("click", async () => {
-  if (!validateForm()) return;
+// ─────────────────────────────
+// 5. 품절 처리 함수
+// ─────────────────────────────
+function handleSoldOut() {
+  $qtyValue.textContent = "0";
+  $totalQty.textContent = "0";
+  $totalPrice.textContent = "0";
 
-  const formData = getFormData();
-  const orderType = orderData.orderType;
+  $qtyMinus.disabled = true;
+  $qtyPlus.disabled = true;
+  $btnCart.disabled = true;
+  $btnBuy.disabled = true;
+
+  $btnCart.classList.add("disabled");
+  $btnBuy.classList.add("disabled");
+  $btnBuy.textContent = "품절된 상품입니다";
+}
+
+// ─────────────────────────────
+// 6. 상품 상세 불러오기
+// ─────────────────────────────
+async function loadProduct() {
+  try {
+    product = await getProductDetail(productId);
+
+    unitPrice = Number(product.price);
+    stock = Number(product.stock);
+
+    $sellerName.textContent = product.seller?.store_name || "판매자";
+    $productName.textContent = product.name;
+    $productPrice.textContent = formatNumber(product.price);
+
+    const shippingMethod =
+      product.shipping_method === "PARCEL" ? "택배배송" : "직접배송";
+    const shippingFee = product.shipping_fee || 0;
+
+    if (shippingFee === 0) {
+      $deliveryInfo.textContent = `${shippingMethod} / 무료배송`;
+    } else {
+      $deliveryInfo.textContent = `${shippingMethod} / 배송비 ${formatNumber(
+        shippingFee
+      )}원`;
+    }
+
+    if (product.image) {
+      $productImage.src = product.image;
+      $productImage.alt = product.name;
+    }
+
+    document.title = `${product.name} | HODU`;
+
+    $tabPanel.textContent = product.info || "상품 상세 정보가 없습니다.";
+
+    if (stock === 0) {
+      handleSoldOut();
+      return;
+    }
+
+    updateQuantity(1);
+
+    if (getUserType() === "SELLER") {
+      $qtyMinus.disabled = true;
+      $qtyPlus.disabled = true;
+      $btnCart.disabled = true;
+      $btnBuy.disabled = true;
+      $btnCart.classList.add("disabled");
+      $btnBuy.classList.add("disabled");
+    }
+  } catch (error) {
+    // ✅ 수정: 상품이 없으면 404 페이지로 이동
+    window.location.href = "/pages/not-found/";
+    return;
+  }
+}
+
+// ─────────────────────────────
+// 7. 수량 버튼 이벤트
+// ─────────────────────────────
+function initQuantityControls() {
+  $qtyMinus?.addEventListener("click", () => {
+    if (stock === 0) return;
+    if (quantity <= 1) return;
+    updateQuantity(quantity - 1);
+  });
+
+  $qtyPlus?.addEventListener("click", () => {
+    if (stock === 0) return;
+    if (stock && quantity >= stock) return;
+    updateQuantity(quantity + 1);
+  });
+}
+
+// ─────────────────────────────
+// 8. 장바구니 / 바로구매 (API 방식)
+// ─────────────────────────────
+async function addToCartHandler() {
+  if (!isLoggedIn()) {
+    showLoginModal();
+    return;
+  }
+
+  if (stock === 0) {
+    showAlertModal("품절된 상품입니다.");
+    return;
+  }
+
+  if (!product) return;
 
   try {
-    if (orderType === "direct") {
-      // 바로 구매: direct_order 사용
-      const item = orderData.items[0];
-      const itemShipping = item.shipping_fee || 0;
+    const cart = await getCart();
+    const exists = cart.results?.some(
+      (item) => String(item.product?.id) === String(productId)
+    );
 
-      const requestData = {
-        product: item.product_id || item.id,
-        quantity: item.quantity,
-        total_price: (item.price * item.quantity) + itemShipping,
-        ...formData,
-      };
-
-      await createDirectOrder(requestData);
-    } else {
-      // 장바구니 주문: cart_order 사용
-      // API 문서: "cartitem에 담긴 product의 id를 리스트 형태로 보내야합니다"
-      const productIds = orderData.items.map(item => item.id);
-
-      const requestData = {
-        cart_items: productIds,
-        total_price: calculateTotalPrice(),
-        ...formData,
-      };
-
-      await createCartOrder(requestData);
+    if (exists) {
+      showAlertModal("이미 장바구니에 담긴 상품입니다.");
+      return;
     }
 
-    localStorage.removeItem("orderData");
-    await showAlertModal("주문이 완료되었습니다!");
-    window.location.href = "/";
-  } catch (error) {
-    console.error("주문 실패:", error);
-    console.error("에러 상세:", error.data);
-    showAlertModal(getApiErrorMessage(error, "주문에 실패했습니다. 다시 시도해주세요."));
+    await addToCart(productId, quantity);
+    showAlertModal("장바구니에 담겼습니다.");
+  } catch (e) {
+    // 원래대로: 에러 모달 표시
+    showAlertModal(getApiErrorMessage(e, "장바구니에 담을 수 없습니다."));
   }
-});
+}
 
-renderOrderItems();
+function buyNow() {
+  if (!isLoggedIn()) {
+    showLoginModal();
+    return;
+  }
+
+  if (getUserType() === "SELLER") {
+    showAlertModal("판매자는 구매할 수 없습니다.");
+    return;
+  }
+
+  if (stock === 0) {
+    showAlertModal("품절된 상품입니다.");
+    return;
+  }
+
+  if (!product) return;
+
+  const orderData = {
+    orderType: "direct",
+    items: [
+      {
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: quantity,
+        shipping_method: product.shipping_method,
+        shipping_fee: product.shipping_fee,
+        store_name: product.seller?.store_name || "판매자",
+      },
+    ],
+  };
+
+  localStorage.setItem("orderData", JSON.stringify(orderData));
+  window.location.href = "/pages/order/";
+}
+
+// ─────────────────────────────
+// 9. 탭 전환
+// ─────────────────────────────
+function initTabs() {
+  if (!$tabs.length) return;
+
+  $tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      $tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+
+      const type = tab.dataset.tab;
+      switch (type) {
+        case "detail":
+          $tabPanel.textContent = product?.info || "상품 상세 정보가 없습니다.";
+          break;
+        case "review":
+          $tabPanel.textContent = "아직 등록된 리뷰가 없습니다.";
+          break;
+        case "qna":
+          $tabPanel.textContent = "상품 Q&A 영역입니다.";
+          break;
+        case "exchange":
+          $tabPanel.textContent = "반품/교환 안내 영역입니다.";
+          break;
+        default:
+          $tabPanel.textContent = "";
+      }
+    });
+  });
+}
+
+// ─────────────────────────────
+// 10. 초기화
+// ─────────────────────────────
+function initPage() {
+  initCommon();
+  initQuantityControls();
+  initTabs();
+
+  $btnCart?.addEventListener("click", addToCartHandler);
+  $btnBuy?.addEventListener("click", buyNow);
+
+  if (productId) {
+    loadProduct();
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initPage);

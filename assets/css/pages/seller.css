@@ -293,47 +293,6 @@ position: relative;
   text-decoration: none;
 }
 
-/* 삭제 모달 */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-overlay.active {
-  display: flex;
-}
-
-.modal {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
-  min-width: 300px;
-}
-
-.modal p {
-  font-size: 1.125rem;
-  margin-bottom: 1.5rem;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.modal-buttons button {
-  padding: 0.75rem 2rem;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
 .btn-cancel {
   background: #fff;
   color: #767676;

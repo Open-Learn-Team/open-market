@@ -1,6 +1,6 @@
 let modalEl = null;
 
-const createModal = (message, onConfirm, onCancel) => {
+const createModal = (message, onConfirm, onCancel, confirmText = '예', cancelText = '아니오') => {
   const modal = document.createElement('div');
   modal.className = 'modal-overlay';
   modal.innerHTML = `
@@ -12,8 +12,8 @@ const createModal = (message, onConfirm, onCancel) => {
       </button>
       <p class="modal-msg">${message}</p>
       <div class="modal-btns">
-        <button type="button" class="btn-cancel">아니오</button>
-        <button type="button" class="btn-confirm">예</button>
+        <button type="button" class="btn-cancel">${cancelText}</button>
+        <button type="button" class="btn-confirm">${confirmText}</button>
       </div>
     </article>
   `;
@@ -44,9 +44,9 @@ export const showLoginModal = () => {
   document.body.appendChild(modalEl);
 };
 
-export const showConfirmModal = (message, onConfirm) => {
+export const showConfirmModal = (message, onConfirm, confirmText = '예', cancelText = '아니오') => {
   if (modalEl) return;
-  modalEl = createModal(message, onConfirm, null);
+  modalEl = createModal(message, onConfirm, null, confirmText, cancelText);
   document.body.appendChild(modalEl);
 };
 
