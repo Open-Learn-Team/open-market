@@ -1,15 +1,19 @@
 .page-wrapper {
-  overflow-x: auto; /* ← 여기만 스크롤 */
+  overflow-x: auto;
   width: 100%;
-  max-width: 1300px;
-  margin: 0 auto; /* 가운데 정렬 */
-  padding: 0 16px;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 60px;
 }
 
 .cart-page {
-  padding: 0 16px;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 1920px;
   margin: 40px auto;
+  padding: 0 60px;
   min-width: 900px;
+  box-sizing: border-box;
 }
 
 .cart-title {

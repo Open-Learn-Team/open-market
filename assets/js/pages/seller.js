@@ -8,15 +8,13 @@ import {
 } from "/utils/api.js";
 import { formatPrice } from "/assets/js/common.js";
 import { renderFooter } from "/components/Footer.js";
+import { showLoginModal, showConfirmModal, showAlertModal } from "/components/Modal.js";  
 
 // DOM 요소
 const $storeName = document.getElementById("storeName");
 const $productCount = document.getElementById("productCount");
 const $productList = document.getElementById("productList");
 const $emptyState = document.getElementById("emptyState");
-const $deleteModal = document.getElementById("deleteModal");
-const $cancelDelete = document.getElementById("cancelDelete");
-const $confirmDelete = document.getElementById("confirmDelete");
 
 // 삭제할 상품 ID 저장
 let deleteTargetId = null;
@@ -24,14 +22,14 @@ let deleteTargetId = null;
 // 권한 체크
 const checkAuth = () => {
   if (!isLoggedIn()) {
-    alert("로그인이 필요합니다.");
-    window.location.href = "/pages/login/";
+    showLoginModal();  // ✅ alert 대신 모달
     return false;
   }
 
   if (getUserType() !== "SELLER") {
-    alert("판매자만 접근할 수 있습니다.");
-    window.location.href = "/";
+    showAlertModal("판매자만 접근할 수 있습니다.").then(() => {
+      window.location.href = "/";
+    });
     return false;
   }
 
@@ -144,46 +142,24 @@ const bindProductEvents = () => {
     });
   });
 
-  // 삭제 버튼
-  $productList.querySelectorAll(".btn-delete").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      deleteTargetId = btn.dataset.id;
-      $deleteModal.classList.add("active");
-    });
+// 삭제 버튼 
+$productList.querySelectorAll(".btn-delete").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    deleteTargetId = btn.dataset.id;
+    
+    showConfirmModal("상품을 삭제하시겠습니까?", async () => {
+      try {
+        await deleteProduct(deleteTargetId);
+        await showAlertModal("상품이 삭제되었습니다.");
+        deleteTargetId = null;
+        loadProducts();
+      } catch (error) {
+        await showAlertModal("삭제에 실패했습니다.");
+        console.error(error);
+      }
+    }, "삭제", "취소");
   });
-};
-
-// 삭제 모달 이벤트
-const initModalEvents = () => {
-  // 취소 버튼
-  $cancelDelete.addEventListener("click", () => {
-    deleteTargetId = null;
-    $deleteModal.classList.remove("active");
-  });
-
-  // 삭제 확인 버튼
-  $confirmDelete.addEventListener("click", async () => {
-    if (!deleteTargetId) return;
-
-    try {
-      await deleteProduct(deleteTargetId);
-      alert("상품이 삭제되었습니다.");
-      $deleteModal.classList.remove("active");
-      deleteTargetId = null;
-      loadProducts(); // 새로고침
-    } catch (error) {
-      alert("삭제에 실패했습니다.");
-      console.error(error);
-    }
-  });
-
-  // 모달 외부 클릭
-  $deleteModal.addEventListener("click", (e) => {
-    if (e.target === $deleteModal) {
-      deleteTargetId = null;
-      $deleteModal.classList.remove("active");
-    }
-  });
+});
 };
 
 // 사이드바 메뉴 이벤트
@@ -207,7 +183,6 @@ const initSidebar = () => {
 const init = () => {
   if (!checkAuth()) return;
 
-  initModalEvents();
   initSidebar();
   loadProducts();
   renderFooter("#footer");

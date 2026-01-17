@@ -1,5 +1,9 @@
 import { initCommon, formatPrice } from "/assets/js/common.js";
-import { createDirectOrder, createCartOrder, deleteCartItem } from "/utils/api.js";
+import {
+  createDirectOrder,
+  createCartOrder,
+  deleteCartItem,
+} from "/utils/api.js";
 import { showAlertModal } from "/components/Modal.js";
 import { getApiErrorMessage } from "/utils/error.js";
 import checkBox from "/assets/images/check-box.svg";
@@ -35,7 +39,8 @@ function renderOrderItems() {
     const itemTotal = item.price * item.quantity;
     totalProductPrice += itemTotal;
 
-    const shippingFee = item.shipping_method === "PARCEL" ? item.shipping_fee : 0;
+    // ✅ 조건 제거 - 배송비가 있으면 무조건 추가
+    const shippingFee = item.shipping_fee || 0;
     totalShippingFee += shippingFee;
 
     const li = document.createElement("li");
@@ -77,7 +82,8 @@ function renderOrderItems() {
 
     const itemShipping = document.createElement("span");
     itemShipping.className = "item-shipping";
-    itemShipping.textContent = shippingFee === 0 ? "무료배송" : formatPrice(shippingFee) + "원";
+    itemShipping.textContent =
+      shippingFee === 0 ? "무료배송" : formatPrice(shippingFee) + "원";
 
     const itemPrice = document.createElement("span");
     itemPrice.className = "item-price";
@@ -104,7 +110,8 @@ $searchZipBtn.addEventListener("click", () => {
   new daum.Postcode({
     oncomplete: function (data) {
       document.getElementById("zipCode").value = data.zonecode;
-      document.getElementById("address1").value = data.roadAddress || data.jibunAddress;
+      document.getElementById("address1").value =
+        data.roadAddress || data.jibunAddress;
       document.getElementById("address2").focus();
     },
   }).open();
@@ -124,12 +131,16 @@ $agreeIcon.addEventListener("click", () => {
   }
 });
 
-document.querySelector(".agree-checkbox label").addEventListener("click", () => {
-  $agreeIcon.click();
-});
+document
+  .querySelector(".agree-checkbox label")
+  .addEventListener("click", () => {
+    $agreeIcon.click();
+  });
 
 function getPaymentMethod() {
-  const selected = document.querySelector('input[name="paymentMethod"]:checked');
+  const selected = document.querySelector(
+    'input[name="paymentMethod"]:checked',
+  );
   if (!selected) return "card";
 
   const value = selected.value;
@@ -138,30 +149,29 @@ function getPaymentMethod() {
     "신용/체크카드": "card",
     "무통장 입금": "deposit",
     "휴대폰 결제": "phone",
-    "네이버페이": "naverpay",
-    "카카오페이": "kakaopay",
-    "CARD": "card",
-    "DEPOSIT": "deposit",
-    "PHONE_PAYMENT": "phone",
-    "NAVERPAY": "naverpay",
-    "KAKAOPAY": "kakaopay",
-    "card": "card",
-    "deposit": "deposit",
-    "phone": "phone",
-    "naverpay": "naverpay",
-    "kakaopay": "kakaopay",
+    네이버페이: "naverpay",
+    카카오페이: "kakaopay",
+    CARD: "card",
+    DEPOSIT: "deposit",
+    PHONE_PAYMENT: "phone",
+    NAVERPAY: "naverpay",
+    KAKAOPAY: "kakaopay",
+    card: "card",
+    deposit: "deposit",
+    phone: "phone",
+    naverpay: "naverpay",
+    kakaopay: "kakaopay",
   };
 
   return methodMap[value] || "card";
 }
 
+// ✅ 수정됨 - 조건 제거
 function calculateTotalPrice() {
   let total = 0;
   orderData.items.forEach((item) => {
     total += item.price * item.quantity;
-    if (item.shipping_method === "PARCEL") {
-      total += item.shipping_fee || 0;
-    }
+    total += item.shipping_fee || 0;
   });
   return total;
 }
@@ -176,8 +186,12 @@ function getFormData() {
   return {
     receiver: document.getElementById("receiverName").value,
     receiver_phone_number: receiverPhone,
-    address: `${document.getElementById("address1").value} ${document.getElementById("address2").value}`,
-    address_message: document.getElementById("deliveryMessage").value || "배송 전 연락 바랍니다",
+    address: `${document.getElementById("address1").value} ${
+      document.getElementById("address2").value
+    }`,
+    address_message:
+      document.getElementById("deliveryMessage").value ||
+      "배송 전 연락 바랍니다",
     payment_method: getPaymentMethod(),
   };
 }
@@ -223,18 +237,17 @@ $submitOrderBtn.addEventListener("click", async () => {
       const requestData = {
         product: item.product_id || item.id,
         quantity: item.quantity,
-        total_price: (item.price * item.quantity) + itemShipping,
+        total_price: item.price * item.quantity + itemShipping,
         ...formData,
       };
 
       await createDirectOrder(requestData);
     } else {
       // 장바구니 주문: cart_order 사용
-      // API 문서: "cartitem에 담긴 product의 id를 리스트 형태로 보내야합니다"
-      const productIds = orderData.items.map(item => item.id);
+      const cartItemIds = orderData.items.map((item) => item.id);
 
       const requestData = {
-        cart_items: productIds,
+        cart_items: cartItemIds,
         total_price: calculateTotalPrice(),
         ...formData,
       };
@@ -248,7 +261,9 @@ $submitOrderBtn.addEventListener("click", async () => {
   } catch (error) {
     console.error("주문 실패:", error);
     console.error("에러 상세:", error.data);
-    showAlertModal(getApiErrorMessage(error, "주문에 실패했습니다. 다시 시도해주세요."));
+    showAlertModal(
+      getApiErrorMessage(error, "주문에 실패했습니다. 다시 시도해주세요."),
+    );
   }
 });
 
