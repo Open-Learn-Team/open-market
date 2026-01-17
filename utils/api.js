@@ -256,9 +256,9 @@ export const createDirectOrder = (orderData) =>
 export const createCartOrder = (orderData) =>
   fetchAPI("/order/", {
     method: "POST",
-    body: JSON.stringify({ 
-      order_type: "cart_order",  
-      ...orderData 
+    body: JSON.stringify({
+      order_type: "cart_order",
+      ...orderData
     }),
   });
 // ─────────────────────────────

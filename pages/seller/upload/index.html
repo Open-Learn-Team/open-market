@@ -102,15 +102,16 @@
             <!-- 배송방법 -->
             <div class="field-group">
               <label>배송방법</label>
-              <div class="shipping-method">
+              <div class="shipping-method" role="group" aria-label="배송방법 선택">
                 <button
                   type="button"
                   class="method-btn active"
                   data-method="PARCEL"
+                  aria-pressed="true"
                 >
                   택배, 소포, 등기
                 </button>
-                <button type="button" class="method-btn" data-method="DELIVERY">
+                <button type="button" class="method-btn" data-method="DELIVERY" aria-pressed="false">
                   직접배송(화물배달)
                 </button>
               </div>

@@ -82,8 +82,12 @@ const initNameCount = () => {
 const initShippingMethod = () => {
   $methodBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
-      $methodBtns.forEach((b) => b.classList.remove("active"));
+      $methodBtns.forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-pressed", "false");
+      });
       btn.classList.add("active");
+      btn.setAttribute("aria-pressed", "true");
       $shippingMethod.value = btn.dataset.method;
     });
   });
@@ -189,10 +193,9 @@ const loadProductData = async () => {
 
     // 배송방법 버튼 활성화
     $methodBtns.forEach((btn) => {
-      btn.classList.toggle(
-        "active",
-        btn.dataset.method === product.shipping_method
-      );
+      const isActive = btn.dataset.method === product.shipping_method;
+      btn.classList.toggle("active", isActive);
+      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
 
     // 이미지 미리보기
