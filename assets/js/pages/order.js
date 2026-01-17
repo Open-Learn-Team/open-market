@@ -228,18 +228,20 @@ $submitOrderBtn.addEventListener("click", async () => {
 
       await createDirectOrder(requestData);
     } else {
+      // 장바구니 주문: 각 상품을 개별 direct_order로 처리
       for (const item of orderData.items) {
         const itemShipping = item.shipping_fee || 0;
 
         const requestData = {
-          product: item.product_id || item.id,
+          product: item.id,
           quantity: item.quantity,
           total_price: (item.price * item.quantity) + itemShipping,
           ...formData,
         };
 
-        await createCartOrder(requestData);
+        await createDirectOrder(requestData);
 
+        // 주문 완료 후 장바구니에서 삭제
         if (item.cartItemId) {
           await deleteCartItem(item.cartItemId);
         }
