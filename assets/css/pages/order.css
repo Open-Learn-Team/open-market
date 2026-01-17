@@ -127,9 +127,8 @@
 .section-title {
   font-size: 24px;
   font-weight: 500;
-  margin-bottom: 18px;
+  margin-bottom: 1px;
   padding-bottom: 18px;
-  border-bottom: 2px solid #c4c4c4;
 }
 
 .info-group {
@@ -191,15 +190,8 @@
   width: 170px;
 }
 
-.phone-inputs {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.phone-inputs .separator {
-  color: #000;
-}
+.phone-inputs{ gap: 6px; } /* 8 → 6 (더 붙이면 4) */
+.phone-inputs .separator{ margin: 0 6px; } /* 하이픈 좌우 */
 
 .phone-inputs .input-small:nth-child(3) {
   width: 100px;
@@ -297,7 +289,7 @@
 .detail-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .detail-row:last-child {
@@ -319,12 +311,24 @@
   color: #000;
 }
 
-.payment-total {
+.payment-total{
+  position: relative;          /* ::before 기준 */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 30px;
-  border-top: 1px solid #c4c4c4;
+  border-top: none;            /* 기존 border-top 제거 */
+}
+
+/* 결제금액 위 라인 */
+.payment-total::before{
+  content: "";
+  position: absolute;
+  left: 30px;                  /* padding 만큼 안쪽 */
+  right: 30px;                 /* padding 만큼 안쪽 */
+  top: 0;
+  height: 1px;
+  background: #c4c4c4;
 }
 
 .total-label {
@@ -337,13 +341,13 @@
   color: #eb5757;
 }
 
-.payment-footer {
-  background: #f2f2f2;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+.payment-footer{
+  background:#f2f2f2;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center; /* 버튼은 가운데 유지 */
+  gap:20px;
 }
 
 .agree-checkbox {
