@@ -14,9 +14,9 @@
         </a>
       </h1>
 
-      <div class="tabs">
-        <button class="tab active" data-type="buyer">구매회원가입</button>
-        <button class="tab" data-type="seller">판매회원가입</button>
+      <div class="tabs" role="tablist" aria-label="회원 유형 선택">
+        <button class="tab active" data-type="buyer" role="tab" aria-selected="true">구매회원가입</button>
+        <button class="tab" data-type="seller" role="tab" aria-selected="false">판매회원가입</button>
       </div>
 
       <form id="signupForm">
@@ -83,6 +83,8 @@
                     type="button"
                     class="select-trigger"
                     id="phone1Trigger"
+                    aria-label="통신사 선택"
+                    aria-expanded="false"
                   >
                     <span id="phone1Value">010</span>
                     <img

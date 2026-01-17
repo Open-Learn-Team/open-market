@@ -109,6 +109,7 @@ const renderProducts = (products) => {
     editBtn.type = "button";
     editBtn.className = "btn-edit";
     editBtn.dataset.id = product.id;
+    editBtn.setAttribute("aria-label", `${product.name} 수정`);
     editBtn.textContent = "수정";
     tdEdit.appendChild(editBtn);
 
@@ -117,6 +118,7 @@ const renderProducts = (products) => {
     deleteBtn.type = "button";
     deleteBtn.className = "btn-delete";
     deleteBtn.dataset.id = product.id;
+    deleteBtn.setAttribute("aria-label", `${product.name} 삭제`);
     deleteBtn.textContent = "삭제";
     tdDelete.appendChild(deleteBtn);
 

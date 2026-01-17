@@ -172,11 +172,13 @@ function initCustomDropdown() {
 function openDropdown() {
   phone1Dropdown.classList.add("open");
   phone1Trigger.classList.add("active");
+  phone1Trigger.setAttribute("aria-expanded", "true");
 }
 
 function closeDropdown() {
   phone1Dropdown.classList.remove("open");
   phone1Trigger.classList.remove("active");
+  phone1Trigger.setAttribute("aria-expanded", "false");
 }
 
 initCustomDropdown();
@@ -199,8 +201,12 @@ function resetSellerForm() {
 
 tabs.forEach((tab) => {
   tab.addEventListener("click", () => {
-    tabs.forEach((t) => t.classList.remove("active"));
+    tabs.forEach((t) => {
+      t.classList.remove("active");
+      t.setAttribute("aria-selected", "false");
+    });
     tab.classList.add("active");
+    tab.setAttribute("aria-selected", "true");
 
     if (tab.dataset.type === "seller") {
       sellerArea.style.display = "block";

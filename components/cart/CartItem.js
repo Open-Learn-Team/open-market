@@ -65,8 +65,10 @@ export function createCartItem(
 
   const minusBtn = document.createElement("button");
   minusBtn.className = `qty-btn minus ${isSoldOut || item.qty <= 1 ? "disabled" : ""}`;
+  minusBtn.setAttribute("aria-label", "수량 감소");
   const minusImg = document.createElement("img");
   minusImg.src = iconMinusLine;
+  minusImg.alt = "";
   minusBtn.appendChild(minusImg);
 
   const qtyValue = document.createElement("span");
@@ -75,8 +77,10 @@ export function createCartItem(
 
   const plusBtn = document.createElement("button");
   plusBtn.className = `qty-btn plus ${isSoldOut ? "disabled" : ""}`;
+  plusBtn.setAttribute("aria-label", "수량 증가");
   const plusImg = document.createElement("img");
   plusImg.src = iconPlusLine;
+  plusImg.alt = "";
   plusBtn.appendChild(plusImg);
 
   cartQty.appendChild(minusBtn);
@@ -88,6 +92,7 @@ export function createCartItem(
 
   const deleteBtn = document.createElement("button");
   deleteBtn.className = "delete-btn";
+  deleteBtn.setAttribute("aria-label", "상품 삭제");
 
   const cartPriceBox = document.createElement("div");
   cartPriceBox.className = "cart-price-box";
