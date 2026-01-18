@@ -275,7 +275,7 @@ export const getSellerProducts = async () => {
     return { count: 0, results: [] };
   }
   
-  // 바로 전체 상품에서 필터링 (서버 버그 우회)
+  // 바로 전체 상품에서 필터링 
   try {
     const allProducts = await fetchAPI(`/products/`);
     const myProducts = allProducts.results?.filter(
