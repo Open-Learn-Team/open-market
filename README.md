@@ -45,8 +45,7 @@
 | 디자인 | Figma |
 
 ### 2.2 배포 URL
-<!-- TODO: 배포 후 URL 수정 필요 -->
-- **배포 URL**: [https://open-learn-team.github.io/open-market/](https://open-learn-hodu.netlify.app/)
+- **배포 URL**: [https://open-learn-hodu.netlify.app/](https://open-learn-hodu.netlify.app/)
 - **GitHub**: https://github.com/Open-Learn-Team/open-market
 - **테스트용 계정**
   ```
@@ -516,7 +515,7 @@ graph TD
     class WA,DA api
 ```
 
-### 8.1 주요 모듈 관계
+### 7.1 주요 모듈 관계
 
 ```mermaid
 graph LR
