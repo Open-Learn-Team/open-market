@@ -471,75 +471,7 @@ gantt
     </tbody>
 </table>
 
-## 7. 데이터베이스 모델링 (ERD)
-
-```mermaid
-erDiagram
-    User ||--o{ Product : sells
-    User ||--o{ Cart : has
-    User ||--o{ Order : places
-
-    User {
-        int id PK
-        string username
-        string password
-        string name
-        string phone_number
-        string user_type "BUYER | SELLER"
-        string company_registration_number "판매자만"
-        string store_name "판매자만"
-        datetime created_at
-    }
-
-    Product {
-        int id PK
-        string name
-        string info
-        string image
-        int price
-        string shipping_method "PARCEL | DELIVERY"
-        int shipping_fee
-        int stock
-        int seller_id FK
-        datetime created_at
-        datetime updated_at
-    }
-
-    Cart {
-        int id PK
-        int user_id FK
-        int product_id FK
-        int quantity
-        boolean is_active
-    }
-
-    Order {
-        int id PK
-        int user_id FK
-        string order_number
-        string order_type "direct_order | cart_order"
-        string receiver
-        string receiver_phone_number
-        string address
-        string address_message
-        string payment_method
-        int total_price
-        datetime created_at
-    }
-
-    Order ||--|{ OrderItem : contains
-    OrderItem {
-        int id PK
-        int order_id FK
-        int product_id FK
-        int quantity
-    }
-
-    Product ||--o{ Cart : contains
-    Product ||--o{ OrderItem : contains
-```
-
-## 8. Architecture
+## 7. Architecture
 
 ```mermaid
 graph TD
@@ -627,9 +559,9 @@ graph LR
     HEADER --> MODAL
 ```
 
-## 9. 메인 기능
+## 8. 메인 기능
 
-### 9.1 토큰 기반 인증
+### 8.1 토큰 기반 인증
 
 ```mermaid
 sequenceDiagram
@@ -657,7 +589,7 @@ sequenceDiagram
     end
 ```
 
-### 9.2 장바구니 → 주문 흐름
+### 8.2 장바구니 → 주문 흐름
 
 ```mermaid
 stateDiagram-v2
@@ -677,7 +609,7 @@ stateDiagram-v2
     주문완료 --> [*]
 ```
 
-### 9.3 판매자 상품 관리
+### 8.3 판매자 상품 관리
 
 ```mermaid
 graph LR
@@ -694,9 +626,9 @@ graph LR
     H --> B
 ```
 
-## 10. 트러블 슈팅
+## 9. 트러블 슈팅
 
-### 10.1 [Vite] MPA 동적 라우팅 처리
+### 9.1 [Vite] MPA 동적 라우팅 처리
 
 **문제**: `/product/123` 같은 동적 라우팅 접근 시 404 에러 발생. 배포 후에도 동일 문제 발생.
 
@@ -722,7 +654,7 @@ if (/^\/product\/\d+$/.test(pathname)) {
 
 ---
 
-### 10.2 [API] FormData 이미지 업로드 실패
+### 9.2 [API] FormData 이미지 업로드 실패
 
 **문제**: 상품 등록 시 이미지 업로드가 실패함
 
@@ -748,7 +680,7 @@ const config = {
 
 ---
 
-### 10.3 [비동기] 로그인 버튼 중복 클릭 방지
+### 9.3 [비동기] 로그인 버튼 중복 클릭 방지
 
 **문제**: 사용자가 로그인 버튼을 빠르게 여러 번 클릭하면 중복 요청이 발생
 
@@ -776,7 +708,7 @@ loginForm.addEventListener("submit", async (e) => {
 
 ---
 
-### 10.4 [비동기] 장바구니 일괄 삭제 성능 개선
+### 9.4 [비동기] 장바구니 일괄 삭제 성능 개선
 
 **문제**: 선택한 여러 상품을 하나씩 삭제하면 느리고, 순차 삭제 중 일부 실패 시 처리가 애매함
 
@@ -804,7 +736,7 @@ $deleteSelectedBtn.onclick = async () => {
 
 ---
 
-### 10.5 [상태관리] 배너 자동재생 인터벌 중복 실행
+### 9.5 [상태관리] 배너 자동재생 인터벌 중복 실행
 
 **문제**: 배너가 자동 재생 중일 때 사용자가 화살표를 클릭하면 여러 인터벌이 동시에 실행되어 배너가 빠르게 움직임
 
@@ -836,7 +768,7 @@ prevBtn?.addEventListener("click", () => {
 
 ---
 
-### 10.6 [비동기] ID 중복확인 Race Condition
+### 9.6 [비동기] ID 중복확인 Race Condition
 
 **문제**: ID 중복확인 버튼 클릭 중에 input에서 blur 이벤트가 발생하면, 비동기 응답 순서가 꼬여서 잘못된 에러 메시지가 표시됨
 
@@ -871,7 +803,7 @@ idInput.addEventListener("blur", () => {
 
 ---
 
-### 10.7 [데이터전달] 페이지 간 복잡한 데이터 전달
+### 9.7 [데이터전달] 페이지 간 복잡한 데이터 전달
 
 **문제**: 장바구니에서 주문 페이지로 여러 상품 정보(객체 배열)를 전달해야 하는데, URL 파라미터로는 한계가 있음
 
@@ -906,7 +838,7 @@ localStorage.removeItem("orderData");
 
 ---
 
-### 10.8 [배포] Netlify 환경에서 CSS 로드 실패
+### 9.8 [배포] Netlify 환경에서 CSS 로드 실패
 
 **문제**: 로컬에서는 정상이나 Netlify 배포 후 스타일이 적용되지 않음
 
@@ -922,9 +854,9 @@ import '../assets/css/pages/home.css';
 
 ---
 
-## 11. 리팩토링
+## 10. 리팩토링
 
-### 11.1 [보안] innerHTML을 DOM API로 전환 (XSS 취약점 방지)
+### 10.1 [보안] innerHTML을 DOM API로 전환 (XSS 취약점 방지)
 
 **상황**: `home.js`, `order.js`, `CartItem.js` 등에서 사용자 데이터를 `innerHTML`로 직접 삽입
 
@@ -946,7 +878,7 @@ li.appendChild(nameP);
 
 ---
 
-### 11.2 [스타일] CSS !important 남용 문제 해결
+### 10.2 [스타일] CSS !important 남용 문제 해결
 
 **상황**: `cart.css`, `product-detail.css`, `seller.css`에서 `!important` 과도 사용
 
@@ -963,7 +895,7 @@ border: none;
 
 ---
 
-### 11.3 [접근성] 스크린리더를 위한 ARIA 속성 추가
+### 10.3 [접근성] 스크린리더를 위한 ARIA 속성 추가
 
 **상황**: 버튼, 탭, 드롭다운에 스크린리더 사용자를 위한 정보 부족
 
@@ -978,7 +910,7 @@ trigger.setAttribute("aria-expanded", "true");
 
 ---
 
-### 11.4 [UX] alert()를 커스텀 모달로 전환
+### 10.4 [UX] alert()를 커스텀 모달로 전환
 
 **상황**: 브라우저 기본 `alert()`는 디자인 커스터마이징 불가
 
@@ -995,7 +927,7 @@ await showAlertModal("주문이 완료되었습니다!");
 
 ---
 
-### 11.5 [유지보수] 매직 넘버를 상수로 추출
+### 10.5 [유지보수] 매직 넘버를 상수로 추출
 
 **상황**: `signup.js`에서 `150`, `90`, `6` 같은 숫자가 의미 없이 사용됨
 
@@ -1012,7 +944,7 @@ const DROPDOWN_VISIBLE_HEIGHT = 150;
 
 ---
 
-### 11.6 [코드 품질] DOM 요소 변수명 컨벤션 통일
+### 10.6 [코드 품질] DOM 요소 변수명 컨벤션 통일
 
 **상황**: DOM 요소와 일반 변수 구분이 어려움
 
@@ -1027,7 +959,7 @@ const $orderItemList = document.getElementById("orderItemList");
 
 **성과**: 코드 리뷰 시 DOM 요소와 일반 변수 즉시 구분 가능
 
-## 12. 개발하며 느낀점
+## 11. 개발하며 느낀점
 
 ### 최서원 (팀장)
 - 이번 프로젝트에서 처음으로 팀장 역할을 맡으며 개발과 협업 전반에 대한 시야를 넓힐 수 있었습니다. 프로젝트 초반에는 작업 분배와 일정 관리, 기술적 의사결정이 모두 낯설어 막막함을 느꼈지만, 문제를 하나씩 해결해 나가며 성장할 수 있었습니다. 특히 API 통신을 직접 설계하며 비동기 처리와 에러 핸들링, 토큰 관리 등 서비스 흐름을 고려한 개발의 중요성을 체감했습니다. 또한 리팩토링 과정에서 유지보수 가능한 구조와 초기 설계의 중요성을 깨달았고, 컨벤션 부재로 인한 협업 비용을 경험하며 명확한 규칙의 필요성을 인식했습니다. Git 사용을 함께 정리하며 팀원들과 지식을 공유한 경험을 통해 협업의 본질은 결과물이 아니라 함께 성장하는 과정임을 배웠습니다.
