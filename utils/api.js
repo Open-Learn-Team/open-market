@@ -268,7 +268,7 @@ export const createCartOrder = (orderData) =>
 // 판매자 상품 불러오기 (전체 상품에서 필터링)
 export const getSellerProducts = async () => {
   const userInfo = getUserInfo();
-  const sellerName = userInfo?.name;
+  const sellerName = userInfo?.username;
   
   if (!sellerName) {
     console.error('판매자 이름을 찾을 수 없습니다.');
@@ -279,7 +279,7 @@ export const getSellerProducts = async () => {
   try {
     const allProducts = await fetchAPI(`/products/`);
     const myProducts = allProducts.results?.filter(
-      product => product.seller?.name === sellerName
+      product => product.seller?.username === sellerName
     ) || [];
     
     return {
