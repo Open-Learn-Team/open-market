@@ -636,18 +636,31 @@ graph LR
 
 **원인**: 초기에 브랜치 전략 없이 main에 직접 푸시하면서 충돌 발생. 충돌이 두려워 "이 파일 수정할게요"라고 말하고 기다리니 작업 속도 저하
 
-**해결**: 기능별 브랜치 전략 도입 및 PR 기반 워크플로우 정립
+**해결**: Git Flow 기반 브랜치 전략 도입 및 PR 기반 워크플로우 정립
 ```bash
 # 브랜치 전략
-main           # 배포용 (직접 푸시 금지)
-├── feat/login      # 로그인 기능
-├── feat/cart       # 장바구니 기능
-├── feat/seller     # 판매자 센터
-└── fix/xss         # XSS 취약점 수정
+main                    # 배포용 (최종 릴리즈)
+└── develop             # 개발 통합 브랜치
+    ├── feature/login       # 로그인 기능
+    ├── feature/cart        # 장바구니 기능
+    ├── feature/seller      # 판매자 센터
+    └── feature/signup      # 회원가입 기능
+
+# 작업 흐름
+# 1. feature 브랜치에서 기능 개발
+git checkout -b feature/cart develop
+
+# 2. 개발 완료 후 develop에 PR & 머지
+git checkout develop
+git merge feature/cart
+
+# 3. 배포 시 main으로 머지
+git checkout main
+git merge develop
 
 # 충돌 발생 시 해결 프로세스
 git fetch origin
-git merge origin/main
+git merge origin/develop
 # 충돌 파일 확인 후 팀원과 화면 공유하며 해결
 git add .
 git commit -m "merge: resolve conflicts in api.js"
